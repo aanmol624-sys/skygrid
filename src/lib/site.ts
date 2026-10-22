@@ -23,16 +23,19 @@ export const PITCH_VIDEO_EMBED_URL = youtubeId(YOUTUBE_URL) ? `https://www.youtu
 
 /** Pitch outline shown under the video. */
 export const PITCH_OUTLINE = [
-  ['0:00–1:00', 'Hook: what UFV SkyGrid is', 'Anmol'],
-  ['1:00–3:00', 'Business case: why SkyGrid, why UFV, why now', 'Armaan'],
-  ['3:00–5:00', 'Project charter, scope and major deliverables', 'Anmol'],
-  ['5:00–6:30', 'Stakeholders (governments, Stó:lō, YXX, students, our employees)', 'Armaan'],
-  ['6:30–8:30', 'WBS, the five gates and kill points, Gantt to September 1, 2030', 'Anmol'],
-  ['8:30–10:30', '$100M baseline, contingency and sustainability after 2030', 'Ishmeet'],
-  ['10:30–12:00', 'Risk register, cost and change control', 'Ishmeet'],
-  ['12:00–13:00', 'Competitive research: why SkyGrid isn’t just another drone lab', 'Armaan'],
-  ['13:00–14:00', 'KPIs and what UFV receives for $100M', 'Ishmeet'],
-  ['14:00–15:00', 'The team and the ask', 'Anmol'],
+  ['0:00–0:30', 'Hook: what UFV SkyGrid is', 'Armaan'],
+  ['0:30–1:40', 'How we got here: from a $100M question to SkyGrid', 'Armaan'],
+  ['1:40–3:30', 'What we noticed: the problem, and why the Fraser Valley', 'Armaan'],
+  ['3:30–4:15', 'Our idea: four connected components', 'Armaan'],
+  ['4:15–5:05', 'How it solves the problem: one farm problem, end to end', 'Armaan'],
+  ['5:05–6:15', 'How it creates value and earns beyond the $100M', 'Armaan'],
+  ['6:15–8:25', 'Making the $100M work hardest: budget, 14 deliverables, charter', 'Armaan'],
+  ['8:25–9:40', 'Stakeholders and the hiring plan', 'Armaan'],
+  ['9:40–11:20', 'WBS, the five gates and kill points, Gantt to September 1, 2030', 'Armaan'],
+  ['11:20–12:40', 'Risk register, cost and change control', 'Armaan'],
+  ['12:40–13:30', 'Competitive research: why SkyGrid isn’t just another drone lab', 'Armaan'],
+  ['13:30–14:10', 'KPIs: how we’ll know it worked', 'Armaan'],
+  ['14:10–15:00', 'The team and the ask: “Sharks, who’s in?”', 'Armaan'],
 ] as const;
 
 export const PROPOSED_NOTE =
