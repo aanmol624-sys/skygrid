@@ -170,6 +170,8 @@ const MENU = [
   :global([data-theme="light"]) .theme-light { display: inline-flex !important; }
 
   /* ── Phone / tablet menu ── */
+  :global(html.menu-open) { overflow: hidden; }
+  #mobile-menu { scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; }
   .menu-bg { opacity: .8; background-color: transparent; }
   .menu-bg::after { content: ''; position: absolute; inset: 0; background:
       radial-gradient(60% 40% at 90% 0%, color-mix(in srgb, var(--impact) 12%, transparent), transparent 70%),

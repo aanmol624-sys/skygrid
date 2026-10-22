@@ -81,6 +81,8 @@ const setMenu = (open: boolean) => {
   menu?.classList.toggle('hidden', !open);
   menu?.classList.toggle('flex', open);
   document.getElementById('menu-open')?.setAttribute('aria-expanded', String(open));
+  // lock the page behind the menu; the root element owns the scrollbar, so hide it there too
+  document.documentElement.classList.toggle('menu-open', open);
   document.body.style.overflow = open ? 'hidden' : '';
   // pause smooth scrolling of the page behind the menu; the menu itself scrolls natively (data-lenis-prevent)
   if (open) lenis?.stop(); else lenis?.start();
