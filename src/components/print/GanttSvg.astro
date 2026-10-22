@@ -1,0 +1,55 @@
+---
+// Static, print-friendly Gantt rendered from the same schedule data as the interactive one.
+import s from '../../data/schedule.json';
+import { ROLE_COLORS } from '../islands/Gantt.tsx';
+const W = 1000, LABEL = 250, ROW = 17, TOP = 34;
+const T0 = new Date('2026-11-01').getTime(), T1 = new Date('2030-09-15').getTime();
+const x = (d: string, eod = false) => LABEL + ((new Date(d).getTime() + (eod ? 86400000 : 0) - T0) / (T1 - T0)) * (W - LABEL - 10);
+type L = { type: 'phase'; n: number; name: string } | { type: 'row'; r: (typeof s.rows)[number] & { milestone?: boolean; critical?: boolean } };
+const lines: L[] = [];
+s.phases.forEach((p) => { lines.push({ type: 'phase', n: p.n, name: p.name }); s.rows.filter((r) => r.phase === p.n).forEach((r) => lines.push({ type: 'row', r })); });
+const H = TOP + lines.length * ROW + 40;
+const years = ['2027', '2028', '2029', '2030'];
+---
+<svg viewBox={`0 0 ${W} ${H}`} width="100%" class="gantt-svg" style="display: block" xmlns="http://www.w3.org/2000/svg" font-family="Inter, Arial, sans-serif">
+  <rect width={W} height={H} fill="#fff" />
+  {years.map((y) => (
+    <g>
+      <line x1={x(`${y}-01-01`)} x2={x(`${y}-01-01`)} y1={TOP - 8} y2={TOP + lines.length * ROW} stroke="#D5DAE3" />
+      <text x={x(`${y}-01-01`)} y={TOP - 14} font-size="10" text-anchor="middle" fill="#334155" font-weight="600">{y}</text>
+    </g>
+  ))}
+  {[['2030-05-31', '#0284C7'], ['2030-08-15', '#0E9F63'], ['2030-09-01', '#B76E00']].map(([d, c]) => (
+    <line x1={x(d)} x2={x(d)} y1={TOP - 4} y2={TOP + lines.length * ROW} stroke={c} stroke-dasharray="3 2" stroke-width="1.2" />
+  ))}
+  {lines.map((l, i) => {
+    const y = TOP + i * ROW;
+    if (l.type === 'phase') return (
+      <g><rect x="0" y={y} width={W} height={ROW} fill="#F1F4F8" /><text x="4" y={y + 12} font-size="9" font-weight="700" fill="#B76E00">PHASE {l.n}</text><text x="52" y={y + 12} font-size="9" font-weight="700" fill="#0F172A">{l.name}</text></g>
+    );
+    const r = l.r;
+    return (
+      <g>
+        <text x="8" y={y + 12} font-size="8.5" fill="#64748B" font-family="monospace">{r.id}</text>
+        <text x="30" y={y + 12} font-size="8.5" fill="#0F172A" font-weight={r.milestone ? 700 : 400}>{r.name.length > 42 ? r.name.slice(0, 41) + '…' : r.name}</text>
+        {r.milestone ? (
+          <g><rect x={x(r.start) - 5} y={y + 3.5} width="10" height="10" transform={`rotate(45 ${x(r.start)} ${y + 8.5})`} fill="#F5A524" stroke="#B76E00" /><text x={x(r.start) + 8} y={y + 12} font-size="8" font-weight="700" fill="#B76E00">{r.id} · {r.timing}</text></g>
+        ) : (
+          <g>
+            <rect x={x(r.start)} y={y + 4} width={Math.max(3, x(r.end, true) - x(r.start))} height={ROW - 8} rx="2" fill={ROLE_COLORS[r.group]} stroke={r.critical ? '#E11D48' : 'none'} stroke-width="1.2" />
+            <text x={x(r.end, true) + 4} y={y + 12} font-size="7.5" fill="#475569">{r.role}</text>
+          </g>
+        )}
+      </g>
+    );
+  })}
+  <g transform={`translate(0 ${TOP + lines.length * ROW + 14})`} font-size="8.5" fill="#334155">
+    {Object.entries(ROLE_COLORS).map(([g, c], i) => (
+      <g transform={`translate(${(i % 4) * 250} ${Math.floor(i / 4) * 13})`}><rect width="10" height="8" fill={c} rx="1.5" /><text x="14" y="7.5">{g}</text></g>
+    ))}
+  </g>
+</svg>
+<p style="font-size:8pt;color:#475569;margin-top:4px">Red outline = provisional critical path. Dashed lines: configuration freeze (May 31, 2030), internal operational acceptance (Aug 15, 2030), launch (Sep 1, 2030). Source: team-developed baseline schedule (Table 10) derived from the WBS and stage-gate model. PROPOSED / TEAM DESIGN.</p>
+<style>
+  @media print { .gantt-svg { max-height: 6.5in; } }
+</style>

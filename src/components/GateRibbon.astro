@@ -1,0 +1,54 @@
+---
+// 7-phase stage-gate ribbon with 5 gate diamonds and the launch flag. Widths follow phase duration.
+import schedule from '../data/schedule.json';
+import gov from '../data/governance.json';
+interface Props { interactive?: boolean }
+const { interactive = false } = Astro.props;
+const months = (s: string, e: string) => {
+  const a = new Date(s), b = new Date(e);
+  return Math.max(1.5, (b.getFullYear() - a.getFullYear()) * 12 + b.getMonth() - a.getMonth() + 1);
+};
+const phases = schedule.phases.map((p) => ({ ...p, w: months(p.start, p.end) }));
+const total = phases.reduce((s, p) => s + p.w, 0);
+let acc = 0;
+const withPos = phases.map((p) => { const left = (acc / total) * 100; acc += p.w; return { ...p, left, width: (p.w / total) * 100 }; });
+const shades = ['var(--innovate)', 'var(--learn)', 'var(--innovate)', 'var(--learn)', 'var(--innovate)', 'var(--learn)', 'var(--innovate)'];
+---
+<div class="gate-ribbon">
+  <div class="relative h-14 sm:h-16 mb-16 sm:mb-14">
+    {withPos.map((p, i) => (
+      <div class="absolute top-0 h-full rounded-md border flex flex-col justify-center overflow-hidden"
+        style={`left:${p.left}%;width:calc(${p.width}% - 3px);padding-left:${i === 0 ? 8 : 22}px;padding-right:${i === 6 ? 4 : 18}px;background:color-mix(in srgb, ${shades[i]} 13%, transparent);border-color:color-mix(in srgb, ${shades[i]} 35%, transparent)`}
+        title={`${p.n}. ${p.name} · ${p.period}`}>
+        <span class="mono text-[.68rem] sm:text-xs font-semibold truncate">{p.n}{p.width > 9 && <span class="hidden lg:inline font-normal font-sans">. {p.name}</span>}</span>
+        {p.width > 9 && <span class="mono text-[.6rem] text-muted truncate hidden sm:block">{p.period}</span>}
+      </div>
+    ))}
+    {withPos.slice(1, 6).map((p, i) => {
+      const g = gov.gates[i];
+      return (
+        <div class="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex flex-col items-center" style={`left:${p.left}%`}>
+          {interactive ? (
+            <button type="button" class="gate-diamond" data-gate={g.n} aria-label={`Gate ${g.n}: ${g.short}. Open decision criteria`}><span class="mono">G{g.n}</span></button>
+          ) : (
+            <span class="gate-diamond" aria-hidden="true"><span class="mono">G{g.n}</span></span>
+          )}
+          <span class={`absolute top-[calc(100%+6px)] text-[.65rem] sm:text-[.72rem] font-semibold whitespace-nowrap text-impact ${i % 2 ? 'sm:top-[calc(100%+6px)] top-[calc(100%+24px)]' : ''}`}>{g.short}</span>
+        </div>
+      );
+    })}
+    <div class="absolute right-0 bottom-full mb-1 z-10 flex items-end gap-1.5">
+      <span class="mono text-[.65rem] whitespace-nowrap text-impact font-semibold">Launch · Sep 1, 2030</span>
+      <svg width="20" height="30" viewBox="0 0 26 40" aria-hidden="true"><path d="M3 2v38" stroke="var(--text)" stroke-width="2" /><path d="M4 3h18l-5 6 5 6H4z" fill="var(--impact)" /></svg>
+    </div>
+  </div>
+</div>
+<style>
+  .gate-diamond {
+    width: 34px; height: 34px; transform: rotate(45deg); display: grid; place-items: center;
+    background: var(--impact); border: 2px solid var(--bg); box-shadow: 0 0 18px -2px var(--impact); border-radius: 4px;
+  }
+  .gate-diamond > span { transform: rotate(-45deg); font-size: .62rem; font-weight: 700; color: var(--on-impact); }
+  button.gate-diamond { cursor: pointer; transition: transform .2s; }
+  button.gate-diamond:hover { transform: rotate(45deg) scale(1.15); }
+</style>

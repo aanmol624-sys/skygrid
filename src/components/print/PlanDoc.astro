@@ -1,0 +1,89 @@
+---
+// Condensed ~3-page high-level plan. All wording is taken from "content - final".
+import g from '../../data/governance.json';
+import s from '../../data/schedule.json';
+import b from '../../data/budget.json';
+import r from '../../data/risks.json';
+import w from '../../data/wbs.json';
+import t from '../../data/responsibility.json';
+const topRisks = [...r.risks].sort((a, c) => c.score - a.score).slice(0, 5);
+---
+<section>
+  <p class="kicker">CIS 385 – Project Management · University of the Fraser Valley · High-level plan</p>
+  <h1>UFV SkyGrid</h1>
+  <p style="font-size:10.5pt;margin:2px 0 1px"><b>Autonomous Aviation Research, Education &amp; Regional Field-Test Network</b></p>
+  <p class="muted"><i>“Where Autonomous Aviation Meets the Real World.”</i> · Project authorization ceiling: CAD $100,000,000 · Required launch: September 1, 2030 · Active assignment team: Anmol • Armaan • Ishmeet Anand</p>
+
+  <h2>1. The idea</h2>
+  <p>UFV SkyGrid is a proposed $100-million autonomous aviation research, education, and regional field-test network designed to connect UFV students and researchers with the Fraser Valley’s aerospace, agriculture, technology, infrastructure, and public-sector ecosystems. Rather than creating only a conventional drone laboratory, SkyGrid would combine a central simulation and innovation capability with regulatory-compliant field-testing locations across the Fraser Valley, allowing autonomous aerial systems to be researched and evaluated under realistic operating conditions. The project would operate around three priorities: <b>Learn, Innovate, and Impact</b>.</p>
+  <p><b>The business problem:</b> “UFV has relevant academic disciplines, applied-research ambitions, experiential-learning programs, and access to a region rich in autonomous-system applications, but those assets are not presently organized around a shared platform capable of moving work from classroom learning to simulation, field testing, and industry application.”</p>
+  <p><b>Why now:</b> In Abbotsford, agriculture alone includes approximately 1,254 farms operating across 61,586 acres and generating nearly $1 billion in annual farm-gate sales (City of Abbotsford, 2024). Transport Canada introduced a Level 1 Complex pathway for certain lower-risk BVLOS operations beginning November 4, 2025 (Transport Canada, 2026a). SkyGrid uses the Abbotsford aerospace ecosystem mainly as a knowledge, industry, simulation, and systems-integration anchor while locating real-world field testing only where the regulatory environment permits it.</p>
+
+  <h2>2. High-level project charter</h2>
+  <table>
+    <tbody>
+      {g.charter.map((c) => <tr><th style="width:150px;text-transform:none;font-size:8pt;letter-spacing:0">{c.el}</th><td>{c.proposed && <span class="tag">{c.proposed}</span>} {c.pos}</td></tr>)}
+    </tbody>
+  </table>
+  <div class="cols">
+    <div><h3>In scope</h3><ul class="small">{g.inScope.map((x) => <li>{x}</li>)}</ul></div>
+    <div><h3>Out of scope</h3><ul class="small">{g.outScope.map((x) => <li>{x}</li>)}</ul></div>
+  </div>
+</section>
+
+<section>
+  <h2>3. Work breakdown structure (Level 2) and critical packages</h2>
+  <div class="cols">
+    <ul class="small">{w.branches.map((br) => <li><b class="mono">{br.code}</b> {br.name}</li>)}</ul>
+    <p class="small"><b>Critical packages (WBS dictionary):</b> {w.critical.map((c, i) => <span><b class="mono">{c.code}</b> {c.name}{i < w.critical.length - 1 ? '; ' : '.'}</span>)} Each has documented acceptance evidence and a primary dependency.</p>
+  </div>
+
+  <h2>4. Delivery approach — prove before we spend</h2>
+  <p>Core control principle: SkyGrid does not receive an unconditional $100M spending commitment on Day 1. Each major investment stage must earn permission to proceed. Hybrid, stage-gated delivery: predictive methods for facilities, sites, capital procurement, regulatory deliverables, budgets and milestone dates; adaptive methods for software, analytics, prototypes, research use cases and partner pilots (PMI, n.d.).</p>
+  <table>
+    <thead><tr><th>Phase</th><th>Period</th><th>Decision / output</th></tr></thead>
+    <tbody>{s.phases.map((p) => <tr><td>{p.n}. {p.name}</td><td class="mono">{p.period}</td><td>{p.decision}</td></tr>)}</tbody>
+  </table>
+  <p class="small">The five gates are kill points: each permits Continue, Redirect, or Terminate / Limited-Launch decisions. Example — {g.gates[2].name}: continue only if {g.gates[2].continue.charAt(0).toLowerCase() + g.gates[2].continue.slice(1)}</p>
+  <p class="small">The external deadline remains September 1, 2030; the proposed internal operational-acceptance target is August 15, 2030. The full Gantt chart (Table 10, 24 activities and milestones M1–M7) is attached.</p>
+
+  <h2>5. $100M cost baseline <span class="tag">Proposed</span></h2>
+  <p><b>Financial principle:</b> {b.principle}.</p>
+  <div class="cols">
+    <table>
+      <thead><tr><th>Budget layer</th><th>Amount</th></tr></thead>
+      <tbody>{b.architecture.map((a) => <tr><td style={a.subtotal ? 'font-weight:700' : ''}>{a.layer}</td><td class="mono" style={a.subtotal ? 'font-weight:700' : ''}>${a.amount}M</td></tr>)}</tbody>
+    </table>
+    <table>
+      <thead><tr><th>$85M planned-work allocation</th><th>CAD M</th></tr></thead>
+      <tbody>{b.allocations.map((a) => <tr><td>{a.area}</td><td class="mono">${a.amount}M</td></tr>)}</tbody>
+    </table>
+  </div>
+  <p class="small">Staffing is covered at a functional level ($6M startup staffing/capability); the website’s hiring plan lists each role and its on-board date, and exact headcount will be set from workload.</p>
+</section>
+
+<section>
+  <h2>6. Cost and change control</h2>
+  <p>Funding is progressively released through stage gates. Each major WBS branch becomes a control account (PMI, 2026a). If forecast cost exceeds authorization: {b.costControlLadder.map((x) => x.charAt(0).toLowerCase() + x.slice(1)).join(' → ')}. Do not cut safety, required compliance, cybersecurity, or core student/research capability merely to preserve optional features.</p>
+  <table>
+    <thead><tr><th>Change level <span class="tag">Proposed</span></th><th>Threshold</th><th>Authority</th></tr></thead>
+    <tbody>{g.authority.map((a) => <tr><td><b>{a.level}</b></td><td>{a.threshold}</td><td>{a.who}</td></tr>)}</tbody>
+  </table>
+
+  <h2>7. Top risks <span class="tag">Proposed scores</span></h2>
+  <table>
+    <thead><tr><th>ID</th><th>Risk</th><th>P×I</th><th>Owner</th><th>Primary response</th></tr></thead>
+    <tbody>{topRisks.map((x) => <tr><td class="mono">{x.id}</td><td>{x.risk}</td><td class="mono">{x.score} {x.rating}</td><td>{x.owner}</td><td>{x.response}</td></tr>)}</tbody>
+  </table>
+  <p class="small">Safety-critical risks receive mandatory controls regardless of arithmetic score. Full register: 12 risks, every one owned.</p>
+
+  <h2>8. Success</h2>
+  <p>Proposed measurable launch targets: at least 3 compliant field-test environments; at least 8 substantive written external partnership agreements; participation pathways across at least 5 UFV academic/program areas; no unresolved critical safety, regulatory, cybersecurity, or privacy deficiencies. <b>Proposed North Star:</b> number of UFV students annually completing a field-validated or external-partner SkyGrid experience.</p>
+
+  <h2>9. Team roles and responsibilities</h2>
+  <table>
+    <thead><tr><th>Student</th><th>Assignment role</th><th>Primary responsibilities</th></tr></thead>
+    <tbody>{t.members.map((m) => <tr><td><b>{m.name}</b></td><td>{m.role}</td><td>{m.responsibilities}</td></tr>)}</tbody>
+  </table>
+  <p class="small muted">PROPOSED / TEAM DESIGN: Numbers such as the three-site target, eight-partner target, five-program target, budget allocation, change thresholds, risk scores, and KPI targets are SkyGrid planning choices created by the team. They are not presented as commitments made by UFV, government, regulators, or external partners. Full APA references are on the website’s Evidence page.</p>
+</section>

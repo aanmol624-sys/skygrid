@@ -1,0 +1,33 @@
+{
+  "source": "Table 19: Proposed KPI framework",
+  "northStar": "Number of UFV students annually completing a field-validated or external-partner SkyGrid experience.",
+  "kpis": [
+    { "pillar": "learn", "code": "L1", "kpi": "Student applied-project participation", "target": "≥150 in first full operating year; ≥300 annually by 2033.", "proposed": true },
+    { "pillar": "learn", "code": "L2", "kpi": "Academic breadth", "target": "≥5 at launch; ≥8 aspiration by 2033.", "proposed": true },
+    { "pillar": "learn", "code": "L3", "kpi": "Real-world project ratio", "target": "≥75%.", "proposed": true },
+    { "pillar": "learn", "code": "L4", "kpi": "Demonstrated learning gain", "target": "Baseline/targets set during academic design." },
+    { "pillar": "innovate", "code": "I1", "kpi": "Applied research projects", "target": "≥10 first full year; ≥25 by 2033.", "proposed": true },
+    { "pillar": "innovate", "code": "I2", "kpi": "Interdisciplinary research ratio", "target": "≥60%.", "proposed": true },
+    { "pillar": "innovate", "code": "I3", "kpi": "Simulation-to-field conversion", "target": "Monitor first; do not force a target that encourages unsafe progression." },
+    { "pillar": "innovate", "code": "I4", "kpi": "External research leverage", "target": "Baseline in 2027; target approved at Gate 3." },
+    { "pillar": "impact", "code": "IMP1", "kpi": "Active partners", "target": "≥8 at launch; ≥15 aspiration by 2033.", "proposed": true },
+    { "pillar": "impact", "code": "IMP2", "kpi": "Partner repeat rate", "target": "Target established after operating data exists." },
+    { "pillar": "impact", "code": "IMP3", "kpi": "Outcome achievement", "target": "Project-level closure measurement." },
+    { "pillar": "safe", "code": "S1–S5", "kpi": "Serious safety events; reporting culture; critical cyber findings; regulatory compliance; system availability", "target": "Zero unresolved critical launch findings; zero knowingly unauthorized operations; PROPOSED mature availability ≥95%." }
+  ],
+  "acceptance": [
+    { "area": "Schedule", "criterion": "Operational launch no later than Sep. 1, 2030; internal target acceptance Aug. 15." },
+    { "area": "Cost", "criterion": "Total authorization ≤ CAD $100M." },
+    { "area": "Central capability", "criterion": "Innovation & Simulation Node commissioned and integrated." },
+    { "area": "Field network", "criterion": "≥3 compliant field-test environments/sites operational." },
+    { "area": "Partnerships", "criterion": "≥8 substantive written external agreements." },
+    { "area": "Academic integration", "criterion": "Participation pathways across ≥5 UFV academic/program areas." },
+    { "area": "Technology", "criterion": "Core RPAS, payload, simulation, communications, compute/data and analytics systems commissioned." },
+    { "area": "Safety / regulation", "criterion": "Required controls/permissions for launch operations and no unresolved critical safety deficiency." },
+    { "area": "Cyber / privacy", "criterion": "No unresolved critical cybersecurity or privacy/data-governance deficiency affecting launch." },
+    { "area": "People", "criterion": "Safety-critical launch roles staffed and qualified." },
+    { "area": "Operations", "criterion": "Representative end-to-end pilot operations and readiness review completed." },
+    { "area": "Handover", "criterion": "Permanent operating owner formally accepts the capability." }
+  ],
+  "refuse": ["Number of drones purchased", "Square feet constructed", "Meetings held", "Companies contacted", "Website views", "Press releases", "Gross revenue without context"]
+}

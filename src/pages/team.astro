@@ -1,0 +1,78 @@
+---
+import DeepPage from '../layouts/DeepPage.astro';
+import Icon from '../components/Icon.astro';
+import t from '../data/responsibility.json';
+const people = ['Anmol', 'Armaan', 'Ishmeet'];
+const AVATAR_COLORS = ['var(--learn)', 'var(--innovate)', 'var(--impact)'];
+const has = (list: string[], p: string) => list.includes(p) || list.includes('All');
+---
+<DeepPage title="Group Roles, Responsibilities & Assigned Deliverables" eyebrow="Team" pillar="learn"
+  crumbs={[{ label: 'Team' }]}
+  intro="The CIS 385 students should not be presented as the permanent operational managers of a four-year $100M aviation program. The hypothetical SkyGrid project requires professional roles; the assignment team is responsible for researching, designing, and communicating the proposal."
+  toc={[{ id: 'members', label: 'Members' }, { id: 'matrix', label: 'Responsibility matrix' }, { id: 'quality', label: 'Shared quality' }]}>
+  <section id="members" class="scroll-mt-24">
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {t.members.map((m, i) => (
+        <article class="card overflow-hidden flex flex-col">
+          <div class="bg-bg-2 border-b border-line pt-8 pb-6 px-5 flex flex-col items-center text-center">
+            <span class="avatar" style={`--c: ${AVATAR_COLORS[i % AVATAR_COLORS.length]}`} role="img" aria-label={`${m.name} (initials ${m.initials})`}>{m.initials}</span>
+            <p class="text-xl font-bold mt-4" style="font-family: var(--font-display)">{m.name}</p>
+            <p class="text-learn font-semibold text-sm mt-0.5">{m.role}</p>
+          </div>
+          <div class="p-5 flex-1 flex flex-col">
+            <p class="eyebrow">Skills</p>
+            <ul class="mt-2 space-y-1.5 text-sm">
+              {m.skills.map((s) => <li class="flex gap-2"><span class="text-learn shrink-0 mt-0.5"><Icon name="check" size={14} /></span><span>{s}</span></li>)}
+            </ul>
+            <p class="eyebrow mt-5">Primary responsibilities</p>
+            <p class="text-sm mt-1">{m.responsibilities}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+    <p class="card p-5 mt-5 max-w-3xl text-sm leading-relaxed flex gap-3"><span class="text-learn shrink-0"><Icon name="people" size={18} /></span><span>{t.note}</span></p>
+  </section>
+
+  <section id="matrix" class="pt-20 scroll-mt-24">
+    <h2 class="text-2xl font-bold">Deliverable responsibility matrix</h2>
+    <p class="text-sm text-muted mt-2 flex flex-wrap gap-4"><span class="flex items-center gap-2"><span class="dot primary"></span>Primary</span><span class="flex items-center gap-2"><span class="dot support"></span>Support</span></p>
+    <div class="card mt-5 overflow-x-auto">
+      <table class="tbl matrix">
+        <thead><tr><th>Assignment deliverable</th>{people.map((p) => <th class="text-center">{p}</th>)}</tr></thead>
+        <tbody>
+          {t.matrix.map((r) => (
+            <tr>
+              <td class="font-medium">{r.deliverable}</td>
+              {people.map((p) => (
+                <td class="text-center">
+                  {has(r.primary, p) ? <span class="dot primary" aria-label="Primary" title="Primary"></span> : has(r.support, p) ? <span class="dot support" aria-label="Support" title="Support"></span> : <span class="text-line-strong" aria-label="None">·</span>}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="quality" class="pt-20 scroll-mt-24">
+    <h2 class="text-2xl font-bold">14.1 Shared quality responsibilities</h2>
+    <div class="grid md:grid-cols-3 gap-4 mt-6">
+      {t.quality.map((q, i) => (
+        <div class="card p-6 text-center">
+          <span class="badge mx-auto" style={`--c: ${['var(--learn)', 'var(--innovate)', 'var(--impact)'][i]}`}><Icon name={['check', 'doc', 'play'][i]} size={26} /></span>
+          <p class="font-bold mt-4">{q.name}</p>
+          <p class="text-sm text-muted mt-2">{q.text}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+</DeepPage>
+<style>
+  .dot { display: inline-block; width: 14px; height: 14px; border-radius: 50%; vertical-align: middle; }
+  .dot.primary { background: var(--impact); box-shadow: 0 0 10px -2px var(--impact); }
+  .dot.support { border: 2px solid var(--impact); }
+  .matrix tbody tr:hover td { background: color-mix(in srgb, var(--impact) 9%, transparent); }
+  .avatar { width: 96px; height: 96px; display: grid; place-items: center; border-radius: 50%; font: 700 2rem/1 var(--font-display); letter-spacing: .02em; color: var(--c); border: 2px solid var(--c); background: color-mix(in srgb, var(--c) 14%, transparent); box-shadow: 0 0 28px -8px var(--c); }
+  .badge { width: 64px; height: 64px; display: grid; place-items: center; border-radius: 50%; color: var(--c); border: 2px solid var(--c); background: color-mix(in srgb, var(--c) 12%, transparent); box-shadow: 0 0 24px -8px var(--c); }
+</style>

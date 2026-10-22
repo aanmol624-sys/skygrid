@@ -1,0 +1,36 @@
+---
+// Bare layout for print/PDF pages (not linked from the navigation).
+import '@fontsource-variable/inter';
+interface Props { title: string; landscape?: boolean }
+const { title, landscape = false } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>{title}</title>
+    <style is:inline set:html={`@page { size: letter ${landscape ? 'landscape' : 'portrait'}; margin: 0.5in; }`}></style>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+<style is:global>
+  body { font-family: 'Inter Variable', Inter, Arial, sans-serif; color: #0F172A; font-size: 8.9pt; line-height: 1.34; margin: 0; background: #fff; }
+  h1 { font-size: 20pt; margin: 0; letter-spacing: -.02em; }
+  h2 { font-size: 11pt; margin: 12px 0 5px; padding-bottom: 2px; border-bottom: 2px solid #F5A524; letter-spacing: -.01em; }
+  h3 { font-size: 9.5pt; margin: 8px 0 3px; }
+  p { margin: 0 0 5px; }
+  table { width: 100%; border-collapse: collapse; margin: 3px 0 6px; font-size: 8.3pt; }
+  th, td { text-align: left; vertical-align: top; padding: 2.5px 5px; border-bottom: 1px solid #E2E8F0; }
+  th { background: #F1F4F8; font-size: 7.5pt; text-transform: uppercase; letter-spacing: .04em; color: #334155; }
+  ul { margin: 2px 0 5px; padding-left: 16px; } li { margin: 1px 0; }
+  .muted { color: #475569; } .small { font-size: 7.6pt; }
+  .tag { display: inline-block; border: 1px solid #B76E00; color: #B76E00; font-size: 6.6pt; font-weight: 700; letter-spacing: .08em; padding: 0 4px; border-radius: 3px; vertical-align: middle; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: start; }
+  .page { break-after: page; } .page:last-child { break-after: auto; }
+  .kicker { font-size: 7.5pt; letter-spacing: .14em; text-transform: uppercase; color: #B76E00; font-weight: 700; }
+  .mono { font-family: Consolas, 'Courier New', monospace; }
+</style>

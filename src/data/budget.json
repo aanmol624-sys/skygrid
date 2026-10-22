@@ -1,0 +1,26 @@
+{
+  "principle": "the $100M is an authorization ceiling, not a spending target",
+  "principleFull": "Financial principle: the $100M is an authorization ceiling, not a spending target. If the approved capability can be delivered for less, the project should not invent spending merely to consume the grant.",
+  "architecture": [
+    { "layer": "Planned SkyGrid work", "amount": 85, "meaning": "Current planning allocation for defined work." },
+    { "layer": "Contingency reserve", "amount": 10, "meaning": "Provisional envelope for identified risk exposure; recalculated before Gate 3." },
+    { "layer": "Cost baseline", "amount": 95, "meaning": "Planned work + contingency.", "subtotal": true },
+    { "layer": "Management reserve", "amount": 5, "meaning": "Sponsor-controlled reserve for unforeseen project-level uncertainty." },
+    { "layer": "Maximum authorization", "amount": 100, "meaning": "Hard project ceiling unless funding authority formally changes it.", "subtotal": true }
+  ],
+  "allocations": [
+    { "id": "gov", "area": "Governance / feasibility / design", "amount": 6, "purpose": "Feasibility, design, project management, cost planning, procurement preparation." },
+    { "id": "node", "area": "Innovation & Simulation Node", "amount": 22, "purpose": "Central research/simulation facility, technical fit-out, specialized spaces, power/network infrastructure." },
+    { "id": "field", "area": "Field-Test Network", "amount": 10, "purpose": "≥3 proposed field environments, communications, weather/safety monitoring, site infrastructure." },
+    { "id": "rpas", "area": "RPAS / sensors / equipment", "amount": 14, "purpose": "Modular aircraft, payloads, sensors, maintenance equipment." },
+    { "id": "data", "area": "Simulation / compute / data", "amount": 9, "purpose": "Mission systems, secure compute/storage, simulation, analytics and data architecture." },
+    { "id": "safety", "area": "Safety / regulatory / cyber / privacy", "amount": 5, "purpose": "Compliance, safety systems, cyber controls, privacy/data governance and related readiness." },
+    { "id": "academic", "area": "Academic / research / students", "amount": 7, "purpose": "Student applied projects, academic integration, research and training development." },
+    { "id": "staff", "area": "Startup staffing / capability", "amount": 6, "purpose": "Specialist hiring and pre-launch training/capability development." },
+    { "id": "partners", "area": "Partnerships / pilots", "amount": 3, "purpose": "Challenge pilots, partnership development and demand validation." },
+    { "id": "integration", "area": "Integration / commissioning", "amount": 3, "purpose": "Systems integration, acceptance testing, pilot missions and readiness." }
+  ],
+  "costControlLadder": ["Use valid contingency", "Value engineer", "Remove optional Category-C scope", "Defer enhancements", "Restructure/recompete procurement", "Redesign"],
+  "neverCut": ["Safety", "Required compliance", "Cybersecurity", "Core student/research capability"],
+  "fundingMix": ["UFV operating funding", "Competitive research grants", "Sponsored/contract research", "Professional education/testing where demand is validated", "Secondary sponsorship/licensing/commercialization income"]
+}

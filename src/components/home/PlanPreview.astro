@@ -1,0 +1,52 @@
+---
+import Chapter from './Chapter.astro';
+import GateRibbon from '../GateRibbon.astro';
+import Icon from '../Icon.astro';
+import { u } from '../../lib/site';
+const previews = [
+  { t: 'Charter', d: 'Authorization document: purpose, owner, sponsor, $100M ceiling, Sep. 1, 2030 completion, measurable launch targets.', href: 'plan/charter', icon: 'doc' },
+  { t: 'WBS', d: 'Deliverable-oriented breakdown 1.1–1.9 with Level-3 work packages and 8 critical packages.', href: 'plan/wbs', icon: 'tree' },
+  { t: 'Gantt', d: '24 activities, 7 milestones, a provisional critical path and an Aug. 15, 2030 internal acceptance target.', href: 'plan/schedule', icon: 'gantt' },
+];
+---
+<Chapter n={5} title="SkyGrid does not receive an unconditional $100M spending commitment on Day 1."
+  deeper={{ label: 'Open full plan', href: 'plan/delivery' }}
+  notes="Charter, WBS, gates, Gantt (3:00 · Anmol). Hybrid, stage-gated delivery: each major investment stage must earn permission to proceed. Walk the five gates: Prove Need → Permission → Affordability → Capability → Readiness. Then the three artefacts: charter, WBS (1.1–1.9), Gantt with critical path and Aug 15 internal acceptance.">
+  <p class="text-lg text-muted max-w-3xl -mt-4 mb-12 reveal">Each major investment stage must earn permission to proceed. Seven phases, five gates — each a kill point.</p>
+  <div class="reveal"><GateRibbon /></div>
+  <div class="grid md:grid-cols-3 gap-4 mt-4">
+    {previews.map((p, i) => (
+      <a href={u(p.href)} class="card p-0 overflow-hidden group reveal hover:border-line-strong transition-colors" style={`transition-delay:${i * 100}ms`}>
+        <div class="h-32 border-b border-line relative overflow-hidden bg-bg-2">
+          {p.t === 'Charter' && (
+            <div class="absolute inset-4 rounded-md p-3" style="background: var(--paper); color: var(--paper-text)">
+              <div class="h-2 w-1/2 rounded bg-current opacity-60"></div>
+              {[80, 95, 70, 88].map((w) => <div class="h-1.5 rounded bg-current opacity-20 mt-2" style={`width:${w}%`}></div>)}
+              <span class="absolute right-3 bottom-3 mono text-[.55rem] font-bold border-2 px-1 rounded rotate-[-8deg]" style="color:#C2410C;border-color:#C2410C">PROPOSED</span>
+            </div>
+          )}
+          {p.t === 'WBS' && (
+            <svg viewBox="0 0 300 128" class="w-full h-full" aria-hidden="true">
+              <rect x="125" y="12" width="50" height="20" rx="4" fill="var(--innovate)" opacity=".8" />
+              <path d="M150 32v14M30 46h240" stroke="var(--line-strong)" fill="none" />
+              {Array.from({ length: 9 }, (_, k) => <g><path d={`M${30 + k * 30} 46v12`} stroke="var(--line-strong)" /><rect x={18 + k * 30} y="58" width="24" height="16" rx="3" fill={k === 3 ? 'var(--impact)' : 'var(--surface-solid)'} stroke="var(--line-strong)" /><text x={30 + k * 30} y="70" text-anchor="middle" font-size="7" font-family="JetBrains Mono, monospace" fill="var(--text)">1.{k + 1}</text></g>)}
+              {[0, 1, 2].map((r) => <rect x="111" y={82 + r * 13} width="38" height="9" rx="2" fill="var(--surface-solid)" stroke="var(--line)" />)}
+            </svg>
+          )}
+          {p.t === 'Gantt' && (
+            <svg viewBox="0 0 300 128" class="w-full h-full" aria-hidden="true">
+              {[[10, 40], [40, 60], [40, 50], [100, 70], [150, 120], [150, 100], [270, 20]].map(([x, w], k) => <rect x={x} y={14 + k * 15} width={w} height="8" rx="3" fill={k % 2 ? 'var(--innovate)' : 'var(--learn)'} opacity=".7" />)}
+              {[95, 145, 265].map((x) => <rect x={x - 4} y="6" width="8" height="8" transform={`rotate(45 ${x} 10)`} fill="var(--impact)" />)}
+              <path d="M282 4v120" stroke="var(--impact)" stroke-dasharray="3 3" />
+            </svg>
+          )}
+        </div>
+        <div class="p-5">
+          <p class="flex items-center gap-2 font-semibold text-lg"><span class="text-innovate"><Icon name={p.icon} /></span>{p.t}</p>
+          <p class="text-sm text-muted mt-2">{p.d}</p>
+          <p class="link-deeper mt-4">Open full plan →</p>
+        </div>
+      </a>
+    ))}
+  </div>
+</Chapter>

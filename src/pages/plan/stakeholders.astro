@@ -1,0 +1,23 @@
+---
+import DeepPage from '../../layouts/DeepPage.astro';
+import Stakeholders from '../../components/islands/Stakeholders.tsx';
+import s from '../../data/stakeholders.json';
+const lenses = [
+  ['Who can authorize', 'UFV governance, the funding authority — and, in this scenario, the instructor as investment decision-maker.'],
+  ['Who can stop it', 'Regulators, governance, the City/YXX where airport property is involved, and rights holders and site communities.'],
+  ['Who delivers it', 'Students, faculty and staff — and the project’s own hired team.'],
+  ['Who bears risk', 'Site hosts, local communities and partners.'],
+  ['Who benefits', 'Students first, then faculty, partners and the region.'],
+];
+---
+<DeepPage title="Stakeholder Analysis & Engagement" eyebrow="The Plan · Stakeholders" pillar="impact"
+  crumbs={[{ label: 'The Plan' }, { label: 'Stakeholders' }]}
+  intro="SkyGrid combines public funding, university governance, academic programs, aviation regulation, municipal infrastructure, Indigenous rights/interests, private-sector participation, land access, safety, privacy, and cybersecurity. Stakeholders therefore cannot be managed as one flat list.">
+  <div class="grid lg:grid-cols-[minmax(0,1fr)_300px] gap-8 mb-12">
+    <p class="text-2xl sm:text-3xl font-semibold leading-snug" style="font-family: var(--font-display)">The key question is: <span class="text-impact">{s.question}</span></p>
+    <ul class="space-y-2 text-sm">
+      {lenses.map(([k, v]) => <li class="card p-3"><span class="font-semibold">{k}?</span> <span class="text-muted">{v}</span></li>)}
+    </ul>
+  </div>
+  <Stakeholders client:load />
+</DeepPage>

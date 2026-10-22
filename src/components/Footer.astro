@@ -1,0 +1,43 @@
+---
+import { u, NAV, PROPOSED_NOTE } from '../lib/site';
+import DroneLogo from './DroneLogo.astro';
+import team from '../data/responsibility.json';
+const links = NAV.flatMap((n) => ('children' in n ? n.children.map((c) => ({ label: c.label, href: c.href })) : [{ label: n.label, href: n.href }]));
+---
+<footer class="relative border-t border-line mt-24 bg-bg-2 no-print pb-20 sm:pb-0">
+  <div class="max-w-[1400px] mx-auto px-4 sm:px-6 py-14 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+    <div>
+      <a href={u('/')} class="flex items-center gap-2.5"><DroneLogo size={32} /><span class="font-bold text-lg" style="font-family: var(--font-display)">UFV <span class="text-impact">SkyGrid</span></span></a>
+      <p class="italic text-muted mt-3">“Where Autonomous Aviation Meets the Real World.”</p>
+      <p class="text-sm text-muted mt-4">CIS 385 – Project Management, University of the Fraser Valley</p>
+    </div>
+    <div>
+      <p class="eyebrow mb-3">Site</p>
+      <ul class="grid grid-cols-2 gap-x-4 gap-y-1.5 text-sm">
+        {links.map((l) => <li><a class="text-muted hover:text-text" href={u(l.href)}>{l.label}</a></li>)}
+        <li><a class="text-muted hover:text-text" href={u('evidence')}>Evidence</a></li>
+        <li><a class="text-impact hover:underline" href={u('investor-room')}>Investor Room</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="eyebrow mb-3">The team</p>
+      <ul class="space-y-2 text-sm">
+        {team.members.map((m) => <li><span class="font-semibold">{m.name}</span><br /><span class="text-muted">{m.role}</span></li>)}
+      </ul>
+    </div>
+    <div>
+      <p class="eyebrow mb-3">Land acknowledgment</p>
+      <p class="text-sm text-muted leading-relaxed">UFV is situated on Stó:lō territory, and UFV’s Peace and Reconciliation Centre describes its location as the unceded ancestral territory of the Ts’elxwéyeqw Tribe, part of the broader Stó:lō Nation.</p>
+    </div>
+  </div>
+  <div class="max-w-[1400px] mx-auto px-4 sm:px-6 pb-10 flex flex-col md:flex-row gap-6 md:items-end justify-between border-t border-line pt-6">
+    <p class="text-[.72rem] text-muted leading-relaxed max-w-4xl">{PROPOSED_NOTE}</p>
+    <button type="button" id="to-top" class="btn btn-ghost btn-sm shrink-0 group" aria-label="Back to top">
+      <span class="liftoff inline-block"><DroneLogo size={20} /></span> Back to top
+    </button>
+  </div>
+</footer>
+<style>
+  .group:hover .liftoff { animation: lift 1s ease-in-out infinite alternate; }
+  @keyframes lift { to { transform: translateY(-5px); } }
+</style>

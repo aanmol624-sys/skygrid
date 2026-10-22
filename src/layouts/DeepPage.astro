@@ -1,0 +1,58 @@
+---
+// Layout for the deep "proof" pages: page header + optional sticky table of contents.
+import Base from './Base.astro';
+import { u } from '../lib/site';
+interface Props {
+  title: string;
+  eyebrow: string;
+  intro?: string;
+  pillar?: 'learn' | 'innovate' | 'impact';
+  toc?: { id: string; label: string }[];
+  crumbs?: { label: string; href?: string }[];
+  description?: string;
+}
+const { title, eyebrow, intro, pillar = 'innovate', toc, crumbs = [], description } = Astro.props;
+---
+<Base title={title} description={description ?? intro}>
+  <header class="relative pt-32 pb-12 contours overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none" style={`background: radial-gradient(60% 80% at 20% 0%, color-mix(in srgb, var(--${pillar}) 14%, transparent), transparent 70%)`}></div>
+    <div class="relative max-w-[1400px] mx-auto px-4 sm:px-6">
+      <nav class="mono text-xs text-muted mb-5 flex flex-wrap gap-2" aria-label="Breadcrumb">
+        <a href={u('/')} class="hover:text-text">Pitch</a>
+        {crumbs.map((c) => <><span aria-hidden="true">/</span>{c.href ? <a href={u(c.href)} class="hover:text-text">{c.label}</a> : <span>{c.label}</span>}</>)}
+      </nav>
+      <p class="eyebrow" style={`color: var(--${pillar})`}>{eyebrow}</p>
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mt-3 max-w-4xl">{title}</h1>
+      {intro && <p class="text-lg text-muted mt-5 max-w-3xl leading-relaxed">{intro}</p>}
+      <slot name="header" />
+    </div>
+  </header>
+  <div class="max-w-[1400px] mx-auto px-4 sm:px-6">
+    {toc ? (
+      <div class="grid lg:grid-cols-[220px_minmax(0,1fr)] gap-10">
+        <aside class="hidden lg:block">
+          <nav class="sticky top-24 border-l border-line pl-4 py-1" aria-label="On this page">
+            <p class="eyebrow mb-3">On this page</p>
+            <ul class="space-y-2 text-sm">
+              {toc.map((t) => <li><a href={`#${t.id}`} class="toc-link text-muted hover:text-text block">{t.label}</a></li>)}
+            </ul>
+          </nav>
+        </aside>
+        <div class="min-w-0"><slot /></div>
+      </div>
+    ) : <slot />}
+  </div>
+</Base>
+<script>
+  // Highlight the active TOC entry
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('.toc-link')];
+  if (links.length) {
+    const io = new IntersectionObserver((es) => {
+      es.forEach((e) => {
+        if (!e.isIntersecting) return;
+        links.forEach((l) => l.classList.toggle('!text-impact', l.hash === `#${e.target.id}`));
+      });
+    }, { rootMargin: '-30% 0px -60% 0px' });
+    links.forEach((l) => { const t = document.querySelector(l.hash); if (t) io.observe(t); });
+  }
+</script>

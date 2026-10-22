@@ -1,0 +1,47 @@
+---
+// The $100M "Ceiling Bar": planned work / contingency / management reserve, with the $95M baseline bracket.
+import Proposed from './Proposed.astro';
+interface Props { id?: string }
+const { id = 'ceiling' } = Astro.props;
+const segs = [
+  { k: 'work', label: 'Planned SkyGrid work', amt: 85, color: 'var(--innovate)' },
+  { k: 'cont', label: 'Contingency reserve', amt: 10, color: 'var(--learn)' },
+  { k: 'mr', label: 'Management reserve', amt: 5, color: 'var(--impact)' },
+];
+---
+<figure class="ceiling" id={id} aria-label="CAD $100M authorization ceiling: $85M planned work, $10M contingency, $5M management reserve. Cost baseline $95M.">
+  <div class="flex items-center justify-between mb-3">
+    <p class="mono text-sm text-muted">CAD $0</p>
+    <p class="flex items-center gap-2"><span class="mono text-sm">Maximum authorization <b class="text-text">$100M</b></span><Proposed label="Proposed split" /></p>
+  </div>
+  <div class="relative">
+    <div class="ceiling-bar h-20 sm:h-24 rounded-xl border border-line-strong flex overflow-hidden" data-ceiling-bar>
+      {segs.map((s, i) => (
+        <div class="seg h-full flex flex-col justify-center px-3 sm:px-4 relative" data-seg={s.k}
+          style={`--w:${s.amt}%;--c:${s.color};transition-delay:${i * 350}ms`}>
+          <p class="mono font-semibold text-lg sm:text-2xl whitespace-nowrap">${s.amt}M</p>
+          {s.amt > 5 && <p class="text-[.7rem] sm:text-xs opacity-80 leading-tight hidden sm:block">{s.label}</p>}
+        </div>
+      ))}
+    </div>
+    <!-- $95M bracket -->
+    <div class="bracket absolute left-0 top-full mt-2" style="width:95%">
+      <div class="h-3 border-x-2 border-b-2 rounded-b-md" style="border-color: var(--text); opacity:.6"></div>
+      <p class="mono text-xs sm:text-sm text-center mt-1.5"><b>$95M</b> cost baseline <span class="text-muted">= planned work + contingency</span></p>
+    </div>
+    <p class="hidden sm:block absolute right-0 top-full mt-7 w-[5%] min-w-[150px] text-right mono text-xs text-impact">↑ $5M management reserve<br /><span class="text-muted">outside the baseline</span></p>
+  </div>
+  <ul class="sm:hidden mt-16 space-y-1 text-sm">
+    {segs.map((s) => <li class="flex items-center gap-2"><span class="w-3 h-3 rounded-sm" style={`background:${s.color}`}></span><span class="mono">${s.amt}M</span> {s.label}</li>)}
+  </ul>
+</figure>
+<style>
+  .seg { width: var(--w); background: color-mix(in srgb, var(--c) 22%, transparent); border-right: 2px solid var(--bg); color: var(--text); }
+  .seg::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--c); }
+  .js .ceiling .seg { width: 0; opacity: 0; transition: width 1s cubic-bezier(.2,.8,.2,1), opacity .5s; }
+  .js .ceiling.in .seg, .js .in .ceiling .seg { width: var(--w); opacity: 1; }
+  .js .ceiling .bracket { opacity: 0; transition: opacity .6s 1.3s; }
+  .js .ceiling.in .bracket, .js .in .ceiling .bracket { opacity: 1; }
+  .bracket { padding-bottom: 1rem; }
+  .ceiling { padding-bottom: 3.5rem; }
+</style>

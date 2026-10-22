@@ -1,0 +1,50 @@
+---
+import DeepPage from '../layouts/DeepPage.astro';
+import HeatMap from '../components/islands/HeatMap.tsx';
+import RiskTable from '../components/islands/RiskTable.tsx';
+import Cite from '../components/Cite.astro';
+import Proposed from '../components/Proposed.astro';
+import Icon from '../components/Icon.astro';
+import r from '../data/risks.json';
+const onboarding = ['Supplier risk', 'Command-and-control architecture', 'Firmware/software', 'Network segmentation', 'Access controls', 'Logging', 'Incident-response integration'];
+const privacy = ['Collect the minimum data required for an approved purpose', 'Define capture boundaries', 'Retention', 'Access', 'Sharing', 'Deletion — all defined before operations'];
+---
+<DeepPage title="Risk Management & Safety" eyebrow="Risk & Safety" pillar="impact"
+  crumbs={[{ label: 'Risk & Safety' }]}
+  intro={r.intro}
+  toc={[{ id: 'heatmap', label: 'Heat map' }, { id: 'register', label: 'Risk register' }, { id: 'cyber', label: 'Cyber & privacy' }]}>
+  <section id="heatmap" class="scroll-mt-24">
+    <div class="flex flex-wrap items-center gap-3 mb-6"><h2 class="text-2xl font-bold">Proposed 5×5 probability–impact map</h2><Proposed label="Proposed scores" /></div>
+    <HeatMap client:load />
+    <div class="card p-4 mt-6 flex gap-3 items-start max-w-3xl" style="border-color: color-mix(in srgb, var(--learn) 45%, transparent)">
+      <span class="text-learn shrink-0"><Icon name="shield" size={24} /></span>
+      <p class="text-sm"><b>R6 — Serious flight/safety event</b> scores only 10, but safety-critical risks receive mandatory controls regardless of arithmetic score: SMS, qualified operators, test envelopes, maintenance, incident procedures, insurance.</p>
+    </div>
+  </section>
+
+  <section id="register" class="pt-20 scroll-mt-24">
+    <h2 class="text-2xl font-bold mb-2">Proposed risk register</h2>
+    <p class="text-muted mb-6 text-sm">Select a column heading to sort. Scores are planning judgments, not measured probabilities.</p>
+    <RiskTable client:load />
+  </section>
+
+  <section id="cyber" class="pt-20 scroll-mt-24">
+    <h2 class="text-2xl font-bold">8.1 Cybersecurity and privacy controls</h2>
+    <div class="grid lg:grid-cols-2 gap-5 mt-6">
+      <div class="card p-6" style="border-top: 3px solid var(--innovate)">
+        <p class="flex items-center gap-2 font-bold text-lg"><span class="text-innovate"><Icon name="lock" /></span> Cybersecurity</p>
+        <p class="text-sm text-muted mt-3 leading-relaxed">The Canadian Centre for Cyber Security recommends conducting a threat risk assessment before deploying a drone in order to identify security threats and appropriate mitigations for systems, data, and networks <Cite ids="cccs-nd" label="Canadian Centre for Cyber Security, n.d." />. SkyGrid therefore proposes a platform-onboarding security review covering:</p>
+        <ul class="mt-4 space-y-2">
+          {onboarding.map((o) => <li class="flex items-center gap-3 text-sm"><span class="w-5 h-5 rounded border border-innovate grid place-items-center text-innovate"><Icon name="check" size={13} stroke={2.5} /></span>{o}</li>)}
+        </ul>
+      </div>
+      <div class="card p-6" style="border-top: 3px solid var(--learn)">
+        <p class="flex items-center gap-2 font-bold text-lg"><span class="text-learn"><Icon name="shield" /></span> Privacy</p>
+        <p class="text-sm text-muted mt-3 leading-relaxed">The Office of the Privacy Commissioner of Canada notes that Canadian privacy law can apply when organizations use drones to collect or use personal information and emphasizes purpose, consent where applicable, limiting collection, safeguards, and retention principles <Cite ids={['opc-2013', 'opc-2025']} label="Office of the Privacy Commissioner of Canada, 2013, 2025" />. SkyGrid’s project-specific design principle:</p>
+        <ul class="mt-4 space-y-2">
+          {privacy.map((o) => <li class="flex items-center gap-3 text-sm"><span class="w-5 h-5 rounded border border-learn grid place-items-center text-learn"><Icon name="check" size={13} stroke={2.5} /></span>{o}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+</DeepPage>

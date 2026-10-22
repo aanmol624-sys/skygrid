@@ -1,0 +1,102 @@
+---
+import DeepPage from '../../layouts/DeepPage.astro';
+import Cite from '../../components/Cite.astro';
+import Icon from '../../components/Icon.astro';
+import g from '../../data/governance.json';
+import { u } from '../../lib/site';
+const tabs = Object.entries(g.acr);
+---
+<DeepPage title="High-Level Project Charter" eyebrow="The Plan · Charter" pillar="innovate"
+  crumbs={[{ label: 'The Plan' }, { label: 'Charter' }]}
+  toc={[{ id: 'charter', label: 'Project charter' }, { id: 'scope', label: 'In / out of scope' }, { id: 'deliverables', label: 'Major deliverables' }, { id: 'acr', label: 'Assumptions, constraints, risks' }]}>
+  <p slot="header" class="mt-6 max-w-3xl text-muted leading-relaxed">Professor Renso’s course material identifies scope, time, cost, sponsorship, project-manager selection, and business-case development as core pre-initiation tasks, and places project-charter development in the initiating process group <Cite ids="renso-2026b" label="Renso, 2026b" />. The charter is therefore written as an authorization document rather than another marketing paragraph.</p>
+  <div slot="header" class="flex flex-wrap gap-3 mt-6">
+    <a href={u('downloads/UFV-SkyGrid-High-Level-Plan.pdf')} download class="btn btn-primary btn-sm"><Icon name="download" size={15} /> Download 3-page high-level plan (PDF)</a>
+  </div>
+
+  <section id="charter" class="scroll-mt-24">
+    <div class="paper rounded-xl p-6 sm:p-12 max-w-4xl relative">
+      <p class="mono text-[.7rem] tracking-[.25em] uppercase opacity-60">Table 2 · Project charter</p>
+      <h2 class="serif text-3xl sm:text-4xl mt-2">UFV SkyGrid</h2>
+      <p class="serif italic opacity-70 mt-1">Autonomous Aviation Research, Education &amp; Regional Field-Test Network</p>
+      <dl class="mt-8 border-t-2" style="border-color: var(--paper-text)">
+        {g.charter.map((r) => (
+          <div class="grid sm:grid-cols-[200px_1fr] gap-1 sm:gap-6 py-3.5 border-b relative" style="border-color: color-mix(in srgb, var(--paper-text) 15%, transparent)">
+            <dt class="serif font-bold">{r.el}</dt>
+            <dd class="text-[.95rem] leading-relaxed">
+              {r.proposed && <span class="stamp mr-2">{r.proposed}</span>}{r.pos}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <section id="scope" class="pt-20 scroll-mt-24">
+    <h2 class="text-2xl font-bold">High-level scope</h2>
+    <p class="text-muted mt-2">What the project includes and what it explicitly excludes (Table 3).</p>
+    <div class="grid md:grid-cols-2 gap-4 mt-6">
+      <div class="card p-6" style="border-color: color-mix(in srgb, var(--learn) 40%, transparent)">
+        <p class="mono text-sm font-bold text-learn tracking-wider">IN SCOPE</p>
+        <ul class="mt-4 space-y-3">
+          {g.inScope.map((x) => <li class="flex gap-3 text-[.95rem]"><span class="text-learn shrink-0 mt-0.5"><Icon name="check" size={18} /></span>{x}</li>)}
+        </ul>
+      </div>
+      <div class="card p-6" style="border-color: color-mix(in srgb, var(--danger) 40%, transparent)">
+        <p class="mono text-sm font-bold text-danger tracking-wider">OUT OF SCOPE</p>
+        <ul class="mt-4 space-y-3">
+          {g.outScope.map((x) => <li class="flex gap-3 text-[.95rem]"><span class="text-danger shrink-0 mt-0.5 font-bold mono">⁄⁄</span>{x}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="deliverables" class="pt-20 scroll-mt-24">
+    <h2 class="text-2xl font-bold">3.1 Major deliverables</h2>
+    <ol class="grid sm:grid-cols-2 gap-3 mt-6">
+      {g.majorDeliverables.map((d, i) => <li class="card p-4 flex gap-4"><span class="mono text-impact">{String(i + 1).padStart(2, '0')}</span><span>{d}</span></li>)}
+    </ol>
+  </section>
+
+  <section id="acr" class="pt-20 scroll-mt-24">
+    <h2 class="text-2xl font-bold">3.2 Assumptions, constraints, and major risks</h2>
+    <div class="mt-6 card p-2" data-tabs>
+      <div role="tablist" class="flex flex-wrap gap-1 p-1">
+        {tabs.map(([k], i) => <button type="button" role="tab" id={`tab-${i}`} aria-controls={`panel-${i}`} aria-selected={i === 0 ? 'true' : 'false'} class="tab-btn px-4 py-2 rounded-lg text-sm font-semibold">{k}</button>)}
+      </div>
+      {tabs.map(([, v], i) => (
+        <div role="tabpanel" id={`panel-${i}`} aria-labelledby={`tab-${i}`} hidden={i !== 0} class="p-5">
+          <ul class="grid sm:grid-cols-2 gap-2">
+            {v.replace(/\.$/, '').split('; ').length > 1
+              ? v.replace(/\.$/, '').split('; ').map((x) => <li class="flex gap-2 text-[.95rem]"><span class="text-impact">•</span>{x}</li>)
+              : v.replace(/\.$/, '').replace(', and ', ', ').split(', ').map((x) => <li class="flex gap-2 text-[.95rem]"><span class="text-impact">•</span>{x}</li>)}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+</DeepPage>
+
+<style>
+  .paper { background: var(--paper); color: var(--paper-text); box-shadow: 0 30px 80px -30px rgba(0,0,0,.6); }
+  .serif { font-family: Georgia, 'Times New Roman', serif; letter-spacing: 0; }
+  .stamp { display: inline-block; border: 2px solid #C2410C; color: #C2410C; font: 700 .62rem/1.4 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; padding: .05rem .4rem; border-radius: 4px; transform: rotate(-3deg); vertical-align: middle; }
+  .tab-btn[aria-selected="true"] { background: var(--impact); color: var(--on-impact); }
+  .tab-btn[aria-selected="false"] { color: var(--muted); }
+</style>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-tabs]').forEach((root) => {
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[role=tab]')];
+    const select = (i: number) => tabs.forEach((t, k) => {
+      t.setAttribute('aria-selected', String(k === i));
+      (document.getElementById(t.getAttribute('aria-controls')!) as HTMLElement).hidden = k !== i;
+    });
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(i));
+      t.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') { select((i + 1) % tabs.length); tabs[(i + 1) % tabs.length].focus(); }
+        if (e.key === 'ArrowLeft') { select((i - 1 + tabs.length) % tabs.length); tabs[(i - 1 + tabs.length) % tabs.length].focus(); }
+      });
+    });
+  });
+</script>

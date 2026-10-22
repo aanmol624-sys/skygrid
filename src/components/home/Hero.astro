@@ -1,0 +1,124 @@
+---
+import Icon from '../Icon.astro';
+import { u } from '../../lib/site';
+// Abstract field points: deliberately NOT real locations (exact sites are determined through feasibility).
+const node = { x: 800, y: 560 };
+const fields = [
+  { x: 330, y: 640, c: 'var(--learn)' },
+  { x: 1180, y: 610, c: 'var(--impact)' },
+  { x: 1010, y: 720, c: 'var(--innovate)' },
+];
+const path = (a: { x: number; y: number }, b: { x: number; y: number }) => {
+  const mx = (a.x + b.x) / 2, my = Math.min(a.y, b.y) - 170;
+  return `M${a.x} ${a.y} Q${mx} ${my} ${b.x} ${b.y}`;
+};
+const loop = `M${node.x} ${node.y} Q565 330 ${fields[0].x} ${fields[0].y} Q750 840 ${fields[2].x} ${fields[2].y} Q1150 520 ${fields[1].x} ${fields[1].y} Q990 330 ${node.x} ${node.y}`;
+---
+<section id="hook" data-chapter="0" data-pillar="innovate" class="chapter relative min-h-[100svh] flex items-end sm:items-center overflow-hidden"
+  data-notes="Hook (1:00 · Anmol). Open with the tagline. One sentence: what SkyGrid is. Point to the three chips: $100M ceiling, Sep 1 2030 launch, Learn → Innovate → Impact. Then: “Let us show you what UFV gets.”">
+  <!-- Valley at dusk -->
+  <svg id="hero-scene" class="absolute inset-0 w-full h-full" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#070C18" />
+        <stop offset=".45" stop-color="#121A35" />
+        <stop offset=".72" stop-color="#3B2445" />
+        <stop offset=".86" stop-color="#8A4B3A" />
+        <stop offset="1" stop-color="#C9772E" />
+      </linearGradient>
+      <linearGradient id="m1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1A2340" /><stop offset="1" stop-color="#0B1220" /></linearGradient>
+      <linearGradient id="m2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#121A30" /><stop offset="1" stop-color="#0B1220" /></linearGradient>
+      <radialGradient id="glowC"><stop offset="0" stop-color="#38BDF8" stop-opacity=".9" /><stop offset="1" stop-color="#38BDF8" stop-opacity="0" /></radialGradient>
+      <radialGradient id="sun" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFC66B" stop-opacity=".9" /><stop offset=".4" stop-color="#F5A524" stop-opacity=".25" /><stop offset="1" stop-color="#F5A524" stop-opacity="0" /></radialGradient>
+      <filter id="blur6"><feGaussianBlur stdDeviation="6" /></filter>
+      <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#38BDF8" stroke-opacity=".08" /></pattern>
+    </defs>
+    <rect width="1600" height="900" fill="url(#sky)" />
+    <circle cx="1120" cy="470" r="260" fill="url(#sun)" />
+    <!-- stars -->
+    <g fill="#E6EDF7">
+      {Array.from({ length: 60 }, (_, i) => <circle cx={(i * 263) % 1600} cy={(i * 97) % 300} r={i % 7 === 0 ? 1.3 : 0.7} opacity={0.25 + (i % 5) * 0.1} />)}
+    </g>
+    <!-- far ridges with contour lines -->
+    <path d="M0 500 L120 420 L230 470 L360 360 L480 440 L600 380 L720 450 L860 340 L980 430 L1100 390 L1240 460 L1360 370 L1480 430 L1600 400 V900 H0Z" fill="url(#m1)" />
+    <g fill="none" stroke="#38BDF8" stroke-opacity=".13">
+      <path d="M0 520 L120 445 L230 492 L360 388 L480 462 L600 405 L720 472 L860 368 L980 452 L1100 414 L1240 482 L1360 398 L1480 452 L1600 425" />
+      <path d="M0 545 L120 472 L230 516 L360 418 L480 486 L600 432 L720 496 L860 398 L980 476 L1100 440 L1240 505 L1360 428 L1480 476 L1600 452" />
+    </g>
+    <path d="M0 600 C 200 540 330 590 480 560 S 760 520 900 560 S 1250 600 1600 540 V900 H0Z" fill="url(#m2)" />
+    <!-- valley floor grid -->
+    <path d="M0 640 C 300 610 600 640 800 630 S 1300 600 1600 630 V900 H0Z" fill="url(#grid)" />
+    <g fill="none" stroke="#3DDC97" stroke-opacity=".12">
+      <path d="M0 680 C 300 650 600 680 800 670 S 1300 640 1600 670" />
+      <path d="M0 730 C 300 700 600 730 800 720 S 1300 690 1600 720" />
+      <path d="M0 790 C 300 760 600 790 800 780 S 1300 750 1600 780" />
+    </g>
+    <!-- flight paths: node → field environments -->
+    {fields.map((f) => (
+      <path d={path(node, f)} fill="none" stroke={f.c} stroke-opacity=".55" stroke-width="1.6" stroke-dasharray="6 8" class="flight-path" />
+    ))}
+    <!-- field points (abstract) -->
+    {fields.map((f) => (
+      <g>
+        <circle cx={f.x} cy={f.y} r="26" fill={f.c} opacity=".18" filter="url(#blur6)" />
+        <circle cx={f.x} cy={f.y} r="7" fill="none" stroke={f.c} stroke-width="1.5" />
+        <circle cx={f.x} cy={f.y} r="3" fill={f.c} />
+      </g>
+    ))}
+    <!-- central node -->
+    <circle cx={node.x} cy={node.y} r="80" fill="url(#glowC)" class="node-glow" />
+    <polygon points={`${node.x},${node.y - 18} ${node.x + 16},${node.y - 9} ${node.x + 16},${node.y + 9} ${node.x},${node.y + 18} ${node.x - 16},${node.y + 9} ${node.x - 16},${node.y - 9}`} fill="#0B1220" stroke="#38BDF8" stroke-width="2" />
+    <circle cx={node.x} cy={node.y} r="4" fill="#38BDF8" />
+    <!-- drone with light trail -->
+    <path id="drone-loop" d={loop} fill="none" stroke="none" />
+    <g id="hero-drone">
+      <circle r="18" fill="#F5A524" opacity=".25" filter="url(#blur6)" />
+      <g stroke="#E6EDF7" stroke-width="1.6" stroke-linecap="round"><path d="M-7 -7L7 7M7 -7L-7 7" /></g>
+      <rect x="-3.5" y="-3.5" width="7" height="7" rx="1.5" fill="#F5A524" />
+      {[[-8, -8], [8, -8], [-8, 8], [8, 8]].map(([x, y]) => <ellipse cx={x} cy={y} rx="4.5" ry="1.2" fill="#E6EDF7" opacity=".8" />)}
+      <animateMotion dur="16s" repeatCount="indefinite" rotate="0"><mpath href="#drone-loop" /></animateMotion>
+    </g>
+    <text x="1580" y="880" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="13" fill="#8A97AD" opacity=".8">ILLUSTRATIVE — NOT REAL SITE LOCATIONS</text>
+  </svg>
+  <div class="absolute inset-0 bg-gradient-to-r from-[#0B1220]/90 via-[#0B1220]/55 to-transparent pointer-events-none"></div>
+  <div class="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-bg to-transparent pointer-events-none"></div>
+
+  <!-- Countdown -->
+  <div class="absolute top-24 right-4 sm:right-8 glass rounded-xl px-4 py-3 text-right hidden sm:block" style="background: rgba(11,18,32,.55); color:#E6EDF7">
+    <p class="mono text-[.65rem] tracking-[.2em] uppercase" style="color:#8A97AD">Launch countdown</p>
+    <p class="mono text-lg mt-0.5">T-minus <span id="countdown" class="text-[#F5A524] font-semibold">____</span> days</p>
+  </div>
+
+  <div class="relative w-full max-w-[1400px] mx-auto px-4 sm:px-6 pt-28 pb-28 sm:pb-16" style="color:#E6EDF7">
+    <div class="max-w-2xl">
+      <p class="mono text-xs tracking-[.2em] uppercase" style="color:#F5A524">CIS 385 · A $100,000,000 proposal</p>
+      <h1 class="text-6xl sm:text-7xl lg:text-8xl font-bold mt-4 leading-[.95]">UFV <span class="bg-gradient-to-r from-[#3DDC97] via-[#38BDF8] to-[#F5A524] bg-clip-text text-transparent">SkyGrid</span></h1>
+      <p class="text-lg sm:text-xl mt-5 font-medium" style="color:#E6EDF7">Autonomous Aviation Research, Education &amp; Regional Field-Test Network</p>
+      <p class="italic text-lg mt-2" style="color:#B9C4D6">“Where Autonomous Aviation Meets the Real World.”</p>
+      <p class="mt-5 leading-relaxed max-w-xl" style="color:#B9C4D6">UFV SkyGrid is a proposed $100-million autonomous aviation research, education, and regional field-test network designed to connect UFV students and researchers with the Fraser Valley’s aerospace, agriculture, technology, infrastructure, and public-sector ecosystems.</p>
+      <ul class="flex flex-wrap gap-2 mt-6 mono text-[.75rem]">
+        <li class="hud">CAD <b>$100M</b> ceiling</li>
+        <li class="hud">Launch: <b>Sep 1, 2030</b></li>
+        <li class="hud"><span style="color:#3DDC97">Learn</span> → <span style="color:#38BDF8">Innovate</span> → <span style="color:#F5A524">Impact</span></li>
+      </ul>
+      <div class="flex flex-wrap gap-3 mt-8">
+        <a href={u('product')} class="btn btn-primary" style="background:#F5A524;color:#1A1206">See what UFV gets <Icon name="arrow" size={16} /></a>
+        <button type="button" data-open="video-modal" class="btn btn-ghost" style="color:#E6EDF7;border-color:rgba(230,237,247,.35)"><Icon name="play" size={14} /> Watch the 15-min pitch</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hud { border: 1px solid rgba(56,189,248,.35); background: rgba(11,18,32,.5); padding: .4rem .7rem; border-radius: 6px; color: #B9C4D6; backdrop-filter: blur(6px); }
+  .hud b { color: #E6EDF7; font-weight: 600; }
+  .flight-path { animation: dash 2.4s linear infinite; }
+  .node-glow { animation: glow 3s ease-in-out infinite; }
+</style>
+
+<script>
+  import { LAUNCH_DATE } from '../../lib/site';
+  const el = document.getElementById('countdown');
+  if (el) el.textContent = Math.max(0, Math.ceil((new Date(LAUNCH_DATE).getTime() - Date.now()) / 86400000)).toLocaleString('en-CA');
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) (document.getElementById('hero-scene') as unknown as SVGSVGElement)?.pauseAnimations();
+</script>

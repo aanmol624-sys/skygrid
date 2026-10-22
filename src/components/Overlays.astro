@@ -1,0 +1,91 @@
+---
+// Global overlays: source panel (CITED chips), Term Sheet modal, pitch video modal.
+import references from '../data/references.json';
+import TermSheet from './TermSheet.astro';
+import Icon from './Icon.astro';
+import { u, YOUTUBE_URL, PITCH_VIDEO_EMBED_URL, PITCH_OUTLINE } from '../lib/site';
+---
+<script type="application/json" id="ref-data" set:html={JSON.stringify(references)} />
+
+<!-- Source panel -->
+<div id="source-scrim" class="fixed inset-0 z-[80] bg-black/40 opacity-0 pointer-events-none transition-opacity no-print"></div>
+<aside id="source-panel" data-lenis-prevent class="fixed top-0 right-0 bottom-0 z-[81] w-full max-w-md glass shadow-2xl translate-x-full transition-transform duration-300 flex flex-col no-print" style="background: var(--surface-solid)" role="dialog" aria-modal="true" aria-labelledby="source-title" hidden>
+  <div class="flex items-center justify-between p-5 border-b border-line">
+    <div class="flex items-center gap-2"><span class="chip-cite">CITED</span><h2 id="source-title" class="font-semibold">Source</h2></div>
+    <button type="button" data-close class="w-9 h-9 grid place-items-center rounded-lg hover:bg-[color-mix(in_srgb,var(--text)_8%,transparent)]" aria-label="Close source panel"><Icon name="x" /></button>
+  </div>
+  <div id="source-body" class="p-5 overflow-y-auto flex-1 space-y-5"></div>
+  <div class="p-5 border-t border-line"><a href={u('evidence')} class="link-deeper">All references →</a></div>
+</aside>
+
+<!-- Term Sheet modal -->
+<dialog id="term-sheet" data-lenis-prevent class="modal" aria-labelledby="ts-title">
+  <div class="w-[min(680px,calc(100vw-2rem))]">
+    <div class="flex justify-between items-center mb-4 text-text">
+      <h2 id="ts-title" class="eyebrow">The Ask</h2>
+      <button type="button" data-close class="w-9 h-9 grid place-items-center rounded-lg glass" aria-label="Close"><Icon name="x" /></button>
+    </div>
+    <TermSheet compact />
+    <div class="flex flex-wrap gap-3 mt-5">
+      <a href={u('/#ask')} class="btn btn-primary">Fund SkyGrid</a>
+      <a href={u('investor-room')} class="btn btn-ghost text-text">Investor Room →</a>
+    </div>
+  </div>
+</dialog>
+
+<!-- Pitch video modal -->
+<dialog id="video-modal" data-lenis-prevent class="modal" aria-labelledby="vid-title">
+  <div class="w-[min(960px,calc(100vw-2rem))]">
+    <div class="card p-4 sm:p-6" style="background: var(--surface-solid)">
+      <div class="flex justify-between items-start gap-4 mb-2 text-text">
+        <h2 id="vid-title" class="text-xl sm:text-2xl font-bold" style="font-family: var(--font-display)">Watch Our 15-Minute Pitch</h2>
+        <button type="button" data-close class="w-9 h-9 shrink-0 grid place-items-center rounded-lg glass" aria-label="Close"><Icon name="x" /></button>
+      </div>
+      <p class="text-sm text-muted leading-relaxed max-w-3xl">UFV SkyGrid is our proposal for how the University of the Fraser Valley could use $100M in federal funding to become a world-class centre for drone (RPAS) innovation, simulation and field testing, delivered by September 1, 2030. Presented by Anmol, Armaan and Ishmeet Anand for CIS 385 (Project Management).</p>
+
+      <div class:list={['relative w-full rounded-2xl overflow-hidden border border-line bg-bg-2 mt-5', PITCH_VIDEO_EMBED_URL ? 'aspect-video' : 'min-h-[240px] sm:min-h-0 sm:aspect-video grid']}>
+        {PITCH_VIDEO_EMBED_URL ? (
+          <iframe class="absolute inset-0 w-full h-full" data-src={PITCH_VIDEO_EMBED_URL} title="UFV SkyGrid 15-minute pitch video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        ) : (
+          <div class="sm:absolute sm:inset-0 grid place-items-center text-center p-5 sm:p-6 reticle">
+            <div class="text-text">
+              <span class="mx-auto w-14 h-14 sm:w-16 sm:h-16 rounded-full grid place-items-center border-2 border-[var(--impact)] text-impact" style="background: color-mix(in srgb, var(--impact) 12%, transparent)"><Icon name="play" size={24} /></span>
+              <p class="text-lg sm:text-xl font-semibold mt-3">Video coming soon</p>
+              <p class="text-muted text-sm mt-1 max-w-sm mx-auto">Our recorded pitch is being uploaded to YouTube. In the meantime, run the pitch live with Presentation Mode.</p>
+              <a href={u('/?present=1')} data-present class="btn btn-ghost btn-sm mt-4"><Icon name="play" size={13} /> Start Presentation Mode</a>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div class="flex flex-wrap gap-3 mt-4">
+        {YOUTUBE_URL ? (
+          <a href={YOUTUBE_URL} target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm"><Icon name="external" size={14} /> Watch on YouTube</a>
+        ) : (
+          <span class="btn btn-ghost btn-sm opacity-50 cursor-not-allowed" aria-disabled="true" title="Link coming soon"><Icon name="external" size={14} /> Watch on YouTube</span>
+        )}
+      </div>
+
+      <h3 class="text-lg font-bold mt-8">Pitch Outline</h3>
+      <div class="overflow-x-auto mt-3 rounded-xl border border-line">
+        <table class="tbl min-w-[520px]">
+          <thead><tr><th>Time</th><th>Section</th><th>Speaker</th></tr></thead>
+          <tbody>
+            {PITCH_OUTLINE.map(([time, section, speaker]) => (
+              <tr><td class="mono whitespace-nowrap text-impact">{time}</td><td>{section}</td><td class="font-semibold whitespace-nowrap">{speaker}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<style is:global>
+  dialog.modal { background: transparent; border: 0; padding: 0; max-width: none; max-height: calc(100vh - 2rem); overflow: auto; margin: auto; }
+  dialog.modal::backdrop { background: rgba(5, 9, 18, .72); backdrop-filter: blur(6px); }
+  dialog.modal[open] { animation: modal-in .3s cubic-bezier(.2,.8,.2,1); }
+  @keyframes modal-in { from { opacity: 0; transform: translateY(16px) scale(.98); } }
+  #source-panel.open { translate: 0; transform: none; }
+  #source-scrim.open { opacity: 1; pointer-events: auto; }
+</style>

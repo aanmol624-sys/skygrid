@@ -1,0 +1,40 @@
+{
+  "source": "Table 22: Finished deliverables",
+  "intro": "On September 1, 2030, UFV receives an operational autonomous-aviation ecosystem — not merely infrastructure.",
+  "equation": ["Infrastructure", "Technology", "People", "Programs", "Partnerships", "Governance"],
+  "incomplete": [
+    "A finished building without field sites is incomplete;",
+    "field sites without technology/data systems are incomplete;",
+    "technology without trained people is incomplete;",
+    "and equipment without academic/research pathways does not make UFV meaningfully better."
+  ],
+  "items": [
+    { "n": 1, "name": "Innovation & Simulation Node", "icon": "node", "pillar": "innovate", "receives": "Commissioned central capability for simulation, mission planning, prototyping, secure compute/data, research, teaching, and partner collaboration." },
+    { "n": 2, "name": "Fraser Valley Field-Test Network", "icon": "field", "pillar": "impact", "receives": "At least three proposed-target compliant field environments representing different operating needs; exact sites determined through feasibility." },
+    { "n": 3, "name": "Modular Autonomous-Aircraft Fleet", "icon": "drone", "pillar": "innovate", "receives": "Controlled portfolio selected from validated missions and regulatory requirements; no invented aircraft count." },
+    { "n": 4, "name": "Sensor & Payload Library", "icon": "sensor", "pillar": "innovate", "receives": "Flexible optical, mapping, multispectral, thermal, environmental, positioning/navigation, and research payload capability as justified." },
+    { "n": 5, "name": "Simulation / Mission-Control / Data Platform", "icon": "data", "pillar": "innovate", "receives": "Integrated pre-flight simulation/planning, authorized operational monitoring, secure data transfer, storage, processing, analytics, and visualization." },
+    { "n": 6, "name": "Safety & Regulatory Operating System", "icon": "shield", "pillar": "impact", "receives": "Operating categories, qualifications, SMS, SOPs, maintenance, incident/emergency procedures, authorization and insurance/liability processes." },
+    { "n": 7, "name": "Cybersecurity, Privacy & Data Governance", "icon": "lock", "pillar": "innovate", "receives": "System access, network/C2 security, firmware/software management, partner/research data rules, imagery/personal-data controls, retention/sharing/deletion, incident response." },
+    { "n": 8, "name": "Student Applied-Learning Program", "icon": "student", "pillar": "learn", "receives": "Formal routes through courses, capstones, co-op/practica, research assistantships, multidisciplinary challenges and partner projects." },
+    { "n": 9, "name": "Applied Research Program", "icon": "research", "pillar": "innovate", "receives": "Clear route from concept → simulation → prototype → approved field test → analysis → research/partner output." },
+    { "n": 10, "name": "Industry & Community Challenge Program", "icon": "challenge", "pillar": "impact", "receives": "Defined intake process beginning with partner problem, not “we have a drone — what can we sell you?”" },
+    { "n": 11, "name": "Strategic Partnership Portfolio", "icon": "handshake", "pillar": "impact", "receives": "Proposed launch target ≥8 substantive written external agreements across more than one sector/type." },
+    { "n": 12, "name": "Trained Operating Organization", "icon": "people", "pillar": "learn", "receives": "All necessary operational/safety/technical/academic/partner functions staffed or assigned before launch; exact headcount determined from workload." },
+    { "n": 13, "name": "Sustainable Operating Model", "icon": "cycle", "pillar": "impact", "receives": "Five-year operating plan, staffing/maintenance, technology refresh, funding mix, lifecycle plan, governance and benefits review." },
+    { "n": 14, "name": "Tested Integrated Capability", "icon": "check", "pillar": "learn", "receives": "Representative end-to-end missions prove people, technology, field sites, safety, data and partner/student workflows operate as a coherent system." }
+  ],
+  "loop": [
+    "External problem defined",
+    "Interdisciplinary student/research team formed",
+    "Mission/sensing workflow designed",
+    "Simulation",
+    "Safety/regulatory/privacy review",
+    "Approved field operation",
+    "Secure data transfer",
+    "Analysis",
+    "Partner/research output",
+    "Lessons fed into the next challenge"
+  ],
+  "definitionOfDone": "SkyGrid is not “done” when construction ends, when drones arrive, or when a website launches. SkyGrid is done when UFV can safely take a real partner or research problem, involve students and faculty, design and simulate an autonomous-aviation approach, obtain the required operating authorization, test it in an appropriate Fraser Valley environment, securely analyze the resulting data, and deliver a meaningful educational, research, or partner outcome within a sustainable operating model."
+}

@@ -1,0 +1,109 @@
+---
+import Chapter from './Chapter.astro';
+import d from '../../data/deliverables.json';
+const pillarOf = (i: number) => (i < 2 ? 'learn' : i < 6 ? 'innovate' : 'impact');
+---
+<Chapter n={4} title="How it works: one agricultural challenge, end to end."
+  deeper={{ label: 'Go deeper: the finished product', href: 'product' }}
+  notes="Operating loop (1:30 · Anmol). Click through the ten steps of the agricultural example (Section 13.1). Stress the last step loops back to the first: this is a system, not a building. Read the Definition of Done.">
+  <div class="loop reveal" id="loop">
+    <div class="relative">
+      <div class="loop-track" aria-hidden="true"><div class="loop-fill" id="loop-fill"></div></div>
+      <ol class="loop-steps" role="tablist" aria-label="Operating loop steps">
+        {d.loop.map((s, i) => (
+          <li>
+            <button type="button" role="tab" class="loop-step" data-step={i} aria-selected={i === 0 ? 'true' : 'false'} style={`--c: var(--${pillarOf(i)})`}>
+              <span class="loop-dot mono">{i + 1}</span>
+              <span class="loop-label">{s}</span>
+            </button>
+          </li>
+        ))}
+      </ol>
+      <svg id="loop-drone" class="loop-drone" width="34" height="34" viewBox="-17 -17 34 34" aria-hidden="true">
+        <circle r="14" fill="var(--impact)" opacity=".2" />
+        <g stroke="var(--text)" stroke-width="1.8" stroke-linecap="round"><path d="M-7 -7L7 7M7 -7L-7 7" /></g>
+        <rect x="-3.5" y="-3.5" width="7" height="7" rx="1.5" fill="var(--impact)" />
+      </svg>
+    </div>
+    <div class="card p-6 mt-8 min-h-[120px] flex flex-col sm:flex-row gap-5 sm:items-center" aria-live="polite">
+      <p class="mono text-5xl font-semibold text-impact w-20 shrink-0" id="loop-num">01</p>
+      <div>
+        <p class="eyebrow" id="loop-kicker">Step 1 of 10</p>
+        <p class="text-2xl font-semibold mt-1" id="loop-text" style="font-family: var(--font-display)">{d.loop[0]}</p>
+        <p class="text-sm text-muted mt-2 hidden" id="loop-back">↻ Lessons loop back into the next challenge — a system, not a building.</p>
+      </div>
+      <div class="sm:ml-auto flex gap-2 shrink-0">
+        <button type="button" class="btn btn-ghost btn-sm" id="loop-prev" aria-label="Previous step">←</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="loop-next" aria-label="Next step">→</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-12 reveal grid lg:grid-cols-[200px_1fr] gap-4 items-start">
+    <p class="eyebrow pt-2">13.2 Definition of Done</p>
+    <p class="text-xl sm:text-2xl leading-snug font-medium" style="font-family: var(--font-display)">
+      SkyGrid is not “done” when construction ends, when drones arrive, or when a website launches. <span class="text-impact">SkyGrid is done when</span> UFV can safely take a real partner or research problem, involve students and faculty, design and simulate an autonomous-aviation approach, obtain the required operating authorization, test it in an appropriate Fraser Valley environment, securely analyze the resulting data, and deliver a meaningful educational, research, or partner outcome within a sustainable operating model.
+    </p>
+  </div>
+</Chapter>
+
+<style>
+  .loop-steps { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: .25rem; position: relative; }
+  .loop-track { position: absolute; left: 5%; right: 5%; top: 21px; height: 2px; background: var(--line-strong); }
+  .loop-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--learn), var(--innovate), var(--impact)); transition: width .6s cubic-bezier(.2,.8,.2,1); }
+  .loop-step { display: flex; flex-direction: column; align-items: center; gap: .6rem; width: 100%; text-align: center; padding-bottom: .25rem; }
+  .loop-dot { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-size: .85rem; background: var(--bg); border: 2px solid var(--line-strong); color: var(--muted); transition: .3s; position: relative; z-index: 1; }
+  .loop-step[aria-selected="true"] .loop-dot, .loop-step.done .loop-dot { border-color: var(--c); color: var(--text); background: color-mix(in srgb, var(--c) 18%, var(--bg)); }
+  .loop-step[aria-selected="true"] .loop-dot { box-shadow: 0 0 24px -2px var(--c); transform: scale(1.1); }
+  .loop-label { font-size: .75rem; line-height: 1.25; color: var(--muted); }
+  .loop-step[aria-selected="true"] .loop-label { color: var(--text); font-weight: 600; }
+  .loop-drone { position: absolute; top: -40px; left: 0; transition: transform .6s cubic-bezier(.2,.8,.2,1); pointer-events: none; }
+  @media (max-width: 900px) {
+    .loop-steps { grid-template-columns: repeat(5, minmax(0, 1fr)); row-gap: 1.25rem; }
+    .loop-track, .loop-drone { display: none; }
+    .loop-label { font-size: .7rem; }
+  }
+</style>
+
+<script>
+  const root = document.getElementById('loop');
+  if (root) {
+    const steps = [...root.querySelectorAll<HTMLButtonElement>('.loop-step')];
+    const drone = document.getElementById('loop-drone')!;
+    const fill = document.getElementById('loop-fill')!;
+    let cur = 0;
+    const show = (i: number) => {
+      cur = (i + steps.length) % steps.length;
+      steps.forEach((s, k) => { s.setAttribute('aria-selected', String(k === cur)); s.classList.toggle('done', k < cur); });
+      const dot = steps[cur].querySelector<HTMLElement>('.loop-dot')!;
+      const r = root.querySelector('.loop-steps')!.getBoundingClientRect();
+      const d = dot.getBoundingClientRect();
+      drone.style.transform = `translateX(${d.left - r.left + d.width / 2 - 17}px)`;
+      fill.style.width = `${(cur / (steps.length - 1)) * 100}%`;
+      document.getElementById('loop-num')!.textContent = String(cur + 1).padStart(2, '0');
+      document.getElementById('loop-kicker')!.textContent = `Step ${cur + 1} of ${steps.length}`;
+      document.getElementById('loop-text')!.textContent = steps[cur].querySelector('.loop-label')!.textContent;
+      document.getElementById('loop-back')!.classList.toggle('hidden', cur !== steps.length - 1);
+    };
+    steps.forEach((s, i) => s.addEventListener('click', () => { auto = false; show(i); }));
+    document.getElementById('loop-prev')!.addEventListener('click', () => { auto = false; show(cur - 1); });
+    document.getElementById('loop-next')!.addEventListener('click', () => { auto = false; show(cur + 1); });
+    root.addEventListener('keydown', (e) => {
+      if (!(e.target as HTMLElement).classList.contains('loop-step')) return;
+      if (e.key === 'ArrowRight') { auto = false; show(cur + 1); steps[cur].focus(); e.preventDefault(); }
+      if (e.key === 'ArrowLeft') { auto = false; show(cur - 1); steps[cur].focus(); e.preventDefault(); }
+    });
+    addEventListener('resize', () => show(cur));
+    // Advance with scroll while the chapter is on screen (stops once the user clicks)
+    let auto = true;
+    const section = document.getElementById('loop')!.closest('section')!;
+    addEventListener('scroll', () => {
+      if (!auto) return;
+      const r = section.getBoundingClientRect();
+      const p = Math.min(1, Math.max(0, (innerHeight * 0.75 - r.top) / (r.height * 0.75)));
+      const i = Math.min(steps.length - 1, Math.floor(p * steps.length));
+      if (i !== cur) show(i);
+    }, { passive: true });
+    requestAnimationFrame(() => show(0));
+  }
+</script>

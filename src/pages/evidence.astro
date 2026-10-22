@@ -1,0 +1,11 @@
+---
+import DeepPage from '../layouts/DeepPage.astro';
+import References from '../components/islands/References.tsx';
+---
+<DeepPage title="Evidence" eyebrow="References · APA 7" pillar="innovate"
+  crumbs={[{ label: 'Evidence' }]}
+  intro="External facts, regulations, statistics, institutional claims, competitor claims, and project-management framework statements are supported by APA 7 in-text citations and matching reference-list entries. Course concepts are also tied to Professor Kevin Renso’s CIS 385 materials where appropriate.">
+  <div class="max-w-4xl">
+    <References client:load />
+  </div>
+</DeepPage>

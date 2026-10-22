@@ -1,0 +1,12 @@
+---
+import Print from '../../layouts/Print.astro';
+import PlanDoc from '../../components/print/PlanDoc.astro';
+import GanttSvg from '../../components/print/GanttSvg.astro';
+---
+<Print title="UFV SkyGrid — Decision Pack">
+  <PlanDoc />
+  <section style="break-before: page">
+    <p class="kicker">Attachment · Proposed master Gantt chart (Table 10)</p>
+    <GanttSvg />
+  </section>
+</Print>

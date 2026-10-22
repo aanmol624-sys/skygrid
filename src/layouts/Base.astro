@@ -1,0 +1,49 @@
+---
+import '@fontsource-variable/space-grotesk';
+import '@fontsource-variable/inter';
+import '@fontsource-variable/jetbrains-mono';
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Overlays from '../components/Overlays.astro';
+
+interface Props { title?: string; description?: string; isHome?: boolean }
+const {
+  title,
+  description = 'UFV SkyGrid — a proposed $100-million autonomous aviation research, education, and regional field-test network for the University of the Fraser Valley.',
+  isHome = false,
+} = Astro.props;
+const fullTitle = title ? `${title} · UFV SkyGrid` : 'UFV SkyGrid — Where Autonomous Aviation Meets the Real World';
+const base = import.meta.env.BASE_URL;
+---
+<!doctype html>
+<html lang="en" data-base={base}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0B1220" />
+    <link rel="icon" href={`${base.replace(/\/$/, '')}/favicon.ico`} sizes="48x48" />
+    <link rel="icon" type="image/svg+xml" href={`${base.replace(/\/$/, '')}/favicon.svg`} />
+    <link rel="icon" type="image/png" sizes="32x32" href={`${base.replace(/\/$/, '')}/favicon-32.png`} />
+    <link rel="apple-touch-icon" href={`${base.replace(/\/$/, '')}/apple-touch-icon.png`} />
+    <link rel="manifest" href={`${base.replace(/\/$/, '')}/site.webmanifest`} />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+      try { var t = localStorage.getItem('sg-theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+    </script>
+  </head>
+  <body class:list={[{ 'is-home': isHome }]}>
+    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] btn btn-primary">Skip to content</a>
+    <Nav isHome={isHome} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <Overlays />
+    <script>
+      import '../scripts/site.ts';
+    </script>
+  </body>
+</html>

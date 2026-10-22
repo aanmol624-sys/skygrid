@@ -1,0 +1,54 @@
+---
+import { u } from '../lib/site';
+interface Props { compact?: boolean }
+const { compact = false } = Astro.props;
+const rows = [
+  ['Asking', 'CAD $100,000,000', null],
+  ['Released', 'Gate by gate, never all at once', 'plan/delivery'],
+  ['UFV receives', '14 finished deliverables', 'product'],
+  ['Delivered by', 'September 1, 2030', 'plan/schedule'],
+  ['Protected by', '5 kill points, a $10M contingency, a $5M reserve, and a 4-level change authority', 'investment/change-control'],
+];
+---
+<div class={`term-sheet relative rounded-2xl ${compact ? 'p-6' : 'p-6 sm:p-10'}`}>
+  <div class="flex items-start justify-between gap-4 border-b border-dashed pb-4 mb-4" style="border-color: color-mix(in srgb, var(--paper-text) 30%, transparent)">
+    <div>
+      <p class="mono text-[.7rem] tracking-[.2em] uppercase opacity-60">Term sheet · CIS 385</p>
+      <h3 class="text-2xl sm:text-3xl font-bold mt-1" style="font-family: Georgia, 'Times New Roman', serif; letter-spacing:0">UFV SkyGrid</h3>
+    </div>
+    <span class="stamp mono">Proposed</span>
+  </div>
+  <dl class="divide-y" style="--tw-divide-opacity:1">
+    {rows.map(([k, v, href]) => (
+      <div class="grid grid-cols-[7.5rem_1fr] sm:grid-cols-[10rem_1fr] gap-3 py-3 border-b" style="border-color: color-mix(in srgb, var(--paper-text) 12%, transparent)">
+        <dt class="mono text-xs uppercase tracking-wider opacity-60 pt-0.5">{k}</dt>
+        <dd class="text-[.95rem] font-medium">
+          {href ? <a href={u(href)} class="underline decoration-dotted underline-offset-4 hover:decoration-solid">{v}</a> : <span class="mono font-semibold text-lg">{v}</span>}
+        </dd>
+      </div>
+    ))}
+  </dl>
+  <div class="flex flex-wrap items-end justify-between gap-6 mt-6">
+    <div>
+      <p class="signature">Anmol · Armaan · Ishmeet</p>
+      <p class="mono text-[.65rem] uppercase tracking-widest opacity-60 border-t pt-1 mt-1" style="border-color: color-mix(in srgb, var(--paper-text) 40%, transparent)">For the SkyGrid team</p>
+    </div>
+    <div class="text-right">
+      <p class="signature opacity-30">________________</p>
+      <p class="mono text-[.65rem] uppercase tracking-widest opacity-60 border-t pt-1 mt-1" style="border-color: color-mix(in srgb, var(--paper-text) 40%, transparent)">Decision-maker</p>
+    </div>
+  </div>
+</div>
+<style>
+  .term-sheet {
+    background: var(--paper);
+    color: var(--paper-text);
+    box-shadow: 0 30px 80px -20px rgba(0,0,0,.6), 0 0 0 1px rgba(0,0,0,.06);
+    background-image: repeating-linear-gradient(0deg, transparent 0 31px, rgba(27,35,51,.035) 31px 32px);
+  }
+  .stamp {
+    border: 2px solid #C2410C; color: #C2410C; padding: .2rem .6rem; border-radius: 6px;
+    font-size: .75rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; transform: rotate(-6deg);
+  }
+  .signature { font-family: 'Brush Script MT', 'Segoe Script', cursive; font-size: 1.5rem; line-height: 1.2; }
+</style>

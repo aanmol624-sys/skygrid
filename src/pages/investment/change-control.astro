@@ -1,0 +1,151 @@
+---
+import DeepPage from '../../layouts/DeepPage.astro';
+import Cite from '../../components/Cite.astro';
+import Proposed from '../../components/Proposed.astro';
+import Icon from '../../components/Icon.astro';
+import g from '../../data/governance.json';
+const statusColor: Record<string, string> = { Green: 'var(--learn)', Amber: 'var(--impact)', Red: 'var(--danger)' };
+---
+<DeepPage title="Cost Control & Integrated Change Control" eyebrow="The Investment · Change Control" pillar="impact"
+  crumbs={[{ label: 'The Investment', href: 'investment' }, { label: 'Change Control' }]}
+  toc={[{ id: 'workflow', label: '7-step workflow' }, { id: 'baselines', label: 'Four baselines' }, { id: 'authority', label: 'Change authority' }, { id: 'variance', label: 'Variance triggers' }, { id: 'scope-creep', label: 'Scope-creep test' }, { id: 'freeze', label: 'Configuration freeze' }]}>
+  <p slot="header" class="mt-6 text-3xl sm:text-4xl font-bold" style="font-family: var(--font-display)">Change is expected; <span class="text-impact">uncontrolled change is not.</span></p>
+  <p slot="header" class="mt-4 max-w-3xl text-muted leading-relaxed">Professor Renso’s integration-management material emphasizes identifying when change occurs, communicating it, and managing actual changes rather than allowing them to happen invisibly <Cite ids="renso-2026b" label="Renso, 2026b" />. PMI defines formal change control as the process through which changes to baselines, documents, or deliverables are identified, evaluated, approved/rejected, and controlled <Cite ids="pmi-2026a" label="PMI, 2026a" />.</p>
+
+  <section id="workflow" class="scroll-mt-24">
+    <div class="flex flex-wrap items-center gap-3"><h2 class="text-2xl font-bold">10.2 Seven-step change process</h2><Proposed label="Team design" /></div>
+    <ol class="pipeline mt-8 grid md:grid-cols-7 gap-2 reveal">
+      {g.changeSteps.map((st, i) => (
+        <li class="pipe-step card p-4 relative" style={`--d:${i * 180}ms`}>
+          <span class="mono text-2xl font-bold text-impact">{i + 1}</span>
+          <p class="text-[.82rem] mt-2 leading-snug">{st}</p>
+          {i === 3 && <p class="text-[.7rem] text-muted mt-2">Across {g.impactAreas}.</p>}
+          {i < 6 && <span class="pipe-arrow hidden md:block" aria-hidden="true">→</span>}
+        </li>
+      ))}
+    </ol>
+    <p class="text-xs text-muted mt-4">Source: Team-developed process based on course integrated-change-control principles <Cite ids="renso-2026b" label="Renso, 2026b" /> and PMI terminology <Cite ids="pmi-2026a" label="PMI, 2026a" />.</p>
+  </section>
+
+  <section id="baselines" class="pt-20 scroll-mt-24">
+    <h2 class="text-2xl font-bold">10.1 Four baselines controlled after Gate 3</h2>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-6">
+      {g.baselines.map((bl) => (
+        <div class="card p-5">
+          <span class="w-11 h-11 rounded-xl grid place-items-center text-impact" style="background: color-mix(in srgb, var(--impact) 12%, transparent)"><Icon name="lock" size={22} /></span>
+          <p class="font-bold mt-3">{bl.name}</p>
+          <p class="text-sm text-muted mt-1">{bl.controls}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section id="authority" class="pt-20 scroll-mt-24">
+    <div class="flex flex-wrap items-center gap-3"><h2 class="text-2xl font-bold">10.3 Proposed change authority</h2><Proposed /></div>
+    <p class="text-sm text-muted mt-2">These dollar/time thresholds are a governance design for the proposal, not verified UFV policy.</p>
+    <div class="stairs mt-8 grid md:grid-cols-4 gap-2 items-end">
+      {g.authority.map((a, i) => (
+        <div class="card p-5 flex flex-col" style={`min-height:${150 + i * 55}px; border-top: 3px solid color-mix(in srgb, var(--impact) ${30 + i * 23}%, var(--innovate))`}>
+          <p class="mono text-xs text-muted">LEVEL</p>
+          <p class="text-xl font-bold">{a.level}</p>
+          <p class="text-sm mt-2 flex-1">{a.threshold}</p>
+          <p class="text-sm mt-3 pt-3 border-t border-line"><span class="eyebrow block">Authority</span><span class="font-semibold">{a.who}</span></p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section id="variance" class="pt-20 scroll-mt-24">
+    <div class="flex flex-wrap items-center gap-3"><h2 class="text-2xl font-bold">10.4 Proposed cost variance triggers</h2><Proposed /></div>
+    <div class="grid lg:grid-cols-[320px_minmax(0,1fr)] gap-8 mt-6 items-center">
+      <figure aria-label="Variance gauge: green under 3%, amber 3 to 5%, red over 5%">
+        <svg viewBox="0 0 220 130" class="w-full max-w-[320px]">
+          <path d="M20 110 A90 90 0 0 1 64 32.5" fill="none" stroke="var(--learn)" stroke-width="18" />
+          <path d="M66 31.5 A90 90 0 0 1 154 31.5" fill="none" stroke="var(--impact)" stroke-width="18" />
+          <path d="M156 32.5 A90 90 0 0 1 200 110" fill="none" stroke="var(--danger)" stroke-width="18" />
+          <g id="needle" style="transform-origin: 110px 110px; transform: rotate(-60deg); transition: transform .8s cubic-bezier(.3,1.4,.5,1)">
+            <path d="M110 110 L110 34" stroke="var(--text)" stroke-width="3" stroke-linecap="round" />
+          </g>
+          <circle cx="110" cy="110" r="7" fill="var(--text)" />
+          <text x="20" y="128" font-family="JetBrains Mono, monospace" font-size="9" fill="var(--muted)">0%</text>
+          <text x="186" y="128" font-family="JetBrains Mono, monospace" font-size="9" fill="var(--muted)">&gt;5%</text>
+        </svg>
+      </figure>
+      <div class="space-y-2">
+        {g.variance.map((v, i) => (
+          <button type="button" data-needle={[-60, 0, 60][i]} class="w-full card p-4 grid sm:grid-cols-[120px_200px_1fr] gap-2 sm:gap-4 text-left items-center hover:border-line-strong">
+            <span class="flex items-center gap-2 mono font-bold" style={`color:${statusColor[v.status]}`}><span class="w-3 h-3 rounded-full" style={`background:${statusColor[v.status]}`}></span>{v.status}</span>
+            <span class="mono text-sm">{v.trigger}</span>
+            <span class="text-sm text-muted">{v.action}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="scope-creep" class="pt-20 scroll-mt-24">
+    <h2 class="text-2xl font-bold">10.5 The Scope-Creep Test</h2>
+    <p class="text-muted mt-2 max-w-3xl">Every proposed addition should answer these five questions. Try it: answer each for an idea someone wants to add. If not, defer it.</p>
+    <div class="card p-6 mt-6 relative overflow-hidden" id="creep">
+      <ol class="space-y-3">
+        {g.scopeCreep.map((q, i) => (
+          <li class="flex flex-col sm:flex-row sm:items-center gap-3 justify-between border-b border-line pb-3">
+            <span class="flex gap-3"><span class="mono text-muted">{i + 1}</span>{q}</span>
+            <span class="flex gap-1 shrink-0" role="radiogroup" aria-label={q}>
+              <button type="button" role="radio" aria-checked="false" data-q={i} data-v="yes" class="yn">Yes</button>
+              <button type="button" role="radio" aria-checked="false" data-q={i} data-v="no" class="yn">No</button>
+            </span>
+          </li>
+        ))}
+      </ol>
+      <div class="flex items-center justify-between mt-5 gap-4 flex-wrap">
+        <p id="creep-status" class="text-sm text-muted" aria-live="polite">Answer all five questions.</p>
+        <button type="button" id="creep-reset" class="btn btn-ghost btn-sm">Reset</button>
+      </div>
+      <div id="creep-stamp" class="stamp-defer" aria-hidden="true">DEFER IT</div>
+      <div id="creep-ok" class="stamp-ok" aria-hidden="true">PROCEED TO CHANGE CONTROL</div>
+    </div>
+  </section>
+
+  <section id="freeze" class="pt-20 scroll-mt-24">
+    <div class="flex flex-wrap items-center gap-3"><h2 class="text-2xl font-bold">Configuration freeze · <span class="mono text-innovate">May 31, 2030</span></h2><Proposed label="Team proposal" /></div>
+    <p class="text-muted mt-4 max-w-3xl leading-relaxed">{g.configFreeze}</p>
+  </section>
+</DeepPage>
+
+<style>
+  .js .pipeline .pipe-step { opacity: 0; transform: translateX(-12px); transition: opacity .5s var(--d), transform .5s var(--d); }
+  .js .pipeline.in .pipe-step { opacity: 1; transform: none; }
+  .pipe-arrow { position: absolute; right: -11px; top: 50%; transform: translateY(-50%); color: var(--impact); z-index: 1; font-weight: 700; }
+  .yn { padding: .35rem .9rem; border-radius: 8px; border: 1px solid var(--line-strong); font-size: .85rem; font-weight: 600; }
+  .yn[aria-checked="true"][data-v="yes"] { background: var(--learn); border-color: var(--learn); color: #062015; }
+  .yn[aria-checked="true"][data-v="no"] { background: var(--danger); border-color: var(--danger); color: #fff; }
+  .stamp-defer, .stamp-ok { position: absolute; right: 8%; top: 40%; transform: rotate(-14deg) scale(2); opacity: 0; pointer-events: none;
+    font: 800 2.4rem/1 var(--font-mono); letter-spacing: .1em; padding: .4rem 1rem; border: 5px solid; border-radius: 10px; transition: transform .25s cubic-bezier(.3,1.6,.5,1), opacity .2s; }
+  .stamp-defer { color: var(--danger); border-color: var(--danger); background: color-mix(in srgb, var(--bg) 70%, transparent); }
+  .stamp-ok { color: var(--learn); border-color: var(--learn); font-size: 1.2rem; background: color-mix(in srgb, var(--bg) 70%, transparent); }
+  .stamp-defer.show, .stamp-ok.show { opacity: 1; transform: rotate(-14deg) scale(1); }
+</style>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-needle]').forEach((b) => b.addEventListener('mouseenter', () => {
+    (document.getElementById('needle') as unknown as SVGGElement).style.transform = `rotate(${b.dataset.needle}deg)`;
+  }));
+  document.querySelectorAll<HTMLElement>('[data-needle]').forEach((b) => b.addEventListener('focus', () => {
+    (document.getElementById('needle') as unknown as SVGGElement).style.transform = `rotate(${b.dataset.needle}deg)`;
+  }));
+
+  const answers: (string | null)[] = [null, null, null, null, null];
+  const stamp = document.getElementById('creep-stamp')!;
+  const ok = document.getElementById('creep-ok')!;
+  const status = document.getElementById('creep-status')!;
+  const render = () => {
+    document.querySelectorAll<HTMLElement>('#creep .yn').forEach((b) => b.setAttribute('aria-checked', String(answers[+b.dataset.q!] === b.dataset.v)));
+    const failed = answers.includes('no');
+    const done = answers.every((a) => a);
+    stamp.classList.toggle('show', failed);
+    ok.classList.toggle('show', done && !failed);
+    status.textContent = failed ? 'At least one answer fails the test: defer it until after launch.' : done ? 'All five pass: submit it through formal change control.' : `Answered ${answers.filter(Boolean).length} of 5.`;
+  };
+  document.querySelectorAll<HTMLElement>('#creep .yn').forEach((b) => b.addEventListener('click', () => { answers[+b.dataset.q!] = b.dataset.v!; render(); }));
+  document.getElementById('creep-reset')!.addEventListener('click', () => { answers.fill(null); render(); });
+</script>

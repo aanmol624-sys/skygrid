@@ -1,0 +1,61 @@
+---
+import DeepPage from '../../layouts/DeepPage.astro';
+import Cite from '../../components/Cite.astro';
+import Proposed from '../../components/Proposed.astro';
+import Icon from '../../components/Icon.astro';
+type Card = { k?: string; text: string; cite: [string[], string] };
+const groups: { id: string; title: string; icon: string; c: string; cards: Card[] }[] = [
+  { id: 'ufv', title: 'UFV', icon: 'student', c: 'var(--learn)', cards: [
+    { text: 'UFV’s 2026 planning refresh describes a future-focused institution that intends to remain deeply connected and responsive while strengthening commitments to reconciliation, sustainability, entrepreneurship, and innovation.', cite: [['ufv-2026a'], 'UFV, 2026a'] },
+    { text: 'UFV describes experiential learning as curriculum-integrated, authentic real-life learning that lets students apply theory to real-world problems and work with community partners.', cite: [['ufv-nd-c'], 'UFV, n.d.-c'] },
+    { text: 'UFV’s Strategic Research Plan explicitly supports regional relevance, applied and collaborative research partnerships, student research involvement, and multidisciplinary work.', cite: [['ufv-2023'], 'UFV, 2023'] },
+    { text: 'The Strategic Research Plan identifies Agriculture and Environmental Resilience as a regional priority and explicitly references agritechnology, sensor technologies, food security, and climate resilience.', cite: [['ufv-2023'], 'UFV, 2023'] },
+    { text: 'UFV offers a BBA Aviation pathway; the current academic calendar explains that flight training is completed outside UFV through regulated flight schools.', cite: [['ufv-nd-b'], 'UFV, n.d.-b'] },
+    { text: 'UFV’s agriculture programs combine theory, data-driven decision-making, hands-on facilities, field trials, and practicums.', cite: [['ufv-nd-a'], 'UFV, n.d.-a'] },
+  ] },
+  { id: 'region', title: 'The Fraser Valley', icon: 'field', c: 'var(--impact)', cards: [
+    { k: '6 key industries', text: 'The City of Abbotsford lists aerospace and aviation, agriculture and agri-tech, construction, information/clean technology, manufacturing, and transportation/warehousing among its key industries.', cite: [['abbotsford-nd'], 'City of Abbotsford, n.d.'] },
+    { k: '1,254 farms · 61,586 acres', text: 'In Abbotsford, agriculture alone includes approximately 1,254 farms operating across 61,586 acres and generating nearly $1 billion in annual farm-gate sales; a 2022 analysis cited by the City estimated that the broader farm economy supported 16,770 local jobs.', cite: [['abbotsford-2024'], 'City of Abbotsford, 2024'] },
+    { k: '~215 acres', text: 'Abbotsford International Airport (YXX) identifies an established aerospace community that includes Cascade Aerospace, Conair, and UFV’s Aerospace Centre, and it advertises approximately 215 acres available for aviation-related development.', cite: [['yxx-nd-b'], 'Abbotsford International Airport, n.d.-b'] },
+    { text: 'YXX is owned and operated by the City of Abbotsford. The Abbotsford Airport Authority functions as a select committee of City Council, and its members are appointed by Council.', cite: [['yxx-nd-a'], 'Abbotsford International Airport, n.d.-a'] },
+  ] },
+  { id: 'regulation', title: 'Regulation', icon: 'shield', c: 'var(--innovate)', cards: [
+    { k: 'Nov 4, 2025', text: 'Transport Canada introduced a Level 1 Complex pathway for certain lower-risk beyond-visual-line-of-sight (BVLOS) operations beginning November 4, 2025, with new pilot, operator, and technical requirements.', cite: [['tc-2026a'], 'Transport Canada, 2026a'] },
+    { k: '≤400 ft AGL · >5 NM', text: 'Lower-risk Level 1 Complex BVLOS operations must remain in uncontrolled airspace, at or below 400 feet AGL, and more than five nautical miles from specified aerodromes; more complex BVLOS operations, including BVLOS in an aerodrome environment, can require a Special Flight Operations Certificate.', cite: [['tc-2026b', 'tc-2026c'], 'Transport Canada, 2026b, 2026c'] },
+    { text: 'Canada’s expanded RPAS rules created new pathways for some lower-risk BVLOS operations while simultaneously imposing operator, pilot, and safety-assurance requirements.', cite: [['tc-2026a', 'tc-2026d'], 'Transport Canada, 2026a, 2026d'] },
+    { text: 'Advanced and Level 1 Complex operations can require specific RPAS Safety Assurance declarations, and aircraft must be used within declared operational capabilities.', cite: [['tc-2025a', 'tc-2026e'], 'Transport Canada, 2025a, 2026e'] },
+    { text: 'NAV CANADA authorization is required where an operation overlaps NAV CANADA-controlled airspace.', cite: [['navcanada-nd'], 'NAV CANADA, n.d.'] },
+  ] },
+];
+---
+<DeepPage title="Business Case — Why SkyGrid, Why UFV, Why Now?" eyebrow="Why SkyGrid · Research & Regulation" pillar="innovate"
+  crumbs={[{ label: 'Why SkyGrid' }, { label: 'Research & Regulation' }]}
+  intro="SkyGrid addresses an opportunity created by the convergence of UFV’s educational priorities, the Fraser Valley’s industrial structure, and a changing Canadian autonomous-aviation environment. UFV does not need another stand-alone technology laboratory; it needs a platform that connects disciplines already present at the university with real regional problems."
+  toc={[{ id: 'ufv', label: 'UFV' }, { id: 'region', label: 'The Fraser Valley' }, { id: 'regulation', label: 'Regulation' }, { id: 'case', label: 'The investment case' }]}>
+  {groups.map((g) => (
+    <section id={g.id} class="pb-16 scroll-mt-24">
+      <h2 class="text-2xl font-bold flex items-center gap-3"><span style={`color:${g.c}`}><Icon name={g.icon} size={26} /></span>{g.title}</h2>
+      <div class="grid md:grid-cols-2 gap-3 mt-6">
+        {g.cards.map((c) => (
+          <article class="card p-5 flex flex-col" style={`border-left: 3px solid ${g.c}`}>
+            {c.k && <p class="mono text-xl font-semibold mb-2" style={`color:${g.c}`}>{c.k}</p>}
+            <p class="text-[.95rem] leading-relaxed">{c.text}</p>
+            <div class="mt-3"><Cite ids={c.cite[0]} label={c.cite[1]} /></div>
+          </article>
+        ))}
+      </div>
+    </section>
+  ))}
+  <section id="case" class="scroll-mt-24">
+    <h2 class="text-2xl font-bold">The investment case</h2>
+    <div class="prose-sg max-w-3xl mt-5">
+      <p>UFV already possesses many ingredients needed to participate: aviation business education, computing, agriculture, environmental and geographic work, applied research, experiential learning, and community relationships.</p>
+      <p>The investment case is therefore larger than purchasing drones. Without an integrated platform, UFV can still participate in isolated projects, but it is less likely to develop a distinctive, sustained institutional capability. The proposed $100-million investment would create infrastructure, field access, technical systems, research capacity, student pathways, and operating controls that allow those pieces to function together.</p>
+      <p>The opportunity is therefore not to claim UFV is already a large aerospace engineering university; it is to connect existing strengths through a new autonomous-systems capability. Those facts make YXX a logical ecosystem and industry anchor; they do not mean UFV owns that airport land or can automatically conduct unrestricted flight testing there.</p>
+    </div>
+    <div class="card p-6 mt-6 max-w-3xl" style="border-color: color-mix(in srgb, var(--impact) 45%, transparent)">
+      <div class="flex items-center gap-2 mb-2"><Proposed label="Proposed positioning" /></div>
+      <p>Formal business-case positioning: make UFV <b>“one of Canada’s most applied places to learn, test and evaluate autonomous aviation in real regional environments.”</b> Use the stronger statement — “Establish UFV SkyGrid as Canada’s leading university-based regional testbed for applied autonomous aviation” — only as a 2030 aspiration, not as a current factual claim.</p>
+    </div>
+  </section>
+</DeepPage>

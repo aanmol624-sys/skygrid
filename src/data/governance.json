@@ -1,0 +1,100 @@
+{
+  "charter": [
+    { "el": "Project", "pos": "UFV SkyGrid — Autonomous Aviation Research, Education & Regional Field-Test Network" },
+    { "el": "Purpose", "pos": "Create a university-wide autonomous-aviation platform connecting student learning, applied research, simulation, field testing, and regional industry/community challenges." },
+    { "el": "2030 vision", "pos": "Establish UFV SkyGrid as Canada’s leading university-based regional testbed for applied autonomous aviation.", "proposed": "PROPOSED aspiration" },
+    { "el": "Project owner", "pos": "University of the Fraser Valley." },
+    { "el": "Executive sponsor", "pos": "UFV President/Vice-Chancellor or Board-designated executive sponsor with authority appropriate to the investment.", "proposed": "PROPOSED" },
+    { "el": "Project manager", "pos": "Dedicated SkyGrid Program Director / Project Manager.", "proposed": "PROPOSED" },
+    { "el": "Start", "pos": "November 2026 following authorization." },
+    { "el": "Required completion", "pos": "September 1, 2030." },
+    { "el": "Budget ceiling", "pos": "CAD $100,000,000 including reserves and transition-to-operations funding." },
+    { "el": "Primary pillars", "pos": "Learn → Innovate → Impact." },
+    { "el": "Proposed measurable launch targets", "pos": "At least 3 compliant field-test environments; at least 8 substantive written external partnership agreements; participation pathways across at least 5 UFV academic/program areas; no unresolved critical safety, regulatory, cybersecurity, or privacy deficiencies.", "proposed": "PROPOSED" },
+    { "el": "Authorization principle", "pos": "Continue only while demand, regulatory feasibility, site access, affordability, and partner participation remain credible. Formal gates permit Continue, Redirect, or Terminate / Limited-Launch decisions." }
+  ],
+  "inScope": [
+    "Central research, simulation, and collaboration capability.",
+    "Regulatory-compliant regional field-test locations.",
+    "RPAS platforms, payloads, sensors, command-and-control, and simulation systems.",
+    "Secure compute, data, networking, cybersecurity, and privacy controls.",
+    "Academic and applied-research integration.",
+    "Student applied-learning pathways.",
+    "Industry/community challenge process and external partnerships.",
+    "Staffing, operator readiness, safety management, regulatory compliance, insurance, commissioning, and handover."
+  ],
+  "outScope": [
+    "A commercial airline or conventional flight school.",
+    "Replacement of Transport Canada, NAV CANADA, airport-authority, or other regulatory functions.",
+    "Weaponized or offensive military drone development.",
+    "Passenger-carrying autonomous-aircraft services.",
+    "Unrestricted BVLOS operations outside approved Canadian regulatory pathways.",
+    "Routine independent emergency-response operations by UFV.",
+    "Mass manufacturing of certified aircraft."
+  ],
+  "majorDeliverables": [
+    "Approved governance and project-management framework.",
+    "Feasibility and site strategy.",
+    "Commissioned central Innovation & Simulation Node.",
+    "Commissioned Fraser Valley Field-Test Network.",
+    "Aircraft, sensors, simulation, computing, and data infrastructure.",
+    "Safety, regulatory, privacy, cybersecurity, insurance, and incident-response framework.",
+    "Interdisciplinary academic and applied-research pathways.",
+    "External partnership and Challenge Program model.",
+    "Trained operating organization.",
+    "Integrated testing, operational-readiness review, handover, and September 1, 2030 launch."
+  ],
+  "acr": {
+    "Assumptions": "Federal funding remains available; suitable site access can be secured; qualified suppliers/staff can be sourced; credible external partners can be developed; architecture can remain sufficiently modular as technology evolves.",
+    "Constraints": "Fixed $100M authorization; fixed Sep. 1, 2030 deadline; aviation regulations and airspace limits; site/land access; privacy/cybersecurity; procurement lead times; insurance/liability; specialist staffing; community acceptance.",
+    "Major risk themes": "Cost escalation, regulatory delay, site access, technology obsolescence, partner demand, safety, cyber/privacy, staffing, procurement delay, community/rights-holder concerns, and academic integration."
+  },
+  "gates": [
+    { "n": 1, "short": "Prove Need", "name": "Gate 1 — Business & feasibility", "date": "Jun 2027", "continue": "Credible applications; external interest; plausible regulatory/site path; preliminary affordability; no fatal legal/safety/site barrier.", "redirect": "Narrow use cases, move node, change operating category, or terminate if there is no credible demand/path." },
+    { "n": 2, "short": "Prove Permission", "name": "Gate 2 — Site & regulatory", "date": "Dec 2027", "continue": "Central-node solution viable; ≥3 field-environment pathways plausible; regulatory strategy documented; rights-holder/site concerns understood; updated cost viable.", "redirect": "Change sites, reduce operational complexity, or stop before detailed design." },
+    { "n": 3, "short": "Prove Affordability", "name": "Gate 3 — Capital investment", "date": "Jun 2028", "continue": "Design mature enough for reliable costing; total authorization ≤$100M incl. reserves; site agreements advanced; regulatory path viable; tech specs fit intended missions.", "redirect": "Value engineer, cut optional scope, or do not authorize major construction/fleet purchase." },
+    { "n": 4, "short": "Prove Capability", "name": "Gate 4 — Capability", "date": "Dec 2029", "continue": "Major infrastructure substantially complete; field network/core technology established; academic/safety/cyber/privacy systems functioning; launch forecast credible.", "redirect": "Redirect capability, defer optional equipment/use cases, consolidate sites." },
+    { "n": 5, "short": "Prove Readiness", "name": "Gate 5 — Operational readiness", "date": "Jun 30, 2030", "continue": "Required permissions; trained people; tested safety/cyber/data controls; field sites; reliable core systems; academic/partner readiness; no critical deficiency.", "redirect": "Continue, limited launch, correct and retest, or do not launch unsafe/unapproved capability." }
+  ],
+  "missionBeforeAircraft": ["Mission", "Operating environment", "Regulatory requirement", "Technical specification", "Procurement"],
+  "waves": [
+    { "wave": "Wave 1", "timing": "2028", "purpose": "Small core fleet for training, integration, system validation, and early staff readiness." },
+    { "wave": "Wave 2", "timing": "2029", "purpose": "Mission-specific systems selected only after use cases and operating requirements have been validated." },
+    { "wave": "Wave 3", "timing": "2030", "purpose": "Targeted final acquisitions only where readiness testing identifies a genuine launch need." }
+  ],
+  "baselines": [
+    { "name": "Scope", "controls": "Approved scope statement, WBS, WBS dictionary and requirements." },
+    { "name": "Schedule", "controls": "Activities, dependencies, critical path, gate dates, Aug. 15 acceptance, Sep. 1 launch." },
+    { "name": "Cost", "controls": "Approved $95M cost baseline; management reserve outside baseline." },
+    { "name": "Technical / performance", "controls": "Minimum field capability, simulation/data requirements, core system characteristics, cybersecurity/safety/interoperability requirements." }
+  ],
+  "changeSteps": [
+    "Authorized stakeholder submits a change request with a unique CR identifier",
+    "Program office records the request in a change register",
+    "Program Director screens whether the issue is routine management or a baseline change",
+    "Relevant leads perform integrated impact analysis",
+    "Decision authority chooses Approve, Approve with Conditions, Defer, or Reject",
+    "If approved, all affected baselines / registers / specifications are updated before execution",
+    "Affected stakeholders are informed and the authorized change is implemented and monitored"
+  ],
+  "impactAreas": "business value, scope, cost, schedule, technical architecture, regulation, safety, cybersecurity, privacy, stakeholders, operations, and risk",
+  "authority": [
+    { "level": "1 — Minor", "threshold": "Within approved work package; ≤$100K; no material scope/milestone/regulatory effect.", "who": "Program Director." },
+    { "level": "2 — Moderate", "threshold": "$100K–$1M or ≤20 working-day impact, with no change to total authorization or final deadline.", "who": "SkyGrid Change Control Board." },
+    { "level": "3 — Major", "threshold": ">$1M, critical-path impact, major scope/technical change, or significant contingency use.", "who": "Executive Sponsor / Steering Committee." },
+    { "level": "4 — Strategic", "threshold": "Changes $100M authorization, Sep. 1 deadline, fundamental mission, or major regulatory posture.", "who": "UFV senior governance / funding authority as applicable." }
+  ],
+  "variance": [
+    { "status": "Green", "trigger": "<3% variance", "action": "Manage within work package." },
+    { "status": "Amber", "trigger": "3–5% variance", "action": "Formal recovery plan and increased review." },
+    { "status": "Red", "trigger": ">5% work-package variance OR total forecast threatens authorization", "action": "Escalate to CCB / Sponsor; use formal corrective/change process." }
+  ],
+  "scopeCreep": [
+    "Does it strengthen Learn, Innovate, or Impact?",
+    "Is it required for the approved 2030 capability?",
+    "Can it fit the approved cost/schedule?",
+    "Does the benefit exceed lifecycle cost and risk?",
+    "Would deferring it until after launch materially harm the core capability?"
+  ],
+  "configFreeze": "SkyGrid should also maintain configuration records for aircraft model, firmware, payload, software, cybersecurity settings, and safety documentation. The proposed core launch configuration freezes on May 31, 2030, except for mandatory safety, regulatory, cybersecurity, or critical-defect corrections. The date is a team proposal intended to keep the June–August period focused on testing and acceptance rather than adding late features."
+}

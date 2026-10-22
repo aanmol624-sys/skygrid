@@ -1,0 +1,87 @@
+---
+import DeepPage from '../../layouts/DeepPage.astro';
+import Cite from '../../components/Cite.astro';
+import Proposed from '../../components/Proposed.astro';
+import Icon from '../../components/Icon.astro';
+import k from '../../data/kpis.json';
+const cols = [
+  { p: 'learn', title: 'Learn', c: 'var(--learn)' },
+  { p: 'innovate', title: 'Innovate', c: 'var(--innovate)' },
+  { p: 'impact', title: 'Impact', c: 'var(--impact)' },
+];
+const safe = k.kpis.find((x) => x.pillar === 'safe')!;
+---
+<DeepPage title="Success Criteria, KPIs & Benefits Realization" eyebrow="Why SkyGrid · Success & KPIs" pillar="learn"
+  crumbs={[{ label: 'Why SkyGrid' }, { label: 'Success & KPIs' }]}
+  toc={[{ id: 'chain', label: 'Benefits chain' }, { id: 'acceptance', label: 'Launch acceptance' }, { id: 'kpis', label: 'KPI dashboard' }, { id: 'north-star', label: 'North Star' }]}>
+  <p slot="header" class="mt-6 text-3xl sm:text-4xl font-bold" style="font-family: var(--font-display)">Finishing SkyGrid is not the same as <span class="text-learn">succeeding</span> with SkyGrid.</p>
+
+  <section id="chain" class="scroll-mt-24">
+    <p class="text-muted max-w-3xl leading-relaxed">PMI’s Benefits Realization Management framework distinguishes delivering project outputs from realizing and sustaining benefits after those outputs move into operations <Cite ids="pmi-2016" label="PMI, 2016" />. SkyGrid therefore measures two levels of success: project delivery success at launch, and benefits realization after launch.</p>
+    <div class="grid md:grid-cols-[1fr_auto_1fr_auto_1fr] gap-3 items-stretch mt-8">
+      <div class="card p-5"><p class="mono text-xs text-innovate">OUTPUTS · AT LAUNCH</p><p class="font-semibold mt-2">Project delivery success</p><p class="text-sm text-muted mt-1">The 12 launch acceptance criteria below.</p></div>
+      <div class="hidden md:grid place-items-center text-muted text-2xl" aria-hidden="true">→</div>
+      <div class="card p-5"><p class="mono text-xs text-learn">CAPABILITIES · IN OPERATIONS</p><p class="font-semibold mt-2">Transferred to permanent owners</p><p class="text-sm text-muted mt-1">Benefits should also transfer from the temporary project team to permanent operational owners after project closure.</p></div>
+      <div class="hidden md:grid place-items-center text-muted text-2xl" aria-hidden="true">→</div>
+      <div class="card p-5" style="border-color: color-mix(in srgb, var(--impact) 45%, transparent)"><p class="mono text-xs text-impact">BENEFITS · AFTER LAUNCH</p><p class="font-semibold mt-2">Benefits realization</p><p class="text-sm text-muted mt-1">Educational, research, regional, safety, and sustainability benefits.</p></div>
+    </div>
+  </section>
+
+  <section id="acceptance" class="pt-20 scroll-mt-24">
+    <div class="flex flex-wrap items-center gap-3"><h2 class="text-2xl font-bold">Proposed launch acceptance criteria</h2><Proposed /></div>
+    <ul class="grid sm:grid-cols-2 gap-2 mt-6" id="checklist">
+      {k.acceptance.map((a) => (
+        <li class="check-item card p-4 flex gap-3">
+          <span class="box w-6 h-6 rounded-md border-2 grid place-items-center shrink-0 mt-0.5"><Icon name="check" size={14} stroke={3} /></span>
+          <span><span class="font-semibold">{a.area}</span><br /><span class="text-sm text-muted">{a.criterion}</span></span>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section id="kpis" class="pt-20 scroll-mt-24">
+    <div class="flex flex-wrap items-center gap-3"><h2 class="text-2xl font-bold">Proposed KPI framework: Learn → Innovate → Impact</h2></div>
+    <div class="grid lg:grid-cols-3 gap-4 mt-6">
+      {cols.map((col) => (
+        <div class="space-y-3">
+          <p class="mono font-bold tracking-widest text-lg" style={`color:${col.c}`}>{col.title.toUpperCase()}</p>
+          {k.kpis.filter((x) => x.pillar === col.p).map((x) => (
+            <div class="card p-4" style={`border-left: 3px solid ${col.c}`}>
+              <div class="flex items-center justify-between gap-2"><p class="mono text-xs" style={`color:${col.c}`}>{x.code}</p>{x.proposed && <Proposed />}</div>
+              <p class="font-semibold mt-1">{x.kpi}</p>
+              <p class="text-sm text-muted mt-1">{x.target}</p>
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+    <div class="card p-5 mt-4 grid md:grid-cols-[220px_1fr] gap-3" style="border-left: 3px solid var(--muted)">
+      <div><p class="mono font-bold tracking-widest">SAFE &amp; SUSTAIN</p><p class="mono text-xs text-muted">{safe.code}</p></div>
+      <div><p class="font-semibold">{safe.kpi}</p><p class="text-sm text-muted mt-1">{safe.target}</p></div>
+    </div>
+  </section>
+
+  <section id="north-star" class="pt-20 scroll-mt-24">
+    <div class="card p-8 sm:p-12 relative overflow-hidden" style="border-color: color-mix(in srgb, var(--impact) 45%, transparent); box-shadow: 0 0 80px -30px var(--impact)">
+      <p class="eyebrow">✦ Proposed North Star student-benefit metric</p>
+      <p class="text-2xl sm:text-3xl font-bold mt-4 leading-snug" style="font-family: var(--font-display)">{k.northStar}</p>
+    </div>
+    <p class="text-muted mt-6 max-w-3xl">SkyGrid should establish 2027 baselines before claiming percentage improvements in student participation, relevant applied research, external funding, or partner activity. A percentage improvement without a baseline would be misleading.</p>
+    <p class="eyebrow mt-10 mb-3">Metrics we refuse to use as strategic success</p>
+    <ul class="flex flex-wrap gap-2">
+      {k.refuse.map((m) => <li class="card px-4 py-2 line-through decoration-2 text-muted" style="text-decoration-color: var(--danger)">{m}</li>)}
+    </ul>
+    <p class="text-sm text-muted mt-4 max-w-3xl">Those can be operational statistics but they do not prove educational, research, regional, safety, or sustainability benefits.</p>
+  </section>
+</DeepPage>
+<style>
+  .check-item .box { border-color: var(--line-strong); color: transparent; transition: .3s; }
+  .check-item.ticked .box { border-color: var(--learn); background: var(--learn); color: #062015; box-shadow: 0 0 12px -2px var(--learn); }
+</style>
+<script>
+  const items = document.querySelectorAll('.check-item');
+  const io = new IntersectionObserver((es) => es.forEach((e) => {
+    if (e.isIntersecting) { const i = [...items].indexOf(e.target); setTimeout(() => e.target.classList.add('ticked'), (i % 2) * 150 + 200); io.unobserve(e.target); }
+  }), { rootMargin: '0px 0px -25% 0px' });
+  items.forEach((i) => io.observe(i));
+</script>

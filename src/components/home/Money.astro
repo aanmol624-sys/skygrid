@@ -1,0 +1,14 @@
+---
+import Chapter from './Chapter.astro';
+import CeilingBar from '../CeilingBar.astro';
+import Cite from '../Cite.astro';
+---
+<Chapter n={6} title="The money: $100M, with the reserves built in."
+  deeper={{ label: 'See every dollar', href: 'investment' }}
+  notes="Money & change control (2:00 · Ishmeet). The ceiling bar: $85M planned work + $10M contingency = $95M cost baseline; $5M sponsor-controlled management reserve. Key line: the $100M is an authorization ceiling, not a spending target. Mention funding released gate by gate and the 4-level change authority.">
+  <div class="reveal"><CeilingBar /></div>
+  <blockquote class="reveal mt-6 text-3xl sm:text-5xl font-bold leading-tight max-w-5xl" style="font-family: var(--font-display)">
+    “the $100M is an <span class="text-impact">authorization ceiling</span>, not a spending target”
+  </blockquote>
+  <p class="reveal text-muted mt-5 max-w-3xl leading-relaxed">If the approved capability can be delivered for less, the project should not invent spending merely to consume the grant. PMI defines the cost baseline as the approved time-phased project budget excluding management reserves <Cite ids="pmi-2026a" label="PMI, 2026a" />.</p>
+</Chapter>

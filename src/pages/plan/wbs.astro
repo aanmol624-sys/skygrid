@@ -1,0 +1,32 @@
+---
+import DeepPage from '../../layouts/DeepPage.astro';
+import Wbs from '../../components/islands/Wbs.tsx';
+import Cite from '../../components/Cite.astro';
+import Proposed from '../../components/Proposed.astro';
+import wbs from '../../data/wbs.json';
+---
+<DeepPage title="Work Breakdown Structure" eyebrow="The Plan · WBS" pillar="innovate"
+  crumbs={[{ label: 'The Plan' }, { label: 'WBS' }]}
+  intro="The WBS should show what the project must deliver, not merely a chronological task list.">
+  <div class="prose-sg max-w-4xl mb-10">
+    <p>PMI defines a WBS as a deliverable-oriented hierarchical breakdown of total project scope, and emphasizes the 100% rule: the WBS includes all project work and only project work <Cite ids="pmi-2026b" label="PMI, 2026b" />. Professor Renso’s course also emphasizes defining scope, time, cost, and project-management planning before execution <Cite ids="renso-2026b" label="Renso, 2026b" />.</p>
+    <p>PMI describes the WBS dictionary as the companion detail behind WBS components and control accounts as points where scope, budget, and schedule come together for performance measurement <Cite ids={['pmi-2026a', 'pmi-2026b']} label="PMI, 2026a, 2026b" />. SkyGrid will use the same WBS codes across schedule, budget, risk, responsibility, and change-control artifacts so the project does not become a collection of unrelated tables.</p>
+  </div>
+  <div class="flex flex-wrap items-center gap-3 mb-6">
+    <h2 class="text-2xl font-bold">Proposed deliverable-oriented SkyGrid WBS</h2><Proposed label="Team design" />
+  </div>
+  <Wbs client:load />
+  <p class="text-xs text-muted mt-4">Source: Team-developed WBS, structured using PMI WBS principles <Cite ids="pmi-2026b" label="PMI, 2026b" />.</p>
+
+  <section class="mt-16">
+    <h2 class="text-2xl font-bold mb-5">WBS dictionary — critical packages</h2>
+    <div class="overflow-x-auto card">
+      <table class="tbl">
+        <thead><tr><th>WBS</th><th>Work package</th><th>Acceptance evidence</th><th>Primary dependency</th></tr></thead>
+        <tbody>
+          {wbs.critical.map((c) => <tr><td class="mono text-impact">{c.code}</td><td class="font-semibold">{c.name}</td><td>{c.evidence}</td><td class="mono text-[.8rem]">{c.dependency}</td></tr>)}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</DeepPage>

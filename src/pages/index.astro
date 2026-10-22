@@ -1,0 +1,158 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/home/Hero.astro';
+import WhyNow from '../components/home/WhyNow.astro';
+import Idea from '../components/home/Idea.astro';
+import Loop from '../components/home/Loop.astro';
+import PlanPreview from '../components/home/PlanPreview.astro';
+import Money from '../components/home/Money.astro';
+import RiskPreview from '../components/home/RiskPreview.astro';
+import Different from '../components/home/Different.astro';
+import Kpis from '../components/home/Kpis.astro';
+import Ask from '../components/home/Ask.astro';
+import { CHAPTERS } from '../lib/site';
+---
+<Base isHome>
+  <div class="relative">
+    <!-- dashed "flight path" connecting the chapters -->
+    <div class="flight-line hidden md:block" aria-hidden="true"></div>
+    <Hero />
+    <WhyNow />
+    <Idea />
+    <Loop />
+    <PlanPreview />
+    <Money />
+    <RiskPreview />
+    <Different />
+    <Kpis />
+    <Ask />
+  </div>
+
+  <!-- Altimeter dot navigation -->
+  <nav id="altimeter" class="fixed right-3 sm:right-5 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col items-center gap-3 no-print" aria-label="Chapters">
+    <span class="mono text-[.55rem] text-muted tracking-widest">ALT</span>
+    <div class="relative flex flex-col gap-3.5 py-2 px-1.5 rounded-full glass">
+      {CHAPTERS.map((c, i) => (
+        <a href={`#${c.id}`} class="alt-dot group relative" data-alt={i} style={`--c: var(--${c.pillar})`} aria-label={`Chapter ${i + 1}: ${c.label}`}>
+          <span class="block w-2.5 h-2.5 rounded-full border border-line-strong transition-all"></span>
+          <span class="alt-label absolute right-6 top-1/2 -translate-y-1/2 whitespace-nowrap glass rounded-md px-2 py-1 text-xs mono">{String(i + 1).padStart(2, '0')} · {c.label}</span>
+        </a>
+      ))}
+    </div>
+  </nav>
+
+  <!-- Presentation Mode HUD -->
+  <div id="present-hud" class="fixed inset-x-0 bottom-0 z-[90] hidden no-print">
+    <div id="notes-drawer" data-lenis-prevent class="glass border-t border-line p-5 sm:px-8 max-h-[40vh] overflow-y-auto" style="background: var(--surface-solid)">
+      <p class="eyebrow mb-2">Speaker notes · press N to hide</p>
+      <p id="notes-text" class="text-[.95rem] leading-relaxed max-w-4xl"></p>
+    </div>
+    <div class="flex items-center gap-2 p-3 sm:px-6 justify-between" style="background: color-mix(in srgb, var(--bg) 85%, transparent)">
+      <div class="flex items-center gap-2">
+        <button type="button" class="btn btn-ghost btn-sm" data-pm="prev" aria-label="Previous chapter">←</button>
+        <span class="mono text-sm" id="pm-count">01 / 10</span>
+        <button type="button" class="btn btn-ghost btn-sm" data-pm="next" aria-label="Next chapter">→</button>
+      </div>
+      <p class="mono text-xs text-muted hidden md:block">← → move · N notes · T timer · Esc exit</p>
+      <div class="flex items-center gap-2">
+        <button type="button" class="mono text-lg font-semibold px-3 py-1 rounded-lg border border-line-strong" id="pm-timer" aria-label="Pause or resume timer">15:00</button>
+        <button type="button" class="btn btn-ghost btn-sm" data-pm="notes">Notes</button>
+        <button type="button" class="btn btn-ghost btn-sm" data-pm="exit">Exit</button>
+      </div>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .flight-line { position: absolute; left: 22px; top: 100vh; bottom: 0; width: 0; border-left: 2px dashed color-mix(in srgb, var(--impact) 30%, transparent); pointer-events: none; z-index: 1; }
+  .alt-dot.active > span:first-child { background: var(--c); border-color: var(--c); box-shadow: 0 0 12px var(--c); transform: scale(1.35); }
+  .alt-label { opacity: 0; pointer-events: none; transition: opacity .15s; }
+  .alt-dot:hover .alt-label, .alt-dot:focus-visible .alt-label { opacity: 1; }
+
+  /* Presentation Mode */
+  :global(body.presenting) { overflow: hidden; }
+  :global(body.presenting #site-nav), :global(body.presenting footer), :global(body.presenting #altimeter), :global(body.presenting #mobile-bar), :global(body.presenting .flight-line) { display: none !important; }
+  :global(body.presenting .chapter) { display: none !important; }
+  :global(body.presenting .chapter.current) { display: flex !important; position: fixed; inset: 0; z-index: 60; overflow-y: auto; background: var(--bg); padding-bottom: 6rem; align-items: flex-start; }
+  :global(body.presenting .chapter.current#hook) { align-items: center; }
+  :global(body.presenting .reveal) { opacity: 1 !important; transform: none !important; }
+  #notes-drawer { display: none; }
+  #present-hud.notes-open #notes-drawer { display: block; }
+  #pm-timer.low { color: var(--danger); border-color: var(--danger); }
+</style>
+
+<script>
+  const chapters = [...document.querySelectorAll<HTMLElement>('.chapter')];
+  const dots = [...document.querySelectorAll<HTMLElement>('[data-alt]')];
+
+  /* Altimeter: highlight the chapter in view */
+  const io = new IntersectionObserver((es) => {
+    es.forEach((e) => {
+      if (!e.isIntersecting) return;
+      const i = Number((e.target as HTMLElement).dataset.chapter);
+      dots.forEach((d, k) => d.classList.toggle('active', k === i));
+    });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  chapters.forEach((c) => io.observe(c));
+
+  /* Presentation Mode */
+  const hud = document.getElementById('present-hud')!;
+  const timerEl = document.getElementById('pm-timer')!;
+  let cur = 0, presenting = false, remaining = 15 * 60, ticking = false, interval: number | undefined;
+  const fmt = (s: number) => `${s < 0 ? '-' : ''}${String(Math.floor(Math.abs(s) / 60)).padStart(2, '0')}:${String(Math.abs(s) % 60).padStart(2, '0')}`;
+  const tick = () => { remaining--; timerEl.textContent = fmt(remaining); timerEl.classList.toggle('low', remaining <= 60); };
+  const setTimer = (on: boolean) => { ticking = on; clearInterval(interval); if (on) interval = window.setInterval(tick, 1000); };
+
+  const show = (i: number) => {
+    cur = Math.max(0, Math.min(chapters.length - 1, i));
+    chapters.forEach((c, k) => { c.classList.toggle('current', k === cur); c.toggleAttribute('data-lenis-prevent', presenting && k === cur); });
+    chapters[cur].scrollTop = 0;
+    document.getElementById('pm-count')!.textContent = `${String(cur + 1).padStart(2, '0')} / ${String(chapters.length).padStart(2, '0')}`;
+    document.getElementById('notes-text')!.textContent = chapters[cur].dataset.notes || '';
+    chapters[cur].querySelectorAll('.reveal').forEach((r) => r.classList.add('in'));
+  };
+  const start = () => {
+    presenting = true;
+    (window as any).__lenis?.stop();
+    document.body.classList.add('presenting');
+    hud.classList.remove('hidden');
+    show(0);
+    remaining = 15 * 60; timerEl.textContent = fmt(remaining); setTimer(true);
+    document.documentElement.requestFullscreen?.().catch(() => {});
+  };
+  const stop = () => {
+    presenting = false;
+    setTimer(false);
+    document.body.classList.remove('presenting');
+    hud.classList.add('hidden');
+    hud.classList.remove('notes-open');
+    chapters.forEach((c) => { c.classList.remove('current'); c.removeAttribute('data-lenis-prevent'); });
+    (window as any).__lenis?.start();
+    if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+    chapters[cur].scrollIntoView();
+  };
+
+  document.querySelectorAll<HTMLElement>('[data-present]').forEach((b) => b.addEventListener('click', (e) => { e.preventDefault(); (document.getElementById('video-modal') as HTMLDialogElement)?.close(); start(); }));
+  hud.addEventListener('click', (e) => {
+    const a = (e.target as HTMLElement).closest<HTMLElement>('[data-pm]')?.dataset.pm;
+    if (a === 'prev') show(cur - 1);
+    if (a === 'next') show(cur + 1);
+    if (a === 'notes') hud.classList.toggle('notes-open');
+    if (a === 'exit') stop();
+  });
+  timerEl.addEventListener('click', () => setTimer(!ticking));
+  document.addEventListener('keydown', (e) => {
+    const tag = (e.target as HTMLElement).tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || document.querySelector('dialog[open]')) return;
+    if (!presenting) { if (e.key === 'p' || e.key === 'P') start(); return; }
+    if (['ArrowRight', 'ArrowDown', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); show(cur + 1); }
+    if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); show(cur - 1); }
+    if (e.key === 'n' || e.key === 'N') hud.classList.toggle('notes-open');
+    if (e.key === 't' || e.key === 'T') setTimer(!ticking);
+    if (e.key === 'Escape') stop();
+  });
+  if (new URLSearchParams(location.search).get('present') === '1') {
+    history.replaceState(null, '', location.pathname);
+    start();
+  }
+</script>

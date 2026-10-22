@@ -1,0 +1,71 @@
+{
+  "source": "Hiring plan: roles we will hire and when",
+  "intro": "Each “On board by” date is the start of the first schedule activity that role leads. Pay comes from the $6M startup staffing budget; the Program Director falls under the $6M governance/design budget. Exact headcount will be set from workload.",
+  "roles": [
+    {
+      "role": "Program Director / Project Manager",
+      "onboard": "Nov 2026",
+      "first": "Authorization, charter & governance (1)"
+    },
+    {
+      "role": "HR / recruitment support",
+      "onboard": "Jan 2027",
+      "first": "Early recruitment to address specialist staffing risk (R9)"
+    },
+    {
+      "role": "Partnerships Lead",
+      "onboard": "Jan 2027",
+      "first": "Market & partner validation (2)"
+    },
+    {
+      "role": "Technical Lead and Regulatory Lead",
+      "onboard": "Jan 2027",
+      "first": "Technical, regulatory & site feasibility (3)"
+    },
+    {
+      "role": "Finance Lead",
+      "onboard": "Mar 2027",
+      "first": "Preliminary financial validation (4)"
+    },
+    {
+      "role": "Capital Projects / Site Lead",
+      "onboard": "Jul 2027",
+      "first": "Central-node / field-site strategy (6)"
+    },
+    {
+      "role": "Indigenous & Community Engagement Lead",
+      "onboard": "Jul 2027",
+      "first": "Rights-holder, privacy & data requirements (7)"
+    },
+    {
+      "role": "Field Operations Lead",
+      "onboard": "Jan 2028",
+      "first": "Field-test network design (9)"
+    },
+    {
+      "role": "Technology Lead",
+      "onboard": "Jan 2028",
+      "first": "Technology architecture & specs (10)"
+    },
+    {
+      "role": "Safety Manager and Cyber/Privacy Lead",
+      "onboard": "Jul 2028",
+      "first": "Safety, cyber, privacy & operating framework (18)"
+    },
+    {
+      "role": "Academic Lead",
+      "onboard": "Jan 2029",
+      "first": "Academic / student-program development (16)"
+    },
+    {
+      "role": "Systems Integration Lead",
+      "onboard": "Jan 2030",
+      "first": "Full-system integration (19)"
+    },
+    {
+      "role": "Operations Lead, RPAS operators and technicians",
+      "onboard": "Jan 2030",
+      "first": "Staff/operator readiness (20) and pilot operations (21)"
+    }
+  ]
+}

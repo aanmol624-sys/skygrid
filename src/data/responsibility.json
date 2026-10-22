@@ -1,0 +1,209 @@
+{
+  "source": "Table 23: Group roles and primary responsibilities + Table 24: Deliverable responsibility matrix",
+  "note": "Our group has three active members: Anmol, Armaan and Ishmeet Anand. Every deliverable on this site was completed by these three, and responsibilities are credited only for work actually done.",
+  "members": [
+    {
+      "id": "anmol",
+      "name": "Anmol",
+      "short": "Anmol",
+      "role": "Project Integration & Project-Management Lead",
+      "responsibilities": "Overall concept; charter integration; scope; WBS; delivery approach; gates/kill points; Gantt logic; consistency across all sections; final integration.",
+      "skills": [
+        "Project planning and scheduling (WBS, Gantt chart, critical path, stage gates and kill points)",
+        "Writing the project charter and defining scope",
+        "Integrating sections from three authors into one consistent proposal",
+        "Producing professional documents and presentation visuals"
+      ],
+      "initials": "A"
+    },
+    {
+      "id": "armaan",
+      "name": "Armaan",
+      "short": "Armaan",
+      "role": "Research, Stakeholder & Competitive-Analysis Lead",
+      "responsibilities": "External research; stakeholder evidence; regulatory/environment scan; UFV/Fraser Valley evidence; competitor benchmarking; source verification.",
+      "skills": [
+        "Researching and checking sources, including Canadian RPAS/drone regulations (Transport Canada, NAV CANADA)",
+        "Stakeholder analysis and power–interest mapping",
+        "Competitive benchmarking against other drone and UAS programs",
+        "APA 7 citation and reference checking"
+      ],
+      "initials": "A"
+    },
+    {
+      "id": "ishmeet",
+      "name": "Ishmeet Anand",
+      "short": "Ishmeet",
+      "role": "Financial, Risk & Benefits Lead",
+      "responsibilities": "$100M structure; sustainability; risk register; cost/change control; KPIs; benefits-realization logic.",
+      "skills": [
+        "Budgeting and cost-baseline design (the $85M / $10M / $5M structure)",
+        "Risk assessment and building the risk register (likelihood × impact scoring)",
+        "Cost and change control (variance triggers, change authority levels)",
+        "KPI design and benefits-realization planning"
+      ],
+      "initials": "IA"
+    }
+  ],
+  "matrix": [
+    {
+      "deliverable": "SkyGrid concept / overall idea",
+      "primary": [
+        "Anmol"
+      ],
+      "support": [
+        "Armaan",
+        "Ishmeet"
+      ]
+    },
+    {
+      "deliverable": "Business case",
+      "primary": [
+        "Armaan"
+      ],
+      "support": [
+        "Anmol"
+      ]
+    },
+    {
+      "deliverable": "Project charter",
+      "primary": [
+        "Anmol"
+      ],
+      "support": [
+        "Ishmeet"
+      ]
+    },
+    {
+      "deliverable": "Stakeholder analysis",
+      "primary": [
+        "Armaan"
+      ],
+      "support": [
+        "Anmol"
+      ]
+    },
+    {
+      "deliverable": "WBS",
+      "primary": [
+        "Anmol"
+      ],
+      "support": [
+        "Ishmeet"
+      ]
+    },
+    {
+      "deliverable": "Delivery method / kill points",
+      "primary": [
+        "Anmol"
+      ],
+      "support": [
+        "Armaan"
+      ]
+    },
+    {
+      "deliverable": "Gantt / schedule",
+      "primary": [
+        "Anmol"
+      ],
+      "support": [
+        "Ishmeet"
+      ]
+    },
+    {
+      "deliverable": "Risk register",
+      "primary": [
+        "Ishmeet"
+      ],
+      "support": [
+        "Armaan"
+      ]
+    },
+    {
+      "deliverable": "$100M cost baseline",
+      "primary": [
+        "Ishmeet"
+      ],
+      "support": [
+        "Anmol"
+      ]
+    },
+    {
+      "deliverable": "Change-control model",
+      "primary": [
+        "Ishmeet"
+      ],
+      "support": [
+        "Anmol"
+      ]
+    },
+    {
+      "deliverable": "Success criteria / KPIs",
+      "primary": [
+        "Ishmeet"
+      ],
+      "support": [
+        "Armaan"
+      ]
+    },
+    {
+      "deliverable": "Competitive research",
+      "primary": [
+        "Armaan"
+      ],
+      "support": [
+        "Anmol"
+      ]
+    },
+    {
+      "deliverable": "Final outputs / definition of done",
+      "primary": [
+        "Anmol"
+      ],
+      "support": [
+        "All"
+      ]
+    },
+    {
+      "deliverable": "APA source verification",
+      "primary": [
+        "Armaan"
+      ],
+      "support": [
+        "All"
+      ]
+    },
+    {
+      "deliverable": "Final report consistency",
+      "primary": [
+        "Anmol"
+      ],
+      "support": [
+        "All"
+      ]
+    },
+    {
+      "deliverable": "Proofreading / website / presentation",
+      "primary": [
+        "All"
+      ],
+      "support": [
+        "All"
+      ]
+    }
+  ],
+  "quality": [
+    {
+      "name": "Accuracy",
+      "text": "Each owner verifies the factual content introduced in their area."
+    },
+    {
+      "name": "Citation integrity",
+      "text": "Every external claim must be recoverable to a source; unsupported claims must be re-researched, labeled as proposals, or removed."
+    },
+    {
+      "name": "Presentation readiness",
+      "text": "All active members understand the whole proposal well enough to answer questions outside their primary section."
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+---
+import Chapter from './Chapter.astro';
+import b from '../../data/benchmarks.json';
+const colors = ['var(--learn)', 'var(--innovate)', 'var(--impact)'];
+---
+<Chapter n={8} title="Why SkyGrid is different: the configuration, not exclusive technology."
+  deeper={{ label: 'Go deeper: 9 comparators', href: 'why/competitors' }}
+  notes="Differentiation (1:00 · Armaan). Read the positioning statement. Other universities already do drone research — we checked nine comparators. Our edge is regional integration. Build what differentiates UFV, buy mature technology, partner for what others do exceptionally well.">
+  <blockquote class="reveal text-2xl sm:text-4xl font-semibold leading-snug max-w-5xl" style="font-family: var(--font-display)">
+    U of T can develop frontier flight-control technology and Foremost can provide specialized restricted test airspace. SkyGrid does not need to recreate either. <span class="text-impact">UFV’s opportunity is to become the place where autonomous aviation meets real Fraser Valley problems, students, researchers, and industries.</span>
+  </blockquote>
+
+  <div class="grid md:grid-cols-3 gap-4 mt-12">
+    {b.bbp.map((x, i) => (
+      <div class="card p-6 reveal" style={`border-top: 3px solid ${colors[i]}; transition-delay:${i * 100}ms`}>
+        <p class="mono text-2xl font-bold tracking-wider" style={`color:${colors[i]}`}>{x.choice}</p>
+        <p class="text-muted mt-3 text-[.95rem] leading-relaxed">{x.use}</p>
+      </div>
+    ))}
+  </div>
+
+  <div class="mt-12 overflow-hidden border-y border-line py-4 reveal" aria-label={`Comparators researched: ${b.marquee.join(', ')}`}>
+    <div class="marquee-track flex w-max gap-12" aria-hidden="true">
+      {[...b.marquee, ...b.marquee].map((n) => <span class="mono text-xl sm:text-2xl text-muted whitespace-nowrap">{n} <span class="text-line-strong ml-12">✦</span></span>)}
+    </div>
+  </div>
+</Chapter>

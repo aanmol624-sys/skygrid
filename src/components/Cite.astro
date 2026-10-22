@@ -1,0 +1,7 @@
+---
+// CITED chip. Clicking opens the global source panel (see SourcePanel.astro).
+interface Props { ids: string | string[]; label: string }
+const { ids, label } = Astro.props;
+const list = Array.isArray(ids) ? ids : [ids];
+---
+<button type="button" class="chip-cite" data-cite={list.join(',')} aria-label={`Source: ${label}`}>({label})</button>

@@ -1,0 +1,34 @@
+---
+import Chapter from './Chapter.astro';
+import Proposed from '../Proposed.astro';
+import k from '../../data/kpis.json';
+const tiles = [
+  { v: 150, pre: '≥', label: 'students in the first full operating year', code: 'L1 · Learn', c: 'learn' },
+  { v: 10, pre: '≥', label: 'applied research projects in the first full year', code: 'I1 · Innovate', c: 'innovate' },
+  { v: 8, pre: '≥', label: 'active partners at launch', code: 'IMP1 · Impact', c: 'impact' },
+];
+---
+<Chapter n={9} title="How we’ll know it worked."
+  deeper={{ label: 'Go deeper: KPIs & benefits', href: 'why/success' }}
+  notes="KPIs (0:45 · Ishmeet). The North Star: number of UFV students annually completing a field-validated or external-partner SkyGrid experience. Three proposed targets: ≥150 students, ≥10 research projects, ≥8 partners. Finishing is not the same as succeeding.">
+  <div class="north-star card p-8 sm:p-12 reveal relative overflow-hidden">
+    <div class="absolute -top-24 -right-24 w-72 h-72 rounded-full" style="background: radial-gradient(circle, color-mix(in srgb, var(--impact) 35%, transparent), transparent 70%)"></div>
+    <p class="eyebrow flex items-center gap-2"><span class="text-impact text-lg">✦</span> Proposed North Star metric</p>
+    <p class="relative text-2xl sm:text-4xl font-bold mt-4 leading-tight max-w-4xl" style="font-family: var(--font-display)">{k.northStar}</p>
+  </div>
+  <div class="grid sm:grid-cols-3 gap-4 mt-5">
+    {tiles.map((t, i) => (
+      <div class="card p-6 reveal" style={`transition-delay:${i * 100}ms`}>
+        <div class="flex items-center justify-between">
+          <p class="mono text-xs" style={`color: var(--${t.c})`}>{t.code}</p>
+          <Proposed />
+        </div>
+        <p class="mono text-5xl font-semibold mt-3" style={`color: var(--${t.c})`}>{t.pre}<span data-count={t.v}>{t.v}</span></p>
+        <p class="text-muted mt-2">{t.label}</p>
+      </div>
+    ))}
+  </div>
+</Chapter>
+<style>
+  .north-star { border-color: color-mix(in srgb, var(--impact) 45%, transparent); box-shadow: 0 0 80px -30px var(--impact); }
+</style>

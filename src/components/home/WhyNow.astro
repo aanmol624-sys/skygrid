@@ -1,0 +1,112 @@
+---
+import Chapter from './Chapter.astro';
+import Cite from '../Cite.astro';
+const cards = [
+  { n: 1254, label: 'farms', pre: '', suf: '', note: 'operating in Abbotsford' },
+  { n: 61586, label: 'acres', pre: '', suf: '', note: 'of Abbotsford farmland' },
+  { n: 1, label: 'in annual farm-gate sales', pre: 'nearly $', suf: 'B', note: 'Abbotsford agriculture' },
+  { n: 16770, label: 'local jobs', pre: '', suf: '', note: 'supported by the broader farm economy (2022 analysis cited by the City)' },
+];
+---
+<Chapter n={2} title="Three forces are converging on the Fraser Valley — right now."
+  deeper={{ label: 'Go deeper: research & regulation', href: 'why/research' }}
+  notes="Why now (2:00 · Armaan). Walk the three circles: UFV strategy, Fraser Valley industries, Canada's 2025 drone-rule changes. Read the business problem. Hit the four numbers (City of Abbotsford, 2024) and YXX's ~215 acres. Then pre-empt the shark question: why not just fly at the airport? Use the altitude slice.">
+  <div class="grid lg:grid-cols-[1fr_1.1fr] gap-12 items-center">
+    <!-- Convergence diagram -->
+    <figure class="reveal" aria-label="Convergence diagram: UFV's strategic direction, Fraser Valley's industries and Canada's 2025 drone-rule changes overlap at SkyGrid">
+      <svg viewBox="0 0 520 470" class="w-full max-w-[520px] mx-auto">
+        <g class="venn" style="mix-blend-mode: screen">
+          <circle class="v v1" cx="190" cy="180" r="140" fill="var(--learn)" fill-opacity=".16" stroke="var(--learn)" stroke-opacity=".7" />
+          <circle class="v v2" cx="330" cy="180" r="140" fill="var(--innovate)" fill-opacity=".16" stroke="var(--innovate)" stroke-opacity=".7" />
+          <circle class="v v3" cx="260" cy="300" r="140" fill="var(--impact)" fill-opacity=".16" stroke="var(--impact)" stroke-opacity=".7" />
+        </g>
+        <circle class="core" cx="260" cy="220" r="34" fill="var(--impact)" opacity=".25" />
+        <text x="260" y="226" text-anchor="middle" class="core-t" font-family="Space Grotesk Variable, sans-serif" font-weight="700" font-size="20" fill="var(--text)">SkyGrid</text>
+        <g font-family="Inter Variable, sans-serif" font-size="14" fill="var(--text)" font-weight="600">
+          <text x="120" y="120" text-anchor="middle"><tspan x="120">UFV’s strategic</tspan><tspan x="120" dy="18">direction</tspan></text>
+          <text x="400" y="120" text-anchor="middle"><tspan x="400">Fraser Valley’s</tspan><tspan x="400" dy="18">industries</tspan></text>
+          <text x="260" y="390" text-anchor="middle"><tspan x="260">Canada’s 2025</tspan><tspan x="260" dy="18">drone-rule changes</tspan></text>
+        </g>
+      </svg>
+      <figcaption class="text-xs text-muted text-center mt-2 flex flex-wrap gap-2 justify-center">
+        <Cite ids="ufv-2026a" label="UFV, 2026a" /><Cite ids="abbotsford-nd" label="City of Abbotsford, n.d." /><Cite ids="tc-2026a" label="Transport Canada, 2026a" />
+      </figcaption>
+    </figure>
+    <div>
+      <blockquote class="reveal text-xl sm:text-2xl leading-snug font-medium border-l-2 pl-6" style="border-color: var(--impact); font-family: var(--font-display)">
+        “UFV has relevant academic disciplines, applied-research ambitions, experiential-learning programs, and access to a region rich in autonomous-system applications, but those assets are not presently organized around a shared platform capable of moving work from classroom learning to simulation, field testing, and industry application.”
+      </blockquote>
+      <p class="eyebrow mt-3 pl-6 reveal">2.1 The business problem</p>
+    </div>
+  </div>
+
+  <!-- Evidence cards -->
+  <div class="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4 mt-14">
+    {cards.map((c) => (
+      <div class="card p-5 reveal">
+        <p class="mono text-3xl sm:text-4xl font-semibold text-impact">{c.pre}<span data-count={c.n}>{c.n.toLocaleString('en-CA')}</span>{c.suf}</p>
+        <p class="font-semibold mt-1">{c.label}</p>
+        <p class="text-xs text-muted mt-1">{c.note}</p>
+        <div class="mt-3"><Cite ids="abbotsford-2024" label="City of Abbotsford, 2024" /></div>
+      </div>
+    ))}
+    <div class="card p-5 reveal col-span-2 lg:col-span-1" style="border-color: color-mix(in srgb, var(--innovate) 40%, transparent)">
+      <p class="mono text-3xl sm:text-4xl font-semibold text-innovate">~<span data-count="215">215</span></p>
+      <p class="font-semibold mt-1">acres at YXX</p>
+      <p class="text-xs text-muted mt-1">advertised as available for aviation-related development</p>
+      <div class="mt-3"><Cite ids="yxx-nd-b" label="Abbotsford International Airport, n.d.-b" /></div>
+    </div>
+  </div>
+
+  <!-- Regulation altitude cross-section -->
+  <div class="card mt-14 p-5 sm:p-8 reveal">
+    <div class="flex flex-wrap items-baseline justify-between gap-3">
+      <h3 class="text-xl sm:text-2xl font-bold">“Why not just fly at the airport?”</h3>
+      <p class="eyebrow">Side view · altitude slice · not to scale</p>
+    </div>
+    <svg viewBox="0 0 1000 300" class="w-full mt-6" role="img" aria-label="Cross-section: lower-risk Level 1 Complex BVLOS operations stay in uncontrolled airspace at or below 400 feet AGL and more than five nautical miles from specified aerodromes.">
+      <defs>
+        <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="var(--danger)" stroke-opacity=".35" stroke-width="2" /></pattern>
+      </defs>
+      <!-- uncontrolled airspace band below 400 ft -->
+      <rect x="20" y="170" width="960" height="90" fill="var(--learn)" fill-opacity=".1" />
+      <!-- aerodrome 5 NM bubble -->
+      <path d="M90 260 A 210 190 0 0 1 510 260 Z" fill="url(#hatch)" stroke="var(--danger)" stroke-dasharray="6 5" stroke-opacity=".9" />
+      <!-- ground -->
+      <path d="M20 260 H980" stroke="var(--line-strong)" stroke-width="2" />
+      <g fill="var(--muted)"><rect x="240" y="252" width="120" height="8" rx="2" /><rect x="270" y="236" width="14" height="16" /></g>
+      <!-- 400 ft ceiling -->
+      <path d="M20 170 H980" stroke="var(--impact)" stroke-width="2" stroke-dasharray="10 6" />
+      <text x="975" y="160" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="14" fill="var(--impact)">400 ft AGL ceiling</text>
+      <!-- 5 NM dimension -->
+      <path d="M300 285 H510" stroke="var(--danger)" stroke-width="1.5" />
+      <path d="M300 279 v12 M510 279 v12" stroke="var(--danger)" stroke-width="1.5" />
+      <text x="405" y="282" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" fill="var(--danger)" dy="-6">5 NM</text>
+      <text x="300" y="70" text-anchor="middle" font-family="Inter Variable, sans-serif" font-size="14" font-weight="600" fill="var(--text)">Aerodrome environment</text>
+      <text x="300" y="90" text-anchor="middle" font-family="Inter Variable, sans-serif" font-size="12" fill="var(--muted)">complex BVLOS can require an SFOC</text>
+      <text x="300" y="222" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="var(--text)">YXX · knowledge &amp; industry anchor</text>
+      <!-- drone in compliant zone -->
+      <g transform="translate(760 215)">
+        <circle r="22" fill="var(--learn)" opacity=".18" />
+        <g stroke="var(--text)" stroke-width="1.8" stroke-linecap="round"><path d="M-8 -8L8 8M8 -8L-8 8" /></g>
+        <rect x="-4" y="-4" width="8" height="8" rx="2" fill="var(--impact)" />
+      </g>
+      <text x="760" y="198" dy="-30" text-anchor="middle" font-family="Inter Variable, sans-serif" font-size="14" font-weight="600" fill="var(--learn)">Field testing where the rules allow it</text>
+      <text x="760" y="252" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="var(--muted)">uncontrolled airspace</text>
+    </svg>
+    <p class="text-muted mt-5 leading-relaxed max-w-4xl text-[.95rem]">
+      Lower-risk Level 1 Complex BVLOS operations must remain in uncontrolled airspace, at or below 400 feet AGL, and more than five nautical miles from specified aerodromes; more complex BVLOS operations, including BVLOS in an aerodrome environment, can require a Special Flight Operations Certificate <Cite ids={['tc-2026b', 'tc-2026c']} label="Transport Canada, 2026b, 2026c" />. For that reason, SkyGrid should use the Abbotsford aerospace ecosystem mainly as a knowledge, industry, simulation, and systems-integration anchor while locating real-world field testing only where the regulatory environment permits it.
+    </p>
+  </div>
+</Chapter>
+
+<style>
+  .js .venn .v { transition: transform 1.2s cubic-bezier(.2,.8,.2,1), opacity 1.2s; opacity: 0; }
+  .js .venn .v1 { transform: translate(-90px, -40px); }
+  .js .venn .v2 { transform: translate(90px, -40px); }
+  .js .venn .v3 { transform: translate(0, 90px); }
+  .js .reveal.in .venn .v { transform: none; opacity: 1; }
+  .js .core, .js .core-t { opacity: 0; transition: opacity .8s 1s; }
+  .js .reveal.in .core, .js .reveal.in .core-t { opacity: 1; }
+  .reveal.in .core { animation: glow 2.5s 2s ease-in-out infinite; }
+</style>

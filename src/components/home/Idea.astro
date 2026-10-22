@@ -1,0 +1,95 @@
+---
+import Chapter from './Chapter.astro';
+import Icon from '../Icon.astro';
+const components = [
+  { name: 'Innovation & Simulation Node', purpose: 'Central simulation, command-and-control development, cybersecurity, data analytics, teaching, prototyping, and partner collaboration.', icon: 'node', color: 'var(--innovate)' },
+  { name: 'Fraser Valley Field-Test Network', purpose: 'Regulatory-compliant locations representing different real operating environments.', icon: 'field', color: 'var(--impact)' },
+  { name: 'Student Applied-Learning Program', purpose: 'Structured projects, research, co-op/practicum opportunities, and multidisciplinary learning.', icon: 'student', color: 'var(--learn)' },
+  { name: 'Industry & Community Challenge Program', purpose: 'A repeatable intake process in which real partner problems are evaluated, simulated, field-tested where appropriate, analyzed, and returned as meaningful outcomes.', icon: 'challenge', color: 'var(--impact)' },
+];
+const [hub, ...orbit] = components;
+const pillars = [
+  { name: 'Learn', c: 'learn', text: 'Learn would provide students with hands-on education, multidisciplinary projects, co-op or applied-learning opportunities, and industry exposure.' },
+  { name: 'Innovate', c: 'innovate', text: 'Innovate would support applied research, prototyping, simulation, cybersecurity, data analytics, and autonomous-systems testing.' },
+  { name: 'Impact', c: 'impact', text: 'Impact would use these capabilities to investigate real regional applications such as precision agriculture, environmental monitoring, infrastructure inspection, mapping, and other partner-defined problems.' },
+];
+const refuse = [
+  { claim: 'World’s first drone centre', rule: 'Do not call SkyGrid the world’s first drone centre or Canada’s first university drone program.' },
+  { claim: 'Automatic YXX land & airspace', rule: 'Do not assume access to YXX land or airspace merely because UFV has an aerospace presence at the airport.' },
+  { claim: 'Revenue as the primary pillar', rule: 'Do not make revenue the primary pillar. Revenue is a supporting sustainability mechanism.' },
+  { claim: 'Success = drones purchased', rule: 'Do not define success by the number of drones purchased. Define it by student learning, research progression, partner outcomes, safe operation, and regional value.' },
+];
+---
+<Chapter n={3} title="Not a drone lab. A platform with four connected components."
+  deeper={{ label: 'Go deeper: what UFV receives', href: 'product' }}
+  notes="The idea (2:00 · Anmol). Centre: the Innovation & Simulation Node. Around it: Field-Test Network, Student Applied-Learning Program, Industry & Community Challenge Program. Then Learn → Innovate → Impact. Close on our discipline: what we refuse to claim — the sharks trust founders who know their limits.">
+  <!-- System architecture hub -->
+  <div class="relative reveal">
+    <div class="hub-grid">
+      <svg class="hub-lines absolute inset-0 w-full h-full hidden md:block" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <g stroke="var(--line-strong)" stroke-width=".25" stroke-dasharray="1 1" fill="none">
+          <path d="M50 50 L16 18" /><path d="M50 50 L84 18" /><path d="M50 50 L50 88" />
+        </g>
+      </svg>
+      <button type="button" class="hub-node hub-center tip" style={`--c:${hub.color}`}>
+        <span class="node-icon"><Icon name={hub.icon} size={30} /></span>
+        <span class="font-bold text-lg leading-tight" style="font-family: var(--font-display)">{hub.name}</span>
+        <span class="eyebrow">Central hub</span>
+        <span class="tip-body">{hub.purpose}</span>
+      </button>
+      {orbit.map((c, i) => (
+        <button type="button" class={`hub-node hub-o${i + 1} tip`} style={`--c:${c.color}`}>
+          <span class="node-icon"><Icon name={c.icon} size={24} /></span>
+          <span class="font-semibold leading-tight">{c.name}</span>
+          <span class="tip-body">{c.purpose}</span>
+        </button>
+      ))}
+    </div>
+    <p class="text-center text-xs text-muted mt-4 mono">Hover or focus a component to see its purpose · Table 1</p>
+  </div>
+
+  <!-- Learn → Innovate → Impact -->
+  <div class="grid md:grid-cols-3 gap-4 mt-14">
+    {pillars.map((p, i) => (
+      <div class="card p-6 reveal relative overflow-hidden" style={`border-top: 3px solid var(--${p.c}); transition-delay:${i * 120}ms`}>
+        <p class="mono text-xs" style={`color: var(--${p.c})`}>0{i + 1}</p>
+        <h3 class="text-3xl font-bold mt-1" style={`color: var(--${p.c})`}>{p.name} {i < 2 && <span class="text-muted text-2xl">→</span>}</h3>
+        <p class="text-muted mt-3 leading-relaxed text-[.95rem]">{p.text}</p>
+      </div>
+    ))}
+  </div>
+
+  <!-- Our discipline -->
+  <div class="mt-14 reveal">
+    <p class="eyebrow mb-4">Our discipline · what we refuse to claim</p>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+      {refuse.map((r) => (
+        <div class="card p-5">
+          <p class="text-lg font-semibold line-through decoration-2" style="text-decoration-color: var(--danger); color: var(--muted)">{r.claim}</p>
+          <p class="text-sm mt-3 leading-relaxed">{r.rule}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</Chapter>
+
+<style>
+  .hub-grid { position: relative; display: grid; gap: 1rem; }
+  @media (min-width: 768px) {
+    .hub-grid { grid-template-columns: 1fr 1.15fr 1fr; grid-template-rows: auto auto auto; min-height: 460px; align-items: center; }
+    .hub-o1 { grid-column: 1; grid-row: 1; }
+    .hub-o2 { grid-column: 3; grid-row: 1; }
+    .hub-center { grid-column: 2; grid-row: 2; }
+    .hub-o3 { grid-column: 2; grid-row: 3; }
+  }
+  .hub-node {
+    position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; gap: .5rem;
+    padding: 1.25rem; border-radius: 18px; background: var(--surface); border: 1px solid color-mix(in srgb, var(--c) 40%, transparent);
+    backdrop-filter: blur(10px); transition: transform .2s, box-shadow .2s;
+  }
+  .hub-node:hover, .hub-node:focus-visible { transform: translateY(-3px); box-shadow: 0 0 40px -10px var(--c); }
+  .hub-center { padding: 2rem 1.5rem; border-width: 2px; box-shadow: 0 0 60px -20px var(--c); }
+  .node-icon { color: var(--c); width: 52px; height: 52px; display: grid; place-items: center; border-radius: 14px; background: color-mix(in srgb, var(--c) 14%, transparent); }
+  .hub-center .node-icon { width: 64px; height: 64px; }
+  .hub-node .tip-body { bottom: auto; top: calc(100% + 8px); }
+</style>

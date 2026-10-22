@@ -1,0 +1,147 @@
+---
+import DeepPage from '../../layouts/DeepPage.astro';
+import BudgetExplorer from '../../components/islands/BudgetExplorer.tsx';
+import Cite from '../../components/Cite.astro';
+import Proposed from '../../components/Proposed.astro';
+import Icon from '../../components/Icon.astro';
+import b from '../../data/budget.json';
+import h from '../../data/hiring.json';
+import { u } from '../../lib/site';
+---
+<DeepPage title="$100M Cost Baseline, Funding Allocation & Financial Sustainability" eyebrow="The Investment" pillar="impact"
+  crumbs={[{ label: 'The Investment' }]}
+  toc={[{ id: 'budget', label: 'Budget explorer' }, { id: 'architecture', label: 'Budget architecture' }, { id: 'maturity', label: 'Estimate maturity' }, { id: 'contingency', label: 'Contingency logic' }, { id: 'cost-control', label: 'Cost control' }, { id: 'sustainability', label: 'Sustainability' }, { id: 'hiring', label: 'Hiring' }]}>
+  <p slot="header" class="mt-6 text-xl sm:text-2xl max-w-4xl font-semibold leading-snug" style="font-family: var(--font-display)">Financial principle: <span class="text-impact">{b.principle}.</span> If the approved capability can be delivered for less, the project should not invent spending merely to consume the grant.</p>
+
+  <section id="budget" class="scroll-mt-24">
+    <h2 class="text-2xl font-bold mb-2">Budget explorer</h2>
+    <p class="text-muted mb-6 max-w-3xl">PMI defines the cost baseline as the approved time-phased project budget excluding management reserves <Cite ids="pmi-2026a" label="PMI, 2026a" />. B.C.’s Capital Asset Management Framework similarly emphasizes managing capital costs through the asset life cycle, developing budgets that meet functional requirements, and refining cost information as design matures <Cite ids={['bc-2019', 'bc-2021']} label="Government of British Columbia, 2019, 2021" />.</p>
+    <BudgetExplorer client:load />
+  </section>
+
+  <section id="architecture" class="pt-20 scroll-mt-24">
+    <div class="flex flex-wrap items-center gap-3"><h2 class="text-2xl font-bold">Proposed budget architecture</h2><Proposed /></div>
+    <div class="overflow-x-auto card mt-6">
+      <table class="tbl">
+        <thead><tr><th>Budget layer</th><th>Proposed amount</th><th>Meaning</th></tr></thead>
+        <tbody>
+          {b.architecture.map((r) => (
+            <tr style={r.subtotal ? 'background: color-mix(in srgb, var(--impact) 6%, transparent)' : ''}>
+              <td class:list={[r.subtotal && 'font-bold']}>{r.layer}</td>
+              <td class:list={['mono', r.subtotal && 'font-bold text-impact']}>${r.amount}M</td>
+              <td>{r.meaning}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="maturity" class="pt-20 scroll-mt-24">
+    <h2 class="text-2xl font-bold">9.1 Estimate maturity and escalation</h2>
+    <p class="text-muted mt-3 max-w-3xl leading-relaxed">The $22M central-node amount and other allocations are planning envelopes, not contractor estimates. B.C.’s capital guidance describes increasing estimate accuracy as projects progress from schematic design through design development and tender-ready working drawings <Cite ids="bc-2021" label="Government of British Columbia, 2021" />.</p>
+    <div class="grid lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] gap-6 mt-8 items-center">
+      <div class="space-y-2" aria-label="Estimate maturity funnel">
+        {[
+          ['Now', 'Concept-level envelope', 100, 'var(--muted)'],
+          ['Gate 2', 'Site-informed estimates', 74, 'var(--innovate)'],
+          ['Gate 3', 'Formal cost baseline', 48, 'var(--impact)'],
+        ].map(([when, what, w, c]) => (
+          <div class="mx-auto rounded-xl py-4 px-5 text-center border" style={`width:${w}%; border-color: color-mix(in srgb, ${c} 50%, transparent); background: color-mix(in srgb, ${c} 12%, transparent)`}>
+            <p class="mono text-xs" style={`color:${c}`}>{when}</p>
+            <p class="font-semibold">{what}</p>
+          </div>
+        ))}
+        <p class="text-center mono text-xs text-muted pt-1">↓ estimate accuracy increases as design matures</p>
+      </div>
+      <div class="card p-6" style="border-color: color-mix(in srgb, var(--innovate) 40%, transparent)">
+        <p class="eyebrow">Escalation signal · Q2 2026</p>
+        <p class="mono text-5xl font-semibold text-innovate mt-2">3.5%</p>
+        <p class="text-sm mt-2">Statistics Canada’s 15-CMA composite non-residential building construction index, year over year; Vancouver’s quarterly non-residential increase was 0.2% in that quarter.</p>
+        <p class="text-sm text-muted mt-3">These figures do not predict SkyGrid’s future inflation rate, but they demonstrate why procurement-year cost escalation must be explicitly modeled rather than assuming 2026 prices remain unchanged.</p>
+        <div class="mt-3"><Cite ids="statcan-2026" label="Statistics Canada, 2026" /></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contingency" class="pt-20 scroll-mt-24">
+    <h2 class="text-2xl font-bold">9.2 Contingency should follow risk</h2>
+    <div class="grid lg:grid-cols-2 gap-6 mt-6 items-center">
+      <div class="card p-8 text-center" style="border-color: color-mix(in srgb, var(--learn) 40%, transparent)">
+        <p class="eyebrow">Planning technique</p>
+        <p class="mono text-xl sm:text-2xl mt-4 leading-relaxed">Expected Monetary Value<br /><span class="text-muted">=</span> <span class="text-learn">Probability</span> <span class="text-muted">×</span> <span class="text-impact">Cost Impact</span></p>
+      </div>
+      <p class="text-muted leading-relaxed">The $10M contingency is intentionally provisional. Before Gate 3, material risks should receive cost consequences and expected exposure estimates. If risk analysis indicates that $10M is too much, the reserve should fall; if it indicates the project needs more, planned scope must be adjusted because the overall $100M ceiling does not automatically move.</p>
+    </div>
+  </section>
+
+  <section id="cost-control" class="pt-20 scroll-mt-24">
+    <h2 class="text-2xl font-bold">9.3 Cost control</h2>
+    <ul class="grid md:grid-cols-2 gap-3 mt-6 text-[.95rem]">
+      <li class="card p-4 flex gap-3"><span class="text-impact"><Icon name="gate" /></span>Funding is progressively released through stage gates instead of fully committed at project start.</li>
+      <li class="card p-4 flex gap-3"><span class="text-impact"><Icon name="chart" /></span><span>Each major WBS branch becomes a control account tracking budget, committed cost, actual cost, estimate to complete, estimate at completion, and variance. PMI defines a control account as a point where scope, budget, actual cost, and schedule are integrated <Cite ids="pmi-2026a" label="PMI, 2026a" />.</span></li>
+    </ul>
+    <h3 class="text-lg font-semibold mt-10">If forecast cost exceeds authorization…</h3>
+    <div class="grid lg:grid-cols-[minmax(0,1fr)_320px] gap-6 mt-5 items-start">
+      <ol class="space-y-2">
+        {b.costControlLadder.map((s, i) => (
+          <li class="flex items-center gap-3" style={`padding-left:${i * 1.6}rem`}>
+            <span class="mono w-8 h-8 shrink-0 rounded-md grid place-items-center text-sm" style={`background: color-mix(in srgb, var(--impact) ${10 + i * 12}%, transparent); border: 1px solid var(--impact)`}>{i + 1}</span>
+            <span class="card px-4 py-2.5 text-sm flex-1">{s}</span>
+          </li>
+        ))}
+      </ol>
+      <div class="rounded-2xl p-5 border-2" style="border-color: var(--danger); background: color-mix(in srgb, var(--danger) 7%, transparent)">
+        <p class="flex items-center gap-2 mono font-bold text-danger"><Icon name="lock" size={20} /> NEVER CUT</p>
+        <p class="text-xs text-muted mt-1">Do not cut these merely to preserve optional features.</p>
+        <ul class="mt-4 space-y-2">
+          {b.neverCut.map((n) => <li class="flex items-center gap-2 font-semibold"><Icon name="shield" size={16} />{n}</li>)}
+        </ul>
+      </div>
+    </div>
+    <p class="mt-8"><a href={u('investment/change-control')} class="link-deeper">Integrated change control →</a></p>
+  </section>
+
+  <section id="sustainability" class="pt-20 scroll-mt-24">
+    <h2 class="text-2xl font-bold">9.4 Financial sustainability after 2030</h2>
+    <p class="text-muted mt-3 max-w-3xl leading-relaxed">SkyGrid does not include a Year-5 revenue forecast because no validated demand study, capacity model, price evidence, or signed contract base currently supports one.</p>
+    <div class="grid lg:grid-cols-2 gap-6 mt-8">
+      <div class="rounded-2xl p-6 border-2" style="border-color: var(--impact); background: color-mix(in srgb, var(--impact) 6%, transparent)">
+        <p class="mono text-xs font-bold text-impact flex items-center gap-2"><Icon name="alert" size={16} /> LESSON LEARNED · FOREMOST UAS TEST RANGE</p>
+        <p class="mt-3 leading-relaxed">A 2026 feasibility-study RFP stated that the range — one of two Canadian sites with Transport Canada-approved restricted airspace for BVLOS testing — had suspended operations in September 2025 because of funding constraints and needed a more sustainable long-term operating model <Cite ids="entrecorp-2026" label="Community Futures Entre-Corp, 2026" />.</p>
+        <p class="mt-3 font-semibold">That experience supports SkyGrid’s decision not to make essential safety, academic, maintenance, or staffing obligations dependent on speculative commercial revenue.</p>
+      </div>
+      <div class="card p-6">
+        <p class="eyebrow">Funding mix to test</p>
+        <ul class="mt-4 space-y-2">
+          {b.fundingMix.map((f, i) => <li class="flex gap-3 items-start"><span class="mono text-xs text-muted pt-1">{String(i + 1).padStart(2, '0')}</span><span>{f}</span></li>)}
+        </ul>
+        <p class="text-sm text-muted mt-5 leading-relaxed">By Gate 3, SkyGrid should have a five-year operating pro forma separating committed, probable, and merely potential income. Traditional ROI/payback can be calculated for revenue-generating activities, but the overall public-university investment should also be judged through educational, research, regional, and strategic benefits <Cite ids="renso-2026b" label="Renso, 2026b" />.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="hiring" class="pt-20 scroll-mt-24">
+    <h2 class="text-2xl font-bold">Hiring and staffing</h2>
+    <div class="card p-6 mt-6 max-w-4xl" style="border-style: dashed">
+      <p class="leading-relaxed">Staffing is covered at a functional level: <span class="mono text-impact">$6M</span> is allocated to specialist hiring and pre-launch training/capability development, and every necessary operational, safety, technical, academic and partner function is staffed or assigned before launch.</p>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-3 mt-12">
+      <h3 class="text-xl font-bold">Roles We Will Hire and When</h3>
+      <Proposed label="Proposed hiring plan" />
+    </div>
+    <p class="text-muted mt-2 max-w-3xl leading-relaxed">{h.intro}</p>
+    <div class="card mt-5 overflow-x-auto max-w-5xl">
+      <table class="tbl min-w-[640px]">
+        <thead><tr><th>Role</th><th>On board by</th><th>First responsibility (Gantt ID)</th></tr></thead>
+        <tbody>
+          {h.roles.map((r) => (
+            <tr><td class="font-semibold">{r.role}</td><td class="mono whitespace-nowrap text-impact">{r.onboard}</td><td>{r.first}</td></tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="text-sm text-muted mt-3"><a href={u('plan/schedule')} class="link-deeper">See these activities on the Gantt chart →</a></p>
+  </section>
+</DeepPage>

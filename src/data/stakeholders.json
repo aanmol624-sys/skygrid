@@ -1,0 +1,225 @@
+{
+  "source": "Table 5: Stakeholders and engagement rules",
+  "question": "Who can authorize SkyGrid, who can stop it, who must deliver it, who bears risk, and who receives the benefits?",
+  "groups": [
+    {
+      "id": "instructor",
+      "name": "Instructor (assignment client)",
+      "role": "Within the CIS 385 scenario, Professor Kevin Renso is the client/investment decision-maker evaluating whether the group has justified the hypothetical $100M. In a real implementation, however, university governance and public funding authorities would carry formal approval responsibilities. Renso’s class material explicitly frames Assignment 3 as a proposal that students must “sell” and links it to project-charter thinking.",
+      "cite": [
+        [
+          "renso-2026b"
+        ],
+        "Renso, 2026b"
+      ],
+      "rule": null,
+      "lens": [
+        "authorize"
+      ]
+    },
+    {
+      "id": "governance",
+      "name": "UFV governance",
+      "role": "UFV’s Board of Governors is responsible for management, administration, and control of university property, revenue, business, and affairs, while Senate is the academic governing body responsible for academic-policy matters. SkyGrid would not have a single approval pathway: capital/property/business decisions and academic-program decisions can require different governance routes.",
+      "cite": [
+        [
+          "ufv-nd-d"
+        ],
+        "UFV, n.d.-d"
+      ],
+      "rule": "Formal steering cadence and periodic sponsor/Board-level reporting appropriate to decision authority.",
+      "lens": [
+        "authorize",
+        "stop"
+      ]
+    },
+    {
+      "id": "government",
+      "name": "Federal and provincial government",
+      "role": "The assignment scenario places the federal government in the funding role. As of October 2026, Mark Carney is Prime Minister of Canada and David Eby is Premier of British Columbia. For a multi-year project, however, the enduring stakeholder should be treated as the office, department, or ministry rather than a specific politician because officeholders can change.",
+      "cite": [
+        [
+          "pmo-nd",
+          "bc-nd"
+        ],
+        "Office of the Prime Minister, n.d.; Government of British Columbia, n.d."
+      ],
+      "rule": null,
+      "lens": [
+        "authorize",
+        "stop"
+      ]
+    },
+    {
+      "id": "regulators",
+      "name": "Aviation regulators and airspace authorities",
+      "role": "Transport Canada has very high influence because operating category, aircraft capability, pilot/operator certification, safety assurance, and special-flight requirements can determine whether a SkyGrid mission is legal. NAV CANADA authorization is required where an operation overlaps NAV CANADA-controlled airspace. Regulatory feasibility must therefore be treated as an early design input rather than a post-construction check.",
+      "cite": [
+        [
+          "navcanada-nd"
+        ],
+        "NAV CANADA, n.d."
+      ],
+      "rule": "Consultation during feasibility; define pathway before major capital commitment.",
+      "lens": [
+        "stop"
+      ]
+    },
+    {
+      "id": "city",
+      "name": "City of Abbotsford / YXX",
+      "role": "YXX is owned and operated by the City of Abbotsford. The Abbotsford Airport Authority functions as a select committee of City Council, and its members are appointed by Council. If SkyGrid uses airport property, airport infrastructure, or relies on coordination with YXX, the City/airport relationship becomes a high-power stakeholder relationship. The project must not assume access simply because UFV already has an aerospace presence at YXX.",
+      "cite": [
+        [
+          "yxx-nd-a"
+        ],
+        "Abbotsford International Airport, n.d.-a"
+      ],
+      "rule": null,
+      "lens": [
+        "stop",
+        "risk"
+      ]
+    },
+    {
+      "id": "stolo",
+      "name": "Stó:lō rights holders and site communities",
+      "role": "UFV is situated on Stó:lō territory, and UFV’s Peace and Reconciliation Centre describes its location as the unceded ancestral territory of the Ts’elxwéyeqw Tribe, part of the broader Stó:lō Nation. Where site selection, aerial imagery, environmental information, research, or land access may affect Stó:lō rights/interests, engagement should begin during site/design work rather than after project decisions are effectively complete. Local communities and field-site hosts can have legitimate concerns about noise, privacy, aerial imaging, livestock, safety, property access, and data use.",
+      "cite": [
+        [
+          "ufv-prc-nd"
+        ],
+        "UFV Peace and Reconciliation Centre, n.d."
+      ],
+      "rule": "Engage during site selection and operating-rule design where rights/interests may be affected.",
+      "lens": [
+        "stop",
+        "risk"
+      ]
+    },
+    {
+      "id": "students",
+      "name": "Students and faculty/staff",
+      "role": "Students are the primary educational beneficiaries and should be involved in requirements and pilot evaluation, not treated only as end users. Faculty and staff determine whether the platform becomes meaningful teaching/research infrastructure.",
+      "cite": null,
+      "rule": "Requirements workshops, pilots, and structured feedback before academic launch.",
+      "lens": [
+        "deliver",
+        "benefit"
+      ]
+    },
+    {
+      "id": "industry",
+      "name": "Industry organizations, farmers, municipalities, and other external organizations",
+      "role": "Potential partners — not confirmed partners — until written commitments exist.",
+      "cite": null,
+      "rule": "Do not count market interest as demand until supported by written agreements, paid pilots, or other substantive commitments.",
+      "lens": [
+        "benefit",
+        "risk"
+      ]
+    },
+    {
+      "id": "employees",
+      "name": "SkyGrid Project Staff (Our Employees)",
+      "role": "SkyGrid’s hired team will include the Program Director, the Safety Manager, the technical, regulatory, finance, partnerships, capital-projects, field-operations and academic leads, and the RPAS operators and technicians. They will deliver the project and run it after launch.",
+      "cite": null,
+      "rule": "We will recruit them early, using the $6M startup staffing budget, involve them in requirements and pilot testing, and train and qualify them before launch. Any safety-critical role left vacant for more than 90 days triggers an escalation, and SkyGrid cannot launch until every safety-critical role is staffed and qualified.",
+      "lens": [
+        "deliver"
+      ]
+    }
+  ],
+  "dots": [
+    {
+      "label": "Instructor (assignment client)",
+      "group": "instructor",
+      "x": 9.6,
+      "y": 9.6
+    },
+    {
+      "label": "Federal government",
+      "group": "government",
+      "x": 8,
+      "y": 9.2
+    },
+    {
+      "label": "B.C. government",
+      "group": "government",
+      "x": 4.2,
+      "y": 7.8
+    },
+    {
+      "label": "UFV Board of Governors",
+      "group": "governance",
+      "x": 8.7,
+      "y": 9.1
+    },
+    {
+      "label": "UFV Senate",
+      "group": "governance",
+      "x": 7,
+      "y": 7.4
+    },
+    {
+      "label": "Executive sponsor",
+      "group": "governance",
+      "x": 9,
+      "y": 8.7
+    },
+    {
+      "label": "Transport Canada",
+      "group": "regulators",
+      "x": 8.4,
+      "y": 9
+    },
+    {
+      "label": "NAV CANADA",
+      "group": "regulators",
+      "x": 7.2,
+      "y": 8.2
+    },
+    {
+      "label": "City of Abbotsford / YXX",
+      "group": "city",
+      "x": 7.8,
+      "y": 8.1
+    },
+    {
+      "label": "Stó:lō rights holders",
+      "group": "stolo",
+      "x": 8,
+      "y": 8.5
+    },
+    {
+      "label": "Field-site hosts",
+      "group": "stolo",
+      "x": 8.5,
+      "y": 5.2
+    },
+    {
+      "label": "Local communities",
+      "group": "stolo",
+      "x": 7.4,
+      "y": 3.6
+    },
+    {
+      "label": "Faculty & staff",
+      "group": "students",
+      "x": 8.4,
+      "y": 4.8
+    },
+    {
+      "label": "Students",
+      "group": "students",
+      "x": 8.8,
+      "y": 4.2
+    },
+    {
+      "label": "Industry & external organizations",
+      "group": "industry",
+      "x": 8.2,
+      "y": 4.5
+    }
+  ]
+}

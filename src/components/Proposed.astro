@@ -1,0 +1,9 @@
+---
+import { PROPOSED_NOTE } from '../lib/site';
+interface Props { label?: string }
+const { label = 'Proposed' } = Astro.props;
+---
+<span class="pill pill-proposed tip" tabindex="0" aria-label={`${label}. ${PROPOSED_NOTE}`}>
+  {label}
+  <span class="tip-body" role="tooltip">{PROPOSED_NOTE}</span>
+</span>

@@ -1,0 +1,20 @@
+---
+import { u, CHAPTERS } from '../../lib/site';
+interface Props { n: number; title: string; deeper?: { label: string; href: string }; notes: string; class?: string }
+const { n, title, deeper, notes, class: cls = '' } = Astro.props;
+const ch = CHAPTERS[n - 1];
+---
+<section id={ch.id} data-chapter={n - 1} data-pillar={ch.pillar} data-notes={notes}
+  class={`chapter relative min-h-[100svh] py-24 sm:py-28 flex items-center overflow-hidden ${cls}`}>
+  <div class="absolute inset-0 contours opacity-70 pointer-events-none"></div>
+  <div class="absolute inset-0 pointer-events-none" style={`background: radial-gradient(50% 60% at 85% 20%, color-mix(in srgb, var(--${ch.pillar}) 9%, transparent), transparent 70%)`}></div>
+  <div class="relative w-full max-w-[1400px] mx-auto px-4 sm:px-6 md:pr-16">
+    <div class="flex items-center gap-3 mb-4 reveal">
+      <span class="mono text-xs px-2 py-1 rounded-md border" style={`color: var(--${ch.pillar}); border-color: color-mix(in srgb, var(--${ch.pillar}) 45%, transparent)`}>CH.{String(n).padStart(2, '0')}</span>
+      <span class="eyebrow">{ch.label}</span>
+    </div>
+    <h2 class="text-3xl sm:text-5xl font-bold max-w-4xl leading-tight reveal">{title}</h2>
+    <div class="mt-10"><slot /></div>
+    {deeper && <p class="mt-10 reveal"><a href={u(deeper.href)} class="link-deeper">{deeper.label} →</a></p>}
+  </div>
+</section>

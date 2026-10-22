@@ -1,0 +1,101 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { u } from '../lib/site';
+
+// Every marking line from "Project Guideline.txt", mapped to where the site answers it.
+// status: 'go' = answered on the site; 'hold' = still has a placeholder the team must fill.
+type Item = { line: string; detail?: string; where: { label: string; href: string }[]; status?: 'go' | 'hold' };
+const sections: { title: string; marks: string; items: Item[] }[] = [
+  {
+    title: '15-minute presentation of the product / idea', marks: '20 marks',
+    items: [
+      { line: 'A website “advocating” for the idea', detail: 'This site; the link is handed in.', where: [{ label: 'The Pitch', href: '/' }] },
+      { line: 'How are you going to present?', detail: 'From the website itself: Presentation Mode (▶ Present or P) with a 15:00 timer and speaker notes.', where: [{ label: 'Start Presentation Mode', href: '/?present=1' }] },
+      { line: 'How does the finished product / plan / idea look? (project charter)', where: [{ label: 'The Product', href: 'product' }, { label: 'Charter', href: 'plan/charter' }] },
+      { line: 'How well do you sell it? How important is the issue?', where: [{ label: 'Why Now', href: '/#why-now' }, { label: 'Why SkyGrid is different', href: '/#different' }] },
+      { line: 'Professionalism', detail: 'One source of truth: every chart renders from the same data; every proposed number is badged; every external claim is cited.', where: [{ label: 'Evidence', href: 'evidence' }] },
+      { line: 'Effort; under/over cost', where: [{ label: '$100M budget', href: 'investment' }] },
+      { line: 'A finished visual presentation — more than a PowerPoint or a Word document', where: [{ label: 'The Pitch', href: '/' }] },
+    ],
+  },
+  {
+    title: 'Project management pre-plan', marks: '10 marks',
+    items: [
+      { line: '~3-page high-level plan (charter and extra info)', detail: '5 marks', where: [{ label: 'Download the plan (PDF)', href: 'downloads/UFV-SkyGrid-High-Level-Plan.pdf' }, { label: 'Charter', href: 'plan/charter' }] },
+      { line: 'Gantt chart (or flow) with all deliverables and assigned tasks, with completion dates', detail: '5 marks', where: [{ label: 'Gantt', href: 'plan/schedule' }] },
+      { line: 'Hiring', detail: 'Hiring plan with on-board dates by role; $6M startup staffing budget; exact headcount set from workload.', where: [{ label: 'Hiring', href: 'investment#hiring' }] },
+      { line: 'Distribution of money', where: [{ label: 'Budget explorer', href: 'investment#budget' }] },
+      { line: 'Development, tasks, deliverables', where: [{ label: 'WBS', href: 'plan/wbs' }, { label: '14 deliverables', href: 'product' }] },
+      { line: 'Kill-points', where: [{ label: '5 gates', href: 'plan/delivery#gates' }] },
+      { line: 'How long will it take? (deadline September 1, 2030)', where: [{ label: 'Schedule', href: 'plan/schedule' }] },
+      { line: 'Each group member’s role and responsibility', where: [{ label: 'Team', href: 'team' }] },
+    ],
+  },
+  {
+    title: 'Project parts', marks: '2 marks each · 20 marks',
+    items: [
+      { line: 'Overall (how it’s put together)', where: [{ label: 'The Pitch', href: '/' }, { label: 'Delivery & Gates', href: 'plan/delivery' }] },
+      { line: 'Stakeholders: UFV leaders / students / staff, leader of country and province, instructor, UFV, your employees', where: [{ label: 'Stakeholders', href: 'plan/stakeholders' }] },
+      { line: 'Work required / work breakdown', where: [{ label: 'WBS', href: 'plan/wbs' }] },
+      { line: 'Skills in the group and assigned deliverables', where: [{ label: 'Team', href: 'team' }] },
+      { line: 'What’s the idea?', where: [{ label: 'The Idea', href: '/#idea' }] },
+      { line: 'How will you create the finished project?', where: [{ label: 'Delivery & Gates', href: 'plan/delivery' }, { label: 'Schedule', href: 'plan/schedule' }] },
+      { line: 'Research', where: [{ label: 'Research & Regulation', href: 'why/research' }, { label: 'Competitors', href: 'why/competitors' }] },
+      { line: 'Citations, references', where: [{ label: 'Evidence (APA 7)', href: 'evidence' }] },
+      { line: 'WBS — outputs, document', where: [{ label: 'WBS + dictionary', href: 'plan/wbs' }] },
+      { line: 'Controlling costs and changes', where: [{ label: 'Cost control', href: 'investment#cost-control' }, { label: 'Change control', href: 'investment/change-control' }] },
+    ],
+  },
+];
+const all = sections.flatMap((s) => s.items);
+const go = all.filter((i) => i.status !== 'hold').length;
+const href = (h: string) => (h.startsWith('/') ? u(h.slice(1) || '/') : u(h));
+---
+<Base title="Investor Room" description="A pre-flight checklist mapping every marking line of the assignment to where it is answered on the site.">
+  <section class="pt-32 pb-12 contours">
+    <div class="max-w-[1100px] mx-auto px-4 sm:px-6">
+      <p class="eyebrow text-impact">Investor Room · for the decision-maker</p>
+      <h1 class="text-4xl sm:text-6xl font-bold mt-3">Pre-flight checklist.</h1>
+      <p class="text-lg text-muted mt-5 max-w-2xl">Every line of the CIS 385 marking guide, and exactly where this proposal answers it. 50 marks total.</p>
+      <div class="flex flex-wrap gap-3 mt-8">
+        <div class="card px-5 py-3"><p class="eyebrow">Items</p><p class="mono text-2xl"><span class="text-learn">{go}</span><span class="text-muted">/{all.length}</span> go</p></div>
+        <div class="card px-5 py-3"><p class="eyebrow">Hold</p><p class="mono text-2xl text-impact">{all.length - go}</p></div>
+        <div class="card px-5 py-3"><p class="eyebrow">Marks</p><p class="mono text-2xl">20 + 10 + 20 = 50</p></div>
+      </div>
+    </div>
+  </section>
+  <div class="max-w-[1100px] mx-auto px-4 sm:px-6 space-y-12">
+    {sections.map((s, si) => (
+      <section class="cockpit rounded-2xl p-4 sm:p-6">
+        <div class="flex flex-wrap items-baseline justify-between gap-2 border-b border-line pb-4 mb-2">
+          <h2 class="text-xl sm:text-2xl font-bold"><span class="mono text-muted mr-2">{String.fromCharCode(65 + si)}.</span>{s.title}</h2>
+          <span class="mono text-sm text-impact">{s.marks}</span>
+        </div>
+        <ul>
+          {s.items.map((it, i) => (
+            <li class="grid sm:grid-cols-[36px_minmax(0,1fr)_auto] gap-3 items-center py-3.5 border-b border-line last:border-0 reveal" style={`transition-delay:${i * 40}ms`}>
+              <span class:list={['light', it.status === 'hold' ? 'hold' : 'go']} aria-label={it.status === 'hold' ? 'On hold: placeholder to fill' : 'Checked'}>
+                {it.status === 'hold' ? '!' : <Icon name="check" size={18} stroke={2.4} />}
+              </span>
+              <div>
+                <p class="font-semibold">{it.line}</p>
+                {it.detail && <p class:list={['text-sm mt-0.5', it.status === 'hold' ? 'text-impact' : 'text-muted']}>{it.detail}</p>}
+              </div>
+              <div class="flex flex-wrap gap-2 sm:justify-end">
+                {it.where.map((w) => <a href={href(w.href)} class="btn btn-ghost btn-sm whitespace-nowrap">{w.label} <Icon name="arrow" size={14} /></a>)}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+    <p class="text-sm text-muted">Handled outside the website: the topic-approval email (Oct 8), the October 22 submission, and the group evaluation (5 extra marks).</p>
+  </div>
+</Base>
+<style>
+  .cockpit { background: linear-gradient(180deg, var(--surface), color-mix(in srgb, var(--bg-2) 80%, transparent)); border: 1px solid var(--line-strong); box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text) 6%, transparent); }
+  .light { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; font: 800 1rem var(--font-mono); }
+  .light.go { background: color-mix(in srgb, var(--learn) 18%, transparent); color: var(--learn); box-shadow: 0 0 14px -3px var(--learn); border: 1px solid var(--learn); }
+  .light.hold { background: color-mix(in srgb, var(--impact) 18%, transparent); color: var(--impact); border: 1px solid var(--impact); animation: glow 1.6s infinite; }
+</style>

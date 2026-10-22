@@ -1,0 +1,182 @@
+@import "tailwindcss";
+
+/* ── Flight Deck at Dusk ─────────────────────────────────────────────
+   Dark-first. Light mode only swaps the semantic tokens below.
+   Pillar language: Learn = green, Innovate = cyan, Impact = amber.   */
+:root {
+  --bg: #0B1220;
+  --bg-2: #0E1628;
+  --surface: rgba(19, 28, 46, 0.7);
+  --surface-solid: #131C2E;
+  --line: rgba(138, 151, 173, 0.18);
+  --line-strong: rgba(138, 151, 173, 0.35);
+  --text: #E6EDF7;
+  --muted: #8A97AD;
+  --learn: #3DDC97;
+  --innovate: #38BDF8;
+  --impact: #F5A524;
+  --danger: #F43F5E;
+  --on-impact: #1A1206;
+  --contour: rgba(56, 189, 248, 0.06);
+  --paper: #F4F1E8;
+  --paper-text: #1B2333;
+  color-scheme: dark;
+}
+:root[data-theme="light"] {
+  --bg: #F6F8FB;
+  --bg-2: #EDF1F7;
+  --surface: rgba(255, 255, 255, 0.82);
+  --surface-solid: #FFFFFF;
+  --line: rgba(30, 41, 59, 0.12);
+  --line-strong: rgba(30, 41, 59, 0.25);
+  --text: #0F172A;
+  --muted: #526079;
+  --learn: #0E9F63;
+  --innovate: #0284C7;
+  --impact: #B76E00;
+  --danger: #E11D48;
+  --on-impact: #FFFFFF;
+  --contour: rgba(2, 132, 199, 0.07);
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-2: var(--bg-2);
+  --color-surface: var(--surface);
+  --color-surface-solid: var(--surface-solid);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-learn: var(--learn);
+  --color-innovate: var(--innovate);
+  --color-impact: var(--impact);
+  --color-danger: var(--danger);
+  --color-on-impact: var(--on-impact);
+  --font-display: "Space Grotesk Variable", "Space Grotesk", system-ui, sans-serif;
+  --font-sans: "Inter Variable", "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, monospace;
+}
+
+html { scroll-behavior: smooth; overflow-x: clip; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.02em; }
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+::selection { background: color-mix(in srgb, var(--innovate) 35%, transparent); }
+:focus-visible { outline: 2px solid var(--impact); outline-offset: 3px; border-radius: 4px; }
+
+@layer components {
+/* Glass surfaces */
+.glass {
+  background: var(--surface);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid var(--line);
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+}
+
+/* Topographic texture behind sections */
+.contours {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Cg fill='none' stroke='%2338BDF8' stroke-opacity='0.07' stroke-width='1'%3E%3Cpath d='M-20 320 C 80 260 160 300 240 250 S 420 180 620 230'/%3E%3Cpath d='M-20 290 C 90 230 170 270 250 220 S 430 150 620 200'/%3E%3Cpath d='M-20 260 C 100 200 180 240 260 190 S 440 120 620 170'/%3E%3Cpath d='M-20 230 C 110 170 190 210 270 160 S 450 90 620 140'/%3E%3Cpath d='M-20 360 C 70 300 150 340 230 290 S 410 220 620 270'/%3E%3Cellipse cx='420' cy='110' rx='70' ry='28'/%3E%3Cellipse cx='420' cy='110' rx='45' ry='16'/%3E%3Cellipse cx='420' cy='110' rx='20' ry='6'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 600px 400px;
+}
+
+/* Badge system */
+.pill {
+  display: inline-flex; align-items: center; gap: .35em;
+  font-family: var(--font-mono); font-size: .65rem; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase;
+  padding: .18em .6em; border-radius: 999px; white-space: nowrap;
+  vertical-align: middle; line-height: 1.5;
+}
+.pill-proposed { color: var(--impact); border: 1px solid color-mix(in srgb, var(--impact) 70%, transparent); background: color-mix(in srgb, var(--impact) 8%, transparent); }
+.pill-team { color: var(--learn); border: 1px solid color-mix(in srgb, var(--learn) 60%, transparent); }
+.pill-illustrative { color: var(--muted); border: 1px dashed var(--line-strong); }
+.chip-cite {
+  display: inline-flex; align-items: center; gap: .3em;
+  font-family: var(--font-mono); font-size: .68rem; font-weight: 500;
+  color: var(--innovate); background: color-mix(in srgb, var(--innovate) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--innovate) 30%, transparent);
+  padding: .1em .55em; border-radius: 6px; cursor: pointer; white-space: nowrap;
+  vertical-align: middle; line-height: 1.55; transition: background .2s;
+}
+.chip-cite:hover { background: color-mix(in srgb, var(--innovate) 22%, transparent); }
+
+/* Tooltip for PROPOSED pills */
+.tip { position: relative; }
+.tip > .tip-body {
+  position: absolute; left: 50%; bottom: calc(100% + 8px); transform: translateX(-50%) translateY(4px);
+  width: min(320px, 80vw); padding: .75rem .9rem; border-radius: 10px;
+  background: var(--surface-solid); border: 1px solid var(--line-strong); color: var(--text);
+  font: 400 .78rem/1.5 var(--font-sans); letter-spacing: 0; text-transform: none; white-space: normal;
+  box-shadow: 0 12px 40px rgba(0,0,0,.35); opacity: 0; pointer-events: none; transition: .18s; z-index: 60;
+}
+.tip:hover > .tip-body, .tip:focus-visible > .tip-body { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* Buttons */
+.btn { display: inline-flex; align-items: center; gap: .5rem; font-weight: 600; border-radius: 10px; padding: .7rem 1.2rem; transition: transform .15s, background .2s, border-color .2s, box-shadow .2s; cursor: pointer; font-size: .95rem; }
+.btn:active { transform: translateY(1px); }
+.btn-primary { background: var(--impact); color: var(--on-impact); box-shadow: 0 0 0 0 color-mix(in srgb, var(--impact) 50%, transparent); }
+.btn-primary:hover { box-shadow: 0 0 28px -4px color-mix(in srgb, var(--impact) 70%, transparent); }
+.btn-ghost { border: 1px solid var(--line-strong); color: var(--text); background: transparent; }
+.btn-ghost:hover { border-color: var(--text); background: color-mix(in srgb, var(--text) 6%, transparent); }
+.btn-sm { padding: .45rem .8rem; font-size: .82rem; border-radius: 8px; }
+
+.eyebrow { font-family: var(--font-mono); font-size: .75rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.link-deeper { font-family: var(--font-mono); font-size: .8rem; letter-spacing: .04em; color: var(--impact); display: inline-flex; gap: .4rem; align-items: center; }
+.link-deeper:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+/* Crosshair reticle on interactive visuals (desktop) */
+@media (pointer: fine) {
+  .reticle { cursor: crosshair; }
+}
+
+/* Long-form prose on deep pages */
+.prose-sg p { color: color-mix(in srgb, var(--text) 86%, var(--muted)); line-height: 1.75; margin: 0 0 1rem; }
+.prose-sg strong { color: var(--text); }
+
+/* Data tables */
+.tbl { width: 100%; border-collapse: collapse; font-size: .88rem; }
+.tbl th { text-align: left; font: 600 .7rem/1.3 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding: .7rem .8rem; border-bottom: 1px solid var(--line-strong); }
+.tbl td { padding: .75rem .8rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+.tbl tr:hover td { background: color-mix(in srgb, var(--text) 3%, transparent); }
+
+}
+
+/* Reveal-on-scroll (JS adds .in). Without JS or with reduced motion everything is visible. */
+.js .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
+.js .reveal.in { opacity: 1; transform: none; }
+
+@keyframes pulse-red { 0%,100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--danger) 70%, transparent); } 50% { box-shadow: 0 0 0 10px transparent; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes marquee { to { transform: translateX(-50%); } }
+@keyframes glow { 0%,100% { opacity: .55; } 50% { opacity: 1; } }
+@keyframes dash { to { stroke-dashoffset: -40; } }
+
+.pulse-red { animation: pulse-red 1.8s infinite; }
+.marquee-track { animation: marquee 40s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+  .js .reveal { opacity: 1; transform: none; }
+}
+
+/* Print: used to render the Decision Pack / plan PDFs */
+@media print {
+  .no-print { display: none !important; }
+  body { background: #fff; color: #000; }
+}
