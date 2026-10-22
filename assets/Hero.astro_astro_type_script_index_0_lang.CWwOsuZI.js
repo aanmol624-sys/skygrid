@@ -1,1 +1,0 @@
-import{L as t}from"./site.CgF_PiPJ.js";const e=document.getElementById("countdown");e&&(e.textContent=Math.max(0,Math.ceil((new Date(t).getTime()-Date.now())/864e5)).toLocaleString("en-CA"));matchMedia("(prefers-reduced-motion: reduce)").matches&&document.getElementById("hero-scene")?.pauseAnimations();
