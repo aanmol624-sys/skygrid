@@ -17,6 +17,7 @@ Stop the server with `Ctrl + C`.
 | Hiring plan | `src/data/hiring.json` |
 | Recorded pitch video | `src/lib/site.ts`, set `YOUTUBE_URL` to any normal YouTube link |
 | Pitch outline | `src/lib/site.ts`, `PITCH_OUTLINE` |
+| Site search (Ctrl+K) | index built automatically by `src/integrations/search-index.mjs`; search box in `src/scripts/search.ts` |
 | Schedule / risks / budget / KPIs / WBS | the matching JSON in `src/data/`. Every chart re-renders from it |
 
 After changing data used by the PDFs, regenerate them: run `npm run dev` in one terminal and `npm run pdfs` in a second.

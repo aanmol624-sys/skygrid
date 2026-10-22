@@ -1,5 +1,6 @@
 // Global client behaviour shared by every page.
 import Lenis from 'lenis';
+import './search';
 
 type Ref = { id: string; cite: string; cat: string; apa: string; url: string | null };
 

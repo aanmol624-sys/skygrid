@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
+import searchIndex from './src/integrations/search-index.mjs';
 
 // On GitHub Pages the site lives at https://<user>.github.io/<repo>/
 // The deploy workflow passes SITE and BASE_PATH; locally both default to "/".
@@ -11,7 +12,7 @@ export default defineConfig({
   trailingSlash: 'ignore',
   // GitHub Pages ignores folders starting with "_", so don't use Astro's default "_astro".
   build: { assets: 'assets' },
-  integrations: [react()],
+  integrations: [react(), searchIndex()],
   vite: {
     plugins: [tailwindcss()],
     // Pre-bundle every client library up front so the dev server never has to

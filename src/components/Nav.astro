@@ -55,7 +55,7 @@ const MENU = [
     </ul>
 
     <div class="ml-auto xl:ml-0 flex items-center gap-1.5">
-      <a href={u('evidence#search')} class="icon-btn" aria-label="Search references"><Icon name="search" size={18} /></a>
+      <a href={u('evidence#search')} data-search class="icon-btn" aria-label="Search the site (Ctrl+K)" title="Search (Ctrl+K)"><Icon name="search" size={18} /></a>
       <button type="button" class="icon-btn" id="theme-toggle" aria-label="Toggle light or dark theme">
         <span class="theme-dark"><Icon name="sun" size={18} /></span><span class="theme-light"><Icon name="moon" size={18} /></span>
       </button>
@@ -133,7 +133,7 @@ const MENU = [
         <span class="theme-dark flex items-center gap-2"><Icon name="sun" size={15} /> Light mode</span>
         <span class="theme-light items-center gap-2"><Icon name="moon" size={15} /> Dark mode</span>
       </button>
-      <a href={u('evidence#search')} class="btn btn-ghost btn-sm"><Icon name="search" size={15} /> Search references</a>
+      <a href={u('evidence#search')} data-search class="btn btn-ghost btn-sm"><Icon name="search" size={15} /> Search the site</a>
       <p class="italic text-sm text-muted sm:ml-auto">“Where Autonomous Aviation Meets the Real World.”</p>
     </div>
   </div>
