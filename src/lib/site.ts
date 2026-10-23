@@ -12,7 +12,7 @@ export const LAUNCH_DATE = '2030-09-01T00:00:00-07:00';
 // Any normal YouTube link works (youtube.com/watch?v=…, youtu.be/…, /shorts/…).
 // Leave it empty to show the "Video coming soon" message instead.
 // ============================================================================
-export const YOUTUBE_URL = '';
+export const YOUTUBE_URL = 'https://youtu.be/8hT0L1DCYPY';
 
 /** Extracts the video ID from any common YouTube link format. */
 const youtubeId = (url: string) =>
